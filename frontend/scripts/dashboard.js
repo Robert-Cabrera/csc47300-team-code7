@@ -19,7 +19,7 @@ import { getUserData } from './auth.js';
 // CONSTANTS AND GLOBAL STATE
 // ============================================================================
 
-// Number of items to fetch per batch
+// Number of items to fetch per batch (KEEP IT OVER 4 FOR BETTER AESTHETICS)
 const ITEMS_PER_PAGE = 4;
 
 // Store user ID for API calls
@@ -71,10 +71,10 @@ async function initializeUserData(userData) {
     updateStats(stats.totalSummaries, stats.totalCrashCourses);
     
     // Load first batch of summaries
-    await loadMoreSummaries(0);
+    await loadMoreObjects('summaries',0);
     
     // Load first batch of crash courses
-    await loadMoreCrashCourses(0);
+    await loadMoreObjects('crash-courses',0);
 
   } catch (err) {
     console.error('Error loading user history:', err);
@@ -85,29 +85,19 @@ async function initializeUserData(userData) {
 // DATA FETCHING FUNCTIONS
 // ============================================================================
 
-// Fetch summaries batch from backend
-async function fetchSummariesBatch(startIndex, limit) {
-  if (!currentUserData?.id) {
+async function fetchObjectsBatch(type, startIndex, limit) {
+  // type: 'summaries' or 'crash-courses', 'practice-tests' needs to be added
+  if (type !== 'summaries' && type !== 'crash-courses') {
+    throw new Error(`Unknown type: ${type}`);
+  }
+
+   if (!currentUserData?.id) {
     throw new Error('User ID not available');
   }
 
-  const response = await fetch(`/api/user/${currentUserData.id}/summaries?start=${startIndex}&limit=${limit}`);
+  const response = await fetch(`/api/user/${currentUserData.id}/${type}?start=${startIndex}&limit=${limit}`);
   if (!response.ok) {
     throw new Error('Failed to fetch summaries');
-  }
-
-  return await response.json();
-}
-
-// Fetch crash courses batch from backend
-async function fetchCrashCoursesBatch(startIndex, limit) {
-  if (!currentUserData?.id) {
-    throw new Error('User ID not available');
-  }
-
-  const response = await fetch(`/api/user/${currentUserData.id}/crash-courses?start=${startIndex}&limit=${limit}`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch crash courses');
   }
 
   return await response.json();
@@ -117,132 +107,77 @@ async function fetchCrashCoursesBatch(startIndex, limit) {
 // MAIN LOAD FUNCTIONS
 // ============================================================================
 
-async function loadMoreSummaries(startIndex) {
-  const container = document.querySelector('.summaries-list-container');
-  const loadMoreBtn = document.getElementById('loadMoreSummaries');
+async function loadMoreObjects(type, startIndex) {
   
-  // If container not found, exit
+  // Configuration map for different object types
+  const typeConfig = {
+    'summaries': {
+      containerClass: '.summaries-list-container',
+      loadMoreBtnId: 'loadMoreSummaries',
+      createItemFn: createSummaryItem
+    },
+    'crash-courses': {
+      containerClass: '.crash-courses-list-container',
+      loadMoreBtnId: 'loadMoreCrashCourses',
+      createItemFn: createCrashCourseItem
+    }
+  };
+
+  const config = typeConfig[type];
+  if (!config) {
+    console.error(`Unknown type: ${type}`);
+    return;
+  }
+
+  const { containerClass, loadMoreBtnId, createItemFn } = config;
+
+  const container = document.querySelector(containerClass);
+  const loadMoreBtn = document.getElementById(loadMoreBtnId);
+
   if (!container) return;
 
   const isFirstLoad = startIndex === 0;
 
-  // Prepare UI for loading (take the button out of view)
   if (isFirstLoad) {
     container.innerHTML = '';
   } else if (loadMoreBtn) {
     loadMoreBtn.style.display = 'none';
   }
 
-  showLoadingAnimation(container, 'summaries');
+  showLoadingAnimation(container, type);
 
   try {
-    // Parse the response:
-    /*
+    const { items, hasMore } = await fetchObjectsBatch(
+      type === 'summaries' ? 'summaries' : 'crash-courses',
+      startIndex,
+      ITEMS_PER_PAGE
+    );
+    removeLoadingAnimation(container, type);
 
-    We send:
-      startIndex: number (where to start fetching)
-      limit: number (how many to fetch)
-
-    We get back:
-      items: Array of objects (summaries or crash courses)
-      hasMore: boolean (do we have more to load? - helps with button display)
-    */
-    const { items, hasMore } = await fetchSummariesBatch(startIndex, ITEMS_PER_PAGE);
-    removeLoadingAnimation(container, 'summaries');
-
-    // Handle empty state
     if (items.length === 0 && isFirstLoad) {
-      showEmptyState(container, loadMoreBtn, 'summaries');
+      showEmptyState(container, loadMoreBtn, type);
       return;
     }
 
-    // Get or create history list
     const historyList = getOrCreateHistoryList(container);
 
-    // Append new items
-    items.forEach(summary => {
-      historyList.appendChild(createSummaryItem(summary));
+    items.forEach(obj => {
+      historyList.appendChild(createItemFn(obj));
     });
 
-    // Check if content overflows and enable scrolling if needed
     if (historyList.scrollWidth > historyList.clientWidth) {
       historyList.style.overflowX = 'auto';
     }
 
-    /* 
-      Update load more button (note that startIndex is captured in the closure so:
-      firstLoad = 0 
-      => nextLoad = 0 + 4 = 4
-      => nextLoad = 4 + 4 = 8
-      etc.
-    */
-    updateLoadMoreButton(container, loadMoreBtn, hasMore, () => loadMoreSummaries(startIndex + ITEMS_PER_PAGE));
-
+    updateLoadMoreButton(
+      container,
+      loadMoreBtn,
+      hasMore,
+      () => loadMoreObjects(type, startIndex + ITEMS_PER_PAGE)
+    );
   } catch (err) {
-    console.error('Error loading summaries:', err);
-    removeLoadingAnimation(container, 'summaries');
-  }
-}
-
-async function loadMoreCrashCourses(startIndex) {
-  const container = document.querySelector('.crash-courses-list-container');
-  const loadMoreBtn = document.getElementById('loadMoreCrashCourses');
-  
-  // If container not found, exit
-  if (!container) return;
-
-  const isFirstLoad = startIndex === 0;
-
-  // Prepare UI for loading
-  if (isFirstLoad) {
-    container.innerHTML = '';
-  } else if (loadMoreBtn) {
-    loadMoreBtn.style.display = 'none';
-  }
-
-  showLoadingAnimation(container, 'crash-courses');
-
-  try {
-
-    // Parse the response:
-    /*
-
-    We send:
-      startIndex: number (where to start fetching)
-      limit: number (how many to fetch)
-
-    We get back:
-      items: Array of objects (summaries or crash courses)
-      hasMore: boolean (do we have more to load? - helps with button display)
-    */
-    const { items, hasMore} = await fetchCrashCoursesBatch(startIndex, ITEMS_PER_PAGE);
-    removeLoadingAnimation(container, 'crash-courses');
-
-    // Handle empty state
-    if (items.length === 0 && isFirstLoad) {
-      showEmptyState(container, loadMoreBtn, 'crash-courses');
-      return;
-    }
-
-    // Get or create history list
-    const historyList = getOrCreateHistoryList(container);
-
-    // Append new items
-    items.forEach(course => {
-      historyList.appendChild(createCrashCourseItem(course));
-    });
-
-    // Check if content overflows and enable scrolling if needed
-    if (historyList.scrollWidth > historyList.clientWidth) {
-      historyList.style.overflowX = 'auto';
-    }
-
-    // Update load more button
-    updateLoadMoreButton(container, loadMoreBtn, hasMore, () => loadMoreCrashCourses(startIndex + ITEMS_PER_PAGE));
-
-  } catch (err) {
-    console.error('Error loading crash courses:', err);
-    removeLoadingAnimation(container, 'crash-courses');
+    console.error(`Error loading ${type}:`, err);
+    removeLoadingAnimation(container, type);
   }
 }
 
@@ -283,52 +218,6 @@ function updateLoadMoreButton(container, loadMoreBtn, hasMore, onClickHandler) {
   } else {
     loadMoreBtn.style.display = 'none';
   }
-}
-
-// ============================================================================
-// TEMPLATE/RENDERING FUNCTIONS
-// ============================================================================
-
-function showLoadingAnimation(container, type) {
-  const template = document.getElementById('loading-template');
-  if (!template) {
-    console.error('Loading template not found');
-    return;
-  }
-  
-  const loadingOverlay = template.content.cloneNode(true).querySelector('.loading-overlay');
-  loadingOverlay.id = `loading-${type}`;
-  container.appendChild(loadingOverlay);
-}
-
-function removeLoadingAnimation(container, type) {
-  const loadingElement = document.getElementById(`loading-${type}`);
-  if (loadingElement) {
-    loadingElement.remove();
-  }
-}
-
-function showEmptyState(container, loadMoreBtn, type) {
-  const template = document.getElementById('empty-state-template');
-  if (!template) {
-    console.error('Empty state template not found');
-    return;
-  }
-  
-  const emptyState = template.content.cloneNode(true);
-  const line1 = emptyState.querySelector('[data-line1]');
-  const line2 = emptyState.querySelector('[data-line2]');
-  
-  if (type === 'summaries') {
-    line1.textContent = 'No summaries generated yet.';
-    line2.textContent = 'Create your first summary to see it here!';
-  } else {
-    line1.textContent = 'No crash courses generated yet.';
-    line2.textContent = 'Create your first crash course to see it here!';
-  }
-  
-  container.appendChild(emptyState);
-  if (loadMoreBtn) loadMoreBtn.style.display = 'none';
 }
 
 function createSummaryItem(summary) {
@@ -399,6 +288,53 @@ function createCrashCourseItem(course) {
   });
 
   return item;
+}
+
+
+// ============================================================================
+// TEMPLATE/RENDERING FUNCTIONS
+// ============================================================================
+
+function showLoadingAnimation(container, type) {
+  const template = document.getElementById('loading-template');
+  if (!template) {
+    console.error('Loading template not found');
+    return;
+  }
+  
+  const loadingOverlay = template.content.cloneNode(true).querySelector('.loading-overlay');
+  loadingOverlay.id = `loading-${type}`;
+  container.appendChild(loadingOverlay);
+}
+
+function removeLoadingAnimation(container, type) {
+  const loadingElement = document.getElementById(`loading-${type}`);
+  if (loadingElement) {
+    loadingElement.remove();
+  }
+}
+
+function showEmptyState(container, loadMoreBtn, type) {
+  const template = document.getElementById('empty-state-template');
+  if (!template) {
+    console.error('Empty state template not found');
+    return;
+  }
+  
+  const emptyState = template.content.cloneNode(true);
+  const line1 = emptyState.querySelector('[data-line1]');
+  const line2 = emptyState.querySelector('[data-line2]');
+  
+  if (type === 'summaries') {
+    line1.textContent = 'No summaries generated yet.';
+    line2.textContent = 'Create your first summary to see it here!';
+  } else {
+    line1.textContent = 'No crash courses generated yet.';
+    line2.textContent = 'Create your first crash course to see it here!';
+  }
+  
+  container.appendChild(emptyState);
+  if (loadMoreBtn) loadMoreBtn.style.display = 'none';
 }
 
 // ============================================================================

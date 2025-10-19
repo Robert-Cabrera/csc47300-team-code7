@@ -138,6 +138,7 @@ router.post('/', upload.single('pdf'), async (req, res) => {
             
             if (userIndex !== -1) {
                 const summary = {
+                    // Generate a simple unique ID for the summary (just the timestamp for now)
                     id: `sum_${Date.now()}`,
                     createdAt: new Date().toISOString(),
                     fileName: req.file.originalname,
