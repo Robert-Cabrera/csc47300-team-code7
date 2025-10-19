@@ -8,7 +8,7 @@
 import { getUserData } from './auth.js';
 
 const FILE_SIZE_LIMIT_MB = 30;
-const TOKEN_LIMIT = 220000;
+const TOKEN_LIMIT = 20000;
 
 // General helper to check for valid response
 const checkForResponse = (data) => {

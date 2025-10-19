@@ -9,6 +9,152 @@
       "profilePicture": "",
       "crashCourses": [
         {
+          "id": "cc_1760842962681",
+          "createdAt": "2025-10-19T03:02:42.681Z",
+          "topic": "Army Surplus on Robotic Materials",
+          "summary": "Exploring the innovative use of decommissioned military materials in robotics. This course delves into repurposing, material properties, and the future potential of this sustainable approach to robot construction.",
+          "overview": "This crash course examines how discarded military assets are being ingeniously transformed into components for advanced robotics. We'll investigate the unique material properties inherited from military applications, discuss practical methods of sourcing and processing these surplus materials, and consider the ethical and environmental benefits, as well as future trends in this field.",
+          "main_topics": [
+            {
+              "title": "Introduction to Military Surplus in Robotics",
+              "description": "Understand the concept of utilizing retired military equipment and materials for robotic applications. Learn about the advantages, challenges, and the growing significance of this sustainable engineering practice.",
+              "subtopics": [
+                {
+                  "title": "What is Military Surplus?",
+                  "details": "Defining military surplus, including vehicles, equipment, and raw materials, that are no longer in active service and available for repurposing."
+                },
+                {
+                  "title": "Why Use Surplus for Robots?",
+                  "details": "Exploring benefits like cost-effectiveness, durability of military-grade materials, environmental sustainability, and unique performance characteristics."
+                },
+                {
+                  "title": "Ethical and Sourcing Considerations",
+                  "details": "Discussing responsible acquisition, potential hazards, and the ethical implications of repurposing materials from defense contexts."
+                }
+              ]
+            },
+            {
+              "title": "Material Properties and Selection",
+              "description": "Analyze the inherent strengths and unique properties of various military surplus materials. Learn how to identify and select the most suitable materials for different robotic components, focusing on performance and adaptability.",
+              "subtopics": [
+                {
+                  "title": "Metals: Armor and Alloys",
+                  "details": "Investigating robust metals like titanium, steel alloys, and aluminum used in vehicles and armor, suitable for structural robot frames and high-stress parts."
+                },
+                {
+                  "title": "Composites and Polymers",
+                  "details": "Examining durable composite materials and advanced polymers found in aircraft, protective gear, and wiring, useful for lightweight structures and insulation."
+                },
+                {
+                  "title": "Electronics and Sensors",
+                  "details": "Identifying functional electronic components, sensors, and wiring harnesses from surplus systems that can be integrated into robotic control and sensing."
+                }
+              ]
+            },
+            {
+              "title": "Processing and Integration Techniques",
+              "description": "Discover the practical methods for processing and integrating repurposed military materials into robotic designs. Covers fabrication, modification, and assembly challenges to create functional robotic systems.",
+              "subtopics": [
+                {
+                  "title": "Decontamination and Preparation",
+                  "details": "Essential steps for cleaning, decontaminating, and preparing salvaged materials to ensure safety and usability for robotic construction."
+                },
+                {
+                  "title": "Fabrication and Machining",
+                  "details": "Techniques for cutting, shaping, welding, and machining military-grade materials to fit specific robotic design requirements and tolerances."
+                },
+                {
+                  "title": "System Integration Strategies",
+                  "details": "Approaches to integrating repurposed materials with new components, ensuring compatibility, functionality, and overall system reliability in the final robot."
+                }
+              ]
+            },
+            {
+              "title": "Future Applications and Innovations",
+              "description": "Envision the future potential of army surplus in robotics. Explore emerging trends, case studies of successful implementations, and the broader impact on sustainable technology and defense innovation.",
+              "subtopics": [
+                {
+                  "title": "Case Studies: Success Stories",
+                  "details": "Highlighting real-world examples of robots successfully built using repurposed military materials, demonstrating practical success and capabilities."
+                },
+                {
+                  "title": "Emerging Trends and Research",
+                  "details": "Discussing cutting-edge research and development in using surplus for advanced robotics, AI integration, and autonomous systems."
+                },
+                {
+                  "title": "Sustainability and Circular Economy",
+                  "details": "The role of military surplus in promoting a circular economy within the robotics industry and contributing to environmental goals."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Repurposing army surplus offers a sustainable, cost-effective path for robotic material innovation, blending resilience with resourcefulness for future technological advancements."
+        },
+        {
+          "id": "cc_1760839840699",
+          "createdAt": "2025-10-19T02:10:40.699Z",
+          "topic": "Uncertainty Threshold for Robotic Movement",
+          "summary": "This course explores how robots manage uncertainty in their environment and actions. We'll cover defining acceptable uncertainty levels for safe and efficient navigation and manipulation.",
+          "overview": "Learn to define and manage uncertainty thresholds critical for robotic motion planning and execution. This course covers understanding sources of uncertainty, methods for quantifying it, setting appropriate thresholds, and implementing strategies for robust robotic behavior in dynamic environments.",
+          "main_topics": [
+            {
+              "title": "Understanding Uncertainty in Robotics",
+              "description": "Explore the fundamental sources and types of uncertainty that affect robot perception, localization, and control. This includes sensor noise, model inaccuracies, and environmental variations.",
+              "subtopics": [
+                {
+                  "title": "Sources of Uncertainty",
+                  "details": "Covers sensor noise (e.g., camera, lidar), actuator imprecision, kinematic/dynamic model errors, and unpredictable environmental changes."
+                },
+                {
+                  "title": "Types of Uncertainty",
+                  "details": "Differentiates between static (fixed) and dynamic (changing) uncertainty, and systematic vs. random errors in robotic systems."
+                },
+                {
+                  "title": "Quantifying Uncertainty",
+                  "details": "Introduces probabilistic methods like Gaussian distributions and Bayesian inference to represent and measure uncertainty mathematically."
+                }
+              ]
+            },
+            {
+              "title": "Defining and Setting Thresholds",
+              "description": "Learn techniques for establishing acceptable uncertainty levels for different robotic tasks. This involves balancing safety, performance, and computational cost.",
+              "subtopics": [
+                {
+                  "title": "Task-Specific Thresholds",
+                  "details": "How to set thresholds based on the critical nature of a task, like collision avoidance versus simple object grasping."
+                },
+                {
+                  "title": "Performance Metrics",
+                  "details": "Relating uncertainty thresholds to desired outcomes like navigation success rate, manipulation accuracy, and energy efficiency."
+                },
+                {
+                  "title": "Risk Assessment",
+                  "details": "Evaluating potential failures and their consequences to inform the selection of conservative or aggressive uncertainty thresholds."
+                }
+              ]
+            },
+            {
+              "title": "Strategies for Managing Uncertainty",
+              "description": "Discover methods robots employ to operate safely and effectively despite inherent uncertainties. This includes re-planning, sensor fusion, and adaptive control.",
+              "subtopics": [
+                {
+                  "title": "Sensor Fusion",
+                  "details": "Combining data from multiple sensors (e.g., cameras, IMUs, GPS) to get a more reliable estimate and reduce overall uncertainty."
+                },
+                {
+                  "title": "Adaptive Motion Planning",
+                  "details": "Techniques that allow robots to replan or adjust their trajectories in real-time based on perceived environmental changes or updated uncertainty estimates."
+                },
+                {
+                  "title": "Active Sensing",
+                  "details": "Strategies where the robot intelligently chooses where to look or sense next to reduce uncertainty in critical areas."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Effectively managing uncertainty thresholds is key to developing robust, safe, and reliable robots capable of navigating complex real-world environments."
+        },
+        {
           "id": "cc_1760750911938",
           "createdAt": "2025-10-18T01:28:31.938Z",
           "topic": "Discrete Signals for Robot Automation",
@@ -1214,6 +1360,138 @@
         }
       ],
       "summaries": [
+        {
+          "id": "sum_1760843158572",
+          "createdAt": "2025-10-19T03:05:58.572Z",
+          "fileName": "jFF322.pdf",
+          "document_title": "Automated Farm Tunnels: Scaled Prototype",
+          "executive_summary": "This report details the design and implementation of a scaled prototype for an automated farm tunnel system aimed at controlling the raising and lowering of tunnel coverings. The system utilizes DC motors controlled by a microcontroller based on user-defined temperature setpoints and analyzes temperature changes to ensure efficient operation. It also includes a manual override feature allowing users to control individual motors or remove them from the automated loop. The prototype successfully demonstrated the core functionality, providing a foundation for larger-scale applications, though challenges with RF communication were noted.",
+          "key_findings": [
+            "The prototype successfully implemented automated temperature control for raising and lowering farm tunnel coverings based on user-defined setpoints and temperature change analysis.",
+            "A manual override system was developed, enabling users to remove motors from the automated loop and manually set tunnel positions (up or down).",
+            "While the core automation and override functions were achieved, the integration of RF communication modules proved challenging with the chosen microcontroller, suggesting alternative platforms like Arduino for future wireless implementations."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1-5",
+              "summary_points": [
+                "Introduces the problem of manually adjusting farm tunnel coverings for temperature and humidity control, highlighting the need for automation.",
+                "Details the design concept of a scaled prototype using DC motors to simulate the raising and lowering of tunnel plastic, controlled by a microcontroller.",
+                "Explains the logic for automated control, including dual temperature setpoints and analysis of temperature change to prevent rapid motor activation due to minor fluctuations."
+              ]
+            },
+            {
+              "page_range": "6-10",
+              "summary_points": [
+                "Describes the system's hardware components, including a keypad, push buttons, LCD for user interface, and a PIC microcontroller.",
+                "Outlines the I/O requirements and the selection of the PIC 16F1937 microcontroller, detailing its connections to various components like motors, sensors, and displays.",
+                "Presents flowcharts illustrating the automated loop control and the interrupt-driven manual override functions, along with port assignments for the microcontroller."
+              ]
+            },
+            {
+              "page_range": "11-15",
+              "summary_points": [
+                "Evaluates the system's components, rating the effort and research required for the LCD, buzzer, user input, temperature sensor, and motor control.",
+                "Discusses challenges encountered and lessons learned, particularly regarding the difficulty of integrating RF modules with the PIC microcontroller and the intricacies of interrupt handling.",
+                "Provides a partial parts list for key components like the H-bridge and temperature sensor, and includes appendices with a wiring diagram and the full source code."
+              ]
+            },
+            {
+              "page_range": "16-20",
+              "summary_points": [
+                "Details the implementation of the interrupt service routine for handling manual override commands, allowing users to select tunnels and actions (add/remove, up/down).",
+                "Explains the process for manually adjusting individual tunnels when they are removed from the automated loop, including raising or lowering them to match the loop's state or a desired manual position.",
+                "Covers the functionality for resetting temperature setpoints, where users can input new lower and raise temperatures using the keypad."
+              ]
+            },
+            {
+              "page_range": "21-24",
+              "summary_points": [
+                "The provided code snippets focus on the interrupt handling and user input for setting parameters like temperature.",
+                "The interrupt routine allows for dynamic adjustment of setpoints and manual control of motors, demonstrating the system's responsiveness.",
+                "The appendices contain the full code and wiring diagram, which are crucial for understanding the complete implementation and reproducibility of the project."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sum_1760842037807",
+          "createdAt": "2025-10-19T02:47:17.807Z",
+          "fileName": "jmrsp.2022.57.64.pdf",
+          "document_title": "Analysis of Mechatronics Degree Evaluation Models",
+          "executive_summary": "This paper presents and analyzes various metric models for evaluating the \"mechatronizability\" of products, focusing on how to quantify the degree of mechatronics integration. It highlights the complexity of mechatronic systems and the need for designers to assess this complexity early in the design stage. The study reviews existing models by Leonida and Tabourot, applying them to a hydraulic pump to demonstrate their utility and limitations. The goal is to provide tools for Small and Medium Enterprises (SMEs) to transition towards mechatronic activities by offering measurable ways to evaluate product integration.",
+          "key_findings": [
+            "Existing metric models for evaluating mechatronics degree, such as those proposed by Leonida and Tabourot, provide valuable frameworks for quantifying product integration.",
+            "The application of these models to a hydraulic pump reveals varying levels of functional integration, dematerialization, and complexity, indicating the potential of these metrics to differentiate product mechatronic characteristics.",
+            "There is a need for SMEs to adopt such evaluation tools to effectively transition into designing and manufacturing complex mechatronic products, enabling informed decisions about product design and production unit capabilities."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "This page serves as the title page, including the document title, authors, affiliations, and publication details.",
+                "It also contains the abstract, which summarizes the paper's focus on mechatronic system complexity, evaluation models, and the application of metrics to a hydraulic pump.",
+                "Keywords such as Metrics, Product Design, Mechatronic Evaluation, Mechatronizability, and Functional Analysis are provided."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "The introduction defines mechatronics as the synergistic integration of mechanics, electronics, automation, and computer science, emphasizing its revolutionary impact on industry.",
+                "It discusses the diverse perspectives on mechatronics research, including the Internet of Things, collaborative engineering, transdisciplinary education, and system reliability.",
+                "The introduction highlights the importance of mechatronics for the 'factory of the future' and the challenges faced by SMEs in adopting mechatronic processes compared to larger companies."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "This page delves into the concept of mechatronizability and the need for evaluation metrics, particularly for SMEs transitioning to multi-domain activities.",
+                "It distinguishes between physical integration (mechanical and electronic supports) and functional integration (adding sensing, communication, processing, and feedback to basic mechanical functions).",
+                "The research objective is to propose metrics for evaluating technological solutions to meet mechatronic product functional needs, aiding companies in defining functional integration levels and designing adequate production units."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "This page introduces the concept of metrics as tools for measurement and comparison in design, defining them as mathematical combinations of criteria or indicators.",
+                "It details Leonida's (2017) metric models: Functional Integration Indicator (IntegMax), Functional Dematerialization Indicator (DemMax), and Functional Complexity Indicator (ComplexiMax), explaining their formulas and interpretations.",
+                "Formulas and interpretations are provided for IntegMax (collaboration of components in functions), DemMax (integration of electronic, computer, automatic domains), and ComplexiMax (interpenetration between different domains within functions)."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "This page presents Tabourot and Balland's (2017) metric models, which include a Functional Integration Indicator (IntegMax) and a multi-component Functional Dematerialization Indicator (DemMax).",
+                "The Functional Dematerialization Indicator by Tabourot and Balland is composed of four sub-indicators: DemMaxEIA, DemMaxinfo, DemMaxdiag, and DemMaxinterv, with weighted coefficients.",
+                "It notes that the Functional Complexity Indicator proposed by Leonida (2017) is the same as that proposed by Tabourot and Balland (2017)."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "This page begins the 'Results and Discussion' section, detailing the application of the metrics to a hydraulic pump (Fig. 1).",
+                "It outlines the process for applying metrics (Fig. 2) and describes the functional environment and retained functions (F1: Supply the hydraulic motor; F2: Attach to the thermal engine) of the hydraulic pump (Fig. 3).",
+                "A functional flow chart (Fig. 4) is presented, showing the decomposition of the pump's components into two modules: a fixed assembly and a rotating assembly."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "This page presents the application of Tabourot and Balland's (2017) metrics to the hydraulic pump, using data from an incidence matrix (Table 1).",
+                "Results show an IntegMax of 0.50, indicating collaboration between functional modules, and a DemMax of 0.38, suggesting a low degree of intelligence in the pump.",
+                "The ComplexiMax is calculated as 0.02, reflecting the low number of couplings and a low degree of mechatronics in terms of functional complexity."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "This page details the application of Leonida's metrics to the hydraulic pump, including calculations for IntegMax (0.50), DemMax (0.5), and ComplexiMax (0.02) using data from Tables 2, 3, and 4.",
+                "It provides a synthesis comparing the metric models from Tabourot and Balland and Leonida, noting differences in their focus (components vs. functional modules) and how they consider specific functions.",
+                "The conclusion emphasizes that these models are useful for comparing products across generations or manufacturers, helping to measure mechatronizability, and acknowledges collaborators and authors."
+              ]
+            }
+          ]
+        },
         {
           "id": "sum_1760750931287",
           "createdAt": "2025-10-18T01:28:51.287Z",

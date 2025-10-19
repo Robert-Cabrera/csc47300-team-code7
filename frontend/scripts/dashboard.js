@@ -19,10 +19,10 @@ import { getUserData } from './auth.js';
 // CONSTANTS AND GLOBAL STATE
 // ============================================================================
 
+// Number of items to fetch per batch
 const ITEMS_PER_PAGE = 4;
-const WAITING_RANGE_MS = 800;
 
-// Store user data globally for pagination
+// Store user ID for API calls
 let currentUserData = null;
 
 // ============================================================================
@@ -55,17 +55,20 @@ async function initializeUserData(userData) {
   if (!userData || !userData.id) return;
 
   try {
-    // Fetch user data from backend to get crash courses and summaries
-    const response = await fetch(`/api/user/${userData.id}`);
-    if (!response.ok) {
-      console.error('Failed to fetch user history');
+    // Store user ID for subsequent API calls
+    currentUserData = { id: userData.id };
+    
+    // Fetch stats from backend (counts only)
+    const statsResponse = await fetch(`/api/user/${userData.id}/stats`);
+    if (!statsResponse.ok) {
+      console.error('Failed to fetch user stats');
       return;
     }
 
-    currentUserData = await response.json();
+    const stats = await statsResponse.json();
     
-    // Update stats with actual data from backend
-    updateStats();
+    // Update stats display
+    updateStats(stats.totalSummaries, stats.totalCrashCourses);
     
     // Load first batch of summaries
     await loadMoreSummaries(0);
@@ -82,34 +85,32 @@ async function initializeUserData(userData) {
 // DATA FETCHING FUNCTIONS
 // ============================================================================
 
-// SIMULATED DELAY FOR FETCHING SUMMARIES
+// Fetch summaries batch from backend
 async function fetchSummariesBatch(startIndex, limit) {
-  
-  // Simulate network delay (500ms - 1000ms)
-  await new Promise(resolve => setTimeout(resolve, WAITING_RANGE_MS + Math.random() * WAITING_RANGE_MS));
-  
-  const allSummaries = currentUserData?.summaries || [];
+  if (!currentUserData?.id) {
+    throw new Error('User ID not available');
+  }
 
-  // Slicing the summary using startIndex and limit
-  return {
-    items: allSummaries.slice(startIndex, startIndex + limit),
-    hasMore: startIndex + limit < allSummaries.length,
-    total: allSummaries.length
-  };
+  const response = await fetch(`/api/user/${currentUserData.id}/summaries?start=${startIndex}&limit=${limit}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch summaries');
+  }
+
+  return await response.json();
 }
 
-// SIMULATED DELAY FOR FETCHING CRASH COURSES
+// Fetch crash courses batch from backend
 async function fetchCrashCoursesBatch(startIndex, limit) {
-  
-  // Simulate network delay (500ms - 1000ms)
-  await new Promise(resolve => setTimeout(resolve, WAITING_RANGE_MS + Math.random() * WAITING_RANGE_MS));
-  
-  const allCourses = currentUserData?.crashCourses || [];
-  return {
-    items: allCourses.slice(startIndex, startIndex + limit),
-    hasMore: startIndex + limit < allCourses.length,
-    total: allCourses.length
-  };
+  if (!currentUserData?.id) {
+    throw new Error('User ID not available');
+  }
+
+  const response = await fetch(`/api/user/${currentUserData.id}/crash-courses?start=${startIndex}&limit=${limit}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch crash courses');
+  }
+
+  return await response.json();
 }
 
 // ============================================================================
@@ -120,11 +121,12 @@ async function loadMoreSummaries(startIndex) {
   const container = document.querySelector('.summaries-list-container');
   const loadMoreBtn = document.getElementById('loadMoreSummaries');
   
+  // If container not found, exit
   if (!container) return;
 
   const isFirstLoad = startIndex === 0;
 
-  // Prepare UI for loading
+  // Prepare UI for loading (take the button out of view)
   if (isFirstLoad) {
     container.innerHTML = '';
   } else if (loadMoreBtn) {
@@ -134,11 +136,22 @@ async function loadMoreSummaries(startIndex) {
   showLoadingAnimation(container, 'summaries');
 
   try {
-    const { items, hasMore, total } = await fetchSummariesBatch(startIndex, ITEMS_PER_PAGE);
+    // Parse the response:
+    /*
+
+    We send:
+      startIndex: number (where to start fetching)
+      limit: number (how many to fetch)
+
+    We get back:
+      items: Array of objects (summaries or crash courses)
+      hasMore: boolean (do we have more to load? - helps with button display)
+    */
+    const { items, hasMore } = await fetchSummariesBatch(startIndex, ITEMS_PER_PAGE);
     removeLoadingAnimation(container, 'summaries');
 
     // Handle empty state
-    if (total === 0 && isFirstLoad) {
+    if (items.length === 0 && isFirstLoad) {
       showEmptyState(container, loadMoreBtn, 'summaries');
       return;
     }
@@ -156,13 +169,15 @@ async function loadMoreSummaries(startIndex) {
       historyList.style.overflowX = 'auto';
     }
 
-    // Update load more button
+    /* 
+      Update load more button (note that startIndex is captured in the closure so:
+      firstLoad = 0 
+      => nextLoad = 0 + 4 = 4
+      => nextLoad = 4 + 4 = 8
+      etc.
+    */
     updateLoadMoreButton(container, loadMoreBtn, hasMore, () => loadMoreSummaries(startIndex + ITEMS_PER_PAGE));
 
-    // Enable scrolling when all items are loaded
-    if (!hasMore) {
-      historyList.style.overflowX = 'auto';
-    }
   } catch (err) {
     console.error('Error loading summaries:', err);
     removeLoadingAnimation(container, 'summaries');
@@ -173,6 +188,7 @@ async function loadMoreCrashCourses(startIndex) {
   const container = document.querySelector('.crash-courses-list-container');
   const loadMoreBtn = document.getElementById('loadMoreCrashCourses');
   
+  // If container not found, exit
   if (!container) return;
 
   const isFirstLoad = startIndex === 0;
@@ -187,11 +203,23 @@ async function loadMoreCrashCourses(startIndex) {
   showLoadingAnimation(container, 'crash-courses');
 
   try {
-    const { items, hasMore, total } = await fetchCrashCoursesBatch(startIndex, ITEMS_PER_PAGE);
+
+    // Parse the response:
+    /*
+
+    We send:
+      startIndex: number (where to start fetching)
+      limit: number (how many to fetch)
+
+    We get back:
+      items: Array of objects (summaries or crash courses)
+      hasMore: boolean (do we have more to load? - helps with button display)
+    */
+    const { items, hasMore} = await fetchCrashCoursesBatch(startIndex, ITEMS_PER_PAGE);
     removeLoadingAnimation(container, 'crash-courses');
 
     // Handle empty state
-    if (total === 0 && isFirstLoad) {
+    if (items.length === 0 && isFirstLoad) {
       showEmptyState(container, loadMoreBtn, 'crash-courses');
       return;
     }
@@ -212,10 +240,6 @@ async function loadMoreCrashCourses(startIndex) {
     // Update load more button
     updateLoadMoreButton(container, loadMoreBtn, hasMore, () => loadMoreCrashCourses(startIndex + ITEMS_PER_PAGE));
 
-    // Enable scrolling when all items are loaded
-    if (!hasMore) {
-      historyList.style.overflowX = 'auto';
-    }
   } catch (err) {
     console.error('Error loading crash courses:', err);
     removeLoadingAnimation(container, 'crash-courses');
@@ -226,12 +250,10 @@ async function loadMoreCrashCourses(startIndex) {
 // HELPER FUNCTIONS
 // ============================================================================
 
-function updateStats() {
+function updateStats(totalSummaries = 0, totalCrashCourses = 0) {
   const statsSection = document.querySelector('.dashboard-stats');
-  if (statsSection && currentUserData) {
+  if (statsSection) {
     statsSection.style.display = 'flex';
-    const totalSummaries = currentUserData.summaries?.length || 0;
-    const totalCrashCourses = currentUserData.crashCourses?.length || 0;
     document.getElementById('statSummaries').textContent = totalSummaries;
     document.getElementById('statCrashCourses').textContent = totalCrashCourses;
   }
@@ -326,12 +348,9 @@ function createSummaryItem(summary) {
 
   // Try to get preview from different possible fields
   let preview = 'No preview available';
-  if (summary.summary) {
-    preview = summary.summary;
-  } else if (summary.overview) {
-    preview = summary.overview;
-  } else if (summary.content) {
-    preview = typeof summary.content === 'string' ? summary.content : JSON.stringify(summary.content).substring(0, 150);
+  if (summary.executive_summary) {
+    const firstSentence = summary.executive_summary.split(/[.!?]/)[0].trim();
+    preview = firstSentence ? firstSentence + '.' : 'No preview available';
   }
 
   // Limit preview length
