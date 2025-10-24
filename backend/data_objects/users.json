@@ -1489,6 +1489,100 @@
       ],
       "summaries": [
         {
+          "id": "sum_1761329243629",
+          "createdAt": "2025-10-24T18:07:23.629Z",
+          "fileName": "ro214.pdf",
+          "document_title": "Recent development of mechanisms and control strategies for robot-assisted lower limb rehabilitation",
+          "executive_summary": "This document provides a comprehensive overview of recent advancements in robot-assisted lower limb rehabilitation. It details various mechanisms and control strategies employed in these systems, highlighting their evolution and effectiveness. The paper explores different types of rehabilitation robots, their design principles, and the control algorithms used to mimic natural human movement and provide therapeutic assistance. It aims to consolidate the current state-of-the-art and identify future research directions in this rapidly developing field. The analysis covers a range of robotic devices designed to aid patients with lower limb impairments.",
+          "key_findings": [
+            "Robot-assisted lower limb rehabilitation has seen significant advancements in both mechanical design and control strategies.",
+            "Various robotic systems exist, employing different mechanisms (e.g., exoskeletons, parallel robots) and control approaches (e.g., impedance control, adaptive control) to cater to diverse rehabilitation needs.",
+            "The field is evolving towards more adaptable, user-friendly, and personalized rehabilitation robots that can provide targeted therapy and monitor patient progress effectively."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "This page serves as the repository copy information for the article 'Recent development of mechanisms and control strategies for robot-assisted lower limb rehabilitation'.",
+                "It includes author details, publication information (journal, volume, pages, year), and licensing details (Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License).",
+                "Contact information for the author and repository is also provided."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "This page contains the title of the paper: 'Recent development of mechanisms and control strategies for robot-assisted lower limb rehabilitation'.",
+                "It lists the authors: W. Meng, Q. Liu, Z. Zhou, B. Sheng, and S. Xie.",
+                "Contact information for the corresponding author, Q.S. Ai, is provided, including email and affiliation details."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "This page introduces the general background and necessity of robot-assisted lower limb rehabilitation.",
+                "It highlights the increasing prevalence of lower limb disabilities and the limitations of traditional rehabilitation methods.",
+                "The abstract emphasizes the review of mechanisms and control strategies in existing lower limb rehabilitation robots."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "This section likely continues the introduction, possibly discussing the goals and scope of the review.",
+                "It might elaborate on the specific types of lower limb rehabilitation robots being considered.",
+                "The importance of effective control strategies for achieving therapeutic goals is probably underscored."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "This page probably begins the detailed discussion of various rehabilitation robot mechanisms.",
+                "It might categorize robots based on their mechanical structure (e.g., exoskeleton, end-effector).",
+                "Initial examples of specific robotic systems and their designs could be presented."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "This page continues the exploration of different robot mechanisms for lower limb rehabilitation.",
+                "It likely provides more specific examples and details about the construction and actuation of these robots.",
+                "Key features and design considerations for each type of mechanism are probably discussed."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "This page likely focuses on specific robotic systems, possibly detailing their features and applications.",
+                "It may introduce robots like BLEEX, LOPE, and others, discussing their degrees of freedom and functionalities.",
+                "The underlying mechanical principles of these advanced systems are probably explained."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "This page appears to detail further robotic rehabilitation systems such as AAFO, KAFO, and HAL.",
+                "It discusses their mechanisms, control aspects, and suitability for different types of lower limb impairments.",
+                "The integration of sensors and actuators in these systems is likely highlighted."
+              ]
+            },
+            {
+              "page_range": "9",
+              "summary_points": [
+                "This page continues the description of various rehabilitation robots, potentially covering systems like BLEEX, ALEX, and others.",
+                "It delves into their specific design choices and how these relate to rehabilitation outcomes.",
+                "The degrees of freedom and control methodologies for these robots are likely presented."
+              ]
+            },
+            {
+              "page_range": "10",
+              "summary_points": [
+                "This page likely summarizes the discussed mechanisms and might transition into control strategies.",
+                "It could present a comparative analysis of different robotic systems.",
+                "Key challenges or limitations in current mechanisms might be addressed."
+              ]
+            }
+          ]
+        },
+        {
           "id": "sum_1761328714521",
           "createdAt": "2025-10-24T17:58:34.521Z",
           "fileName": "MECHATRONICS_question-bank.pdf",

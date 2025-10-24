@@ -53,7 +53,7 @@ class Summary {
         2. **Page-by-Page Analysis:** For the 'section_summaries' array, provide a summary for EACH individual page.
            * For page 1, use page_range "1"
            * For page 2, use page_range "2"
-           * Continue for all ${totalPages} pages
+           * Continue for all ${totalPages} pages without exceeding the limit of ${totalPages} total pages.
            * For each page, provide **EXACTLY 3 distinct, concise bullet points** summarizing that specific page's content.
            * If a page is a title page, table of contents, or mostly empty, still include it but note this in the summary points.
         
