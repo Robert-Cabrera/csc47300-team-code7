@@ -1201,7 +1201,7 @@ body {
   }
 }
 
-.loading-overlay {
+.practice_test_loading-overlay {
   position: absolute;
   inset: 0;
   background-color: var(--clr_container_bg);
