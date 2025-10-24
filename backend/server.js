@@ -11,11 +11,13 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 const crashCourseRoutes = require('./routes/crashCourse');
 const summaryRoutes = require('./routes/summary');
+const practiceTestRoutes = require('./routes/practiceTest'); 
 
 // Use routes
 app.use('/api', authRoutes);
 app.use('/api/crash-course', crashCourseRoutes);
 app.use('/api/summary', summaryRoutes);
+app.use('/api/practice-test', practiceTestRoutes);
 
 // Serve favicon specifically BEFORE static files
 const faviconPath = path.join(__dirname, '..', 'frontend', 'assets', 'favicon.ico');
