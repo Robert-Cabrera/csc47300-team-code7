@@ -9,6 +9,70 @@
       "profilePicture": "",
       "crashCourses": [
         {
+          "id": "cc_1761328623086",
+          "createdAt": "2025-10-24T17:57:03.086Z",
+          "topic": "Machine Vision",
+          "summary": "Machine vision, or computer vision, enables computers to 'see' and interpret visual information from the world, powering applications from autonomous driving to medical imaging.",
+          "overview": "This crash course introduces machine vision, exploring how computers process and understand images. We'll cover fundamental concepts like image acquisition and processing, delve into feature detection and object recognition, and touch upon advanced applications and future trends in this rapidly evolving field.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of Image Acquisition and Processing",
+              "description": "Understand how images are captured by machines and the initial steps to prepare them for analysis. This section covers digital image representation and basic manipulation techniques essential for further processing.",
+              "subtopics": [
+                {
+                  "title": "Image Acquisition",
+                  "details": "Learn about cameras, sensors, and how light is converted into digital data, forming the basis of any machine vision system."
+                },
+                {
+                  "title": "Image Representation",
+                  "details": "Explore how images are stored as pixels, understanding concepts like resolution, color spaces (RGB, Grayscale), and bit depth."
+                },
+                {
+                  "title": "Basic Image Preprocessing",
+                  "details": "Discover techniques like noise reduction, contrast enhancement, and geometric transformations to improve image quality for analysis."
+                }
+              ]
+            },
+            {
+              "title": "Feature Detection and Object Recognition",
+              "description": "Dive into the core techniques used to identify and locate specific objects or patterns within an image. This involves extracting meaningful information and classifying it.",
+              "subtopics": [
+                {
+                  "title": "Edge and Corner Detection",
+                  "details": "Understand algorithms like Canny or Harris to find important boundaries and points of interest in an image."
+                },
+                {
+                  "title": "Template Matching",
+                  "details": "Learn how to find occurrences of a known pattern or object within a larger image by comparing pixel values."
+                },
+                {
+                  "title": "Object Classification",
+                  "details": "Explore methods, including machine learning, to assign a label or category to detected objects based on their features."
+                }
+              ]
+            },
+            {
+              "title": "Advanced Concepts and Applications",
+              "description": "Explore sophisticated techniques and real-world uses of machine vision. This section highlights how machine vision is transforming industries and pushing technological boundaries.",
+              "subtopics": [
+                {
+                  "title": "Deep Learning in Vision",
+                  "details": "Discover how neural networks, especially Convolutional Neural Networks (CNNs), revolutionize image recognition and analysis tasks."
+                },
+                {
+                  "title": "3D Vision and Stereo",
+                  "details": "Learn how systems perceive depth and reconstruct 3D environments using multiple cameras or depth sensors."
+                },
+                {
+                  "title": "Real-World Applications",
+                  "details": "See examples in autonomous vehicles, medical diagnostics, manufacturing quality control, augmented reality, and security systems."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Machine vision bridges the gap between the digital and physical worlds, enabling intelligent systems to perceive, interpret, and act upon visual data, driving innovation across countless fields."
+        },
+        {
           "id": "cc_1761327294182",
           "createdAt": "2025-10-24T17:34:54.182Z",
           "topic": "Computer Organization",
@@ -1424,6 +1488,196 @@
         }
       ],
       "summaries": [
+        {
+          "id": "sum_1761328714521",
+          "createdAt": "2025-10-24T17:58:34.521Z",
+          "fileName": "MECHATRONICS_question-bank.pdf",
+          "document_title": "MECHATRONICS QUESTION BANK",
+          "executive_summary": "This document is a question bank for the subject of Mechatronics, covering five units: Introduction to Mechatronics, Actuation Systems, System Models and Controllers, Programming Logic Controllers, and Design of Mechatronics Systems. It provides a comprehensive list of both 2-mark and 8-mark questions for each unit, designed to test students' understanding of fundamental concepts, components, system modeling, control strategies, and design principles within mechatronics. The questions range from basic definitions and classifications to in-depth explanations of working principles, comparisons of systems, and design considerations, serving as a valuable resource for learning and assessment.",
+          "key_findings": [
+            "The question bank covers a broad spectrum of mechatronics topics, from basic definitions to complex system design.",
+            "It emphasizes understanding of core components like sensors, actuators, and controllers, as well as their integration.",
+            "The structure includes both short-answer and in-depth analytical questions, suitable for comprehensive evaluation."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "Introduces Unit 1: Introduction to Mechatronics, focusing on 2-mark questions.",
+                "Covers definitions of mechatronics, systems, and applications.",
+                "Includes questions on control systems, sensors, transducers, and measurement characteristics."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "Continues with 2-mark questions for Unit 1: Introduction to Mechatronics.",
+                "Details types of sensors like potentiometers, strain gauges, and tachogenerators.",
+                "Lists instruments for measuring linear and angular velocity and types of bimetallic sensors."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 1: Introduction to Mechatronics.",
+                "Requires detailed explanations of closed-loop systems, RTDs, sensors in robots, and comparative analysis of control systems.",
+                "Includes short notes on various transducers and working principles of sensors and controllers."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "Begins Unit 2: Actuation Systems with 2-mark questions.",
+                "Covers components and purposes of hydraulic and pneumatic systems, including filters and compressors.",
+                "Discusses different types of compressors and control valves."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 2: Actuation Systems.",
+                "Explains actuators, gear trains, belt drives, and bearings.",
+                "Includes questions on solenoid selection, relay principles, and features of JFETs and synchronous motors."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "Features 8-mark questions for Unit 2: Actuation Systems.",
+                "Requires schematic diagrams for measuring and counting parts.",
+                "Includes explanations of mechanisms, actuators, motor configurations, and belt drive power calculations."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "Focuses on 8-mark questions for Unit 2: Actuation Systems.",
+                "Asks for detailed discussions on specific actuation systems like DC motors and stepper motors.",
+                "Involves calculations for hydraulic cylinder requirements."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "Starts Unit 3: System Models and Controllers with 2-mark questions.",
+                "Defines terms like damper, electromechanical systems, thermal capacitance, and transfer function.",
+                "Covers purposes of control systems, steady-state error, and types of controllers (proportional, integral, derivative)."
+              ]
+            },
+            {
+              "page_range": "9",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 3: System Models and Controllers.",
+                "Discusses adaptive controllers, self-tuning, gray codes, logic gates, truth tables, and encoding/decoding.",
+                "Includes definitions of microcomputers and microcontrollers, and memory mapping."
+              ]
+            },
+            {
+              "page_range": "10",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 3: System Models and Controllers.",
+                "Requires derivation of mathematical equations for systems like ground disturbances and electric motors.",
+                "Asks for comparisons of controller performances (proportional vs. integral) and electrical analogues of thermal systems."
+              ]
+            },
+            {
+              "page_range": "11",
+              "summary_points": [
+                "Continues 8-mark questions for Unit 3: System Models and Controllers.",
+                "Focuses on characteristics of PID controllers and proportional plus integral controllers.",
+                "Explains adaptive control, digital logic controllers, and interfacing circuits (parallel vs. serial)."
+              ]
+            },
+            {
+              "page_range": "12",
+              "summary_points": [
+                "Introduces Unit 4: Programming Logic Controllers (PLCs) with 2-mark questions.",
+                "Defines PLC and its main component parts (CPU, I/O, programming device, memory).",
+                "Explains the function of programming devices and types of PLC buses."
+              ]
+            },
+            {
+              "page_range": "13",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 4: Programming Logic Controllers.",
+                "Discusses the roles of ALU and control unit, defines RAM, and explains program scan.",
+                "Covers retentive timers, counters, cascaded counters, and master control."
+              ]
+            },
+            {
+              "page_range": "14",
+              "summary_points": [
+                "Features 2-mark questions for Unit 4: Programming Logic Controllers.",
+                "Explains jump control, data manipulation in shift registers, and PLC programming methods (structured text, ladder diagrams, etc.).",
+                "Lists types of memory and CPU tasks."
+              ]
+            },
+            {
+              "page_range": "15",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 4: Programming Logic Controllers.",
+                "Requires sketching and explaining PLC architecture.",
+                "Includes questions on handling analog inputs and drawing ladder diagrams for various control scenarios."
+              ]
+            },
+            {
+              "page_range": "16",
+              "summary_points": [
+                "Begins Unit 5: Design of Mechatronics Systems with 2-mark questions.",
+                "Outlines the stages in designing a mechatronic system, from need identification to detailed design.",
+                "Covers problem definition, conceptualization, and comparisons between traditional and mechatronic design approaches."
+              ]
+            },
+            {
+              "page_range": "17",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Discusses improvements in temperature control using mechatronics, and requirements before starting a timer.",
+                "Explains how delay can be varied in simple programs and lists advantages of PLC systems for timing."
+              ]
+            },
+            {
+              "page_range": "18",
+              "summary_points": [
+                "Features 2-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Defines windscreen wipers, stepper motor configurations, and basic steps for running a stepper motor.",
+                "Explains the function of a decoder and lists various movements of robots."
+              ]
+            },
+            {
+              "page_range": "19",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Names barriers used in automatic car parking systems and lists sensors in engine management systems.",
+                "Defines engine management and explains the uses and categories of sensors in this context."
+              ]
+            },
+            {
+              "page_range": "20",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Requires detailed explanation of the stages in designing a mechatronics system.",
+                "Asks for detailed comparisons between traditional and mechatronic design with examples."
+              ]
+            },
+            {
+              "page_range": "21",
+              "summary_points": [
+                "Features 8-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Requires discussion of design solutions for pick and place robots and automatic washing machines.",
+                "Includes design considerations for automatic car park systems and engine management systems."
+              ]
+            },
+            {
+              "page_range": "22",
+              "summary_points": [
+                "Continues 8-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Asks for design of mechatronics systems for bottling systems (segregating by height and defects).",
+                "Includes design of automatic windscreen wipers, cameras, and room heating systems."
+              ]
+            }
+          ]
+        },
         {
           "id": "sum_1760843158572",
           "createdAt": "2025-10-19T03:05:58.572Z",
