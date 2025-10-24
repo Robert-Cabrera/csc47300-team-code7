@@ -6,9 +6,14 @@ require('dotenv').config({ path: require('path').join(__dirname, '../keys.env') 
 
 const router = express.Router();
 
+// Accept either GEMINI_API_KEY or GOOGLE_API_KEY
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-if (!GEMINI_API_KEY) {
-    console.warn("⚠️  Missing GEMINI_API_KEY in environment.");
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+
+const API_KEY = (GEMINI_API_KEY || GOOGLE_API_KEY || '').trim();
+
+if (!API_KEY) {
+    console.warn("Missing GEMINI_API_KEY / GOOGLE_API_KEY in environment.");
 }
 
 // Define the Zod schema for structured output
@@ -41,11 +46,13 @@ router.post("/generate-test", async (req, res) => {
             return res.status(400).json({ error: "Field 'num_questions' must be 1–50." });
         }
 
-        // Initialize LangChain model with structured output
+        // Initialize LangChain model with structured output. Pass the API key
+        // explicitly (ChatGoogleGenerativeAI looks for GOOGLE_API_KEY by
+        // default, or accepts apiKey in the constructor).
         const model = new ChatGoogleGenerativeAI({
             model: "gemini-2.5-pro",
-
             temperature: 0.7,
+            apiKey: API_KEY,
         });
 
         // Create structured output model

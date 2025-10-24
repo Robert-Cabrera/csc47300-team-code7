@@ -9,6 +9,70 @@
       "profilePicture": "",
       "crashCourses": [
         {
+          "id": "cc_1761327294182",
+          "createdAt": "2025-10-24T17:34:54.182Z",
+          "topic": "Computer Organization",
+          "summary": "Explore the fundamental structure and operation of computer systems. Learn how hardware components interact to execute instructions and manage data, providing a foundational understanding of modern computing.",
+          "overview": "This crash course demystifies computer organization by breaking down its core concepts. We will delve into the CPU, memory hierarchy, input/output systems, and the instruction cycle. Gain insight into how these elements work in concert to bring software to life, from basic logic gates to system architecture.",
+          "main_topics": [
+            {
+              "title": "Core Components of a Computer",
+              "description": "Understand the essential building blocks of any computer system. This section introduces the Central Processing Unit (CPU), memory, storage devices, and input/output (I/O) interfaces, explaining their individual roles and how they connect.",
+              "subtopics": [
+                {
+                  "title": "The CPU: The Brain",
+                  "details": "Focuses on the Arithmetic Logic Unit (ALU), Control Unit, and registers. Explains how the CPU fetches, decodes, and executes instructions, managing the overall flow of data and operations within the system."
+                },
+                {
+                  "title": "Memory Hierarchy",
+                  "details": "Covers registers, cache memory (L1, L2, L3), RAM, and secondary storage. Explains the trade-offs between speed, cost, and capacity, and how this hierarchy optimizes data access for the CPU."
+                },
+                {
+                  "title": "Input/Output (I/O) Devices",
+                  "details": "Examines peripherals like keyboards, displays, and storage drives. Discusses methods of data transfer and communication between the CPU and these external devices, including buses and controllers."
+                }
+              ]
+            },
+            {
+              "title": "Data Representation and Operations",
+              "description": "Learn how computers represent information digitally and perform calculations. This section covers number systems, logic gates, and basic arithmetic operations essential for computer processing.",
+              "subtopics": [
+                {
+                  "title": "Number Systems",
+                  "details": "Explores binary, octal, decimal, and hexadecimal representations. Understands how these systems are used to encode numbers, characters, and instructions within a computer system."
+                },
+                {
+                  "title": "Logic Gates",
+                  "details": "Introduces fundamental logic gates (AND, OR, NOT, XOR) and their truth tables. Explains how these gates form the basis of all digital circuits and computations."
+                },
+                {
+                  "title": "Arithmetic Circuits",
+                  "details": "Covers how adders, subtractors, and multipliers are built using logic gates. Demonstrates the hardware implementation of basic arithmetic operations essential for the ALU."
+                }
+              ]
+            },
+            {
+              "title": "Instruction Set Architecture (ISA) and Execution",
+              "description": "Examines the language of the computer – the instructions the CPU understands. This topic covers instruction formats, addressing modes, and the step-by-step process of instruction execution.",
+              "subtopics": [
+                {
+                  "title": "Instruction Formats",
+                  "details": "Details the structure of machine instructions, including opcodes and operands. Understands how instructions are encoded in binary to direct the CPU's actions."
+                },
+                {
+                  "title": "Addressing Modes",
+                  "details": "Explains various ways instructions can specify the location of data (operands). Covers immediate, direct, indirect, register, and indexed addressing."
+                },
+                {
+                  "title": "The Fetch-Decode-Execute Cycle",
+                  "details": "Walks through the fundamental operation cycle of the CPU. Describes how instructions are retrieved from memory, interpreted, and then carried out."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Understanding computer organization is key to appreciating how hardware and software interact. This knowledge empowers you to better grasp system performance, design, and the evolution of computing technology."
+        },
+        {
           "id": "cc_1760842962681",
           "createdAt": "2025-10-19T03:02:42.681Z",
           "topic": "Army Surplus on Robotic Materials",
