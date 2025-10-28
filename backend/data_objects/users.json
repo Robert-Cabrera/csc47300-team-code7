@@ -9,6 +9,134 @@
       "profilePicture": "",
       "crashCourses": [
         {
+          "id": "cc_1761587631338",
+          "createdAt": "2025-10-27T17:53:51.339Z",
+          "topic": "Antenna Fundamentals",
+          "summary": "Explore the essential principles of antennas, from basic concepts to practical applications. Understand how antennas transmit and receive electromagnetic waves, covering different types and their characteristics for effective wireless communication.",
+          "overview": "This crash course introduces the fundamental concepts of antennas. We'll delve into how antennas work, explore various antenna types and their designs, discuss key performance parameters, and touch upon their crucial role in modern wireless communication systems like Wi-Fi, cellular networks, and broadcasting.",
+          "main_topics": [
+            {
+              "title": "What is an Antenna?",
+              "description": "Understand the basic function of an antenna as a transducer converting electrical signals into electromagnetic waves and vice versa. Learn about the fundamental principles governing antenna operation and their interaction with radio waves.",
+              "subtopics": [
+                {
+                  "title": "Electromagnetic Waves",
+                  "details": "Covers the nature of electromagnetic waves, including their properties like frequency, wavelength, and polarization. Explains how these waves propagate through space, forming the basis of wireless communication."
+                },
+                {
+                  "title": "Transducer Function",
+                  "details": "Explains how an antenna acts as a bridge between guided electrical signals in a circuit and free-space electromagnetic waves. Details the reciprocal nature of antennas for transmitting and receiving."
+                },
+                {
+                  "title": "Resonance",
+                  "details": "Discusses the concept of electrical resonance in antennas. Explains how antennas are typically designed to be resonant at specific frequencies for maximum efficiency and signal transfer."
+                }
+              ]
+            },
+            {
+              "title": "Types of Antennas",
+              "description": "Discover a variety of common antenna types used in different applications. Learn about their structural differences, operating principles, and suitability for specific frequency ranges and communication scenarios.",
+              "subtopics": [
+                {
+                  "title": "Wire Antennas",
+                  "details": "Focuses on simple wire antennas like dipoles and monopoles. Covers their basic construction, radiation patterns, and common uses in amateur radio and simple communication systems."
+                },
+                {
+                  "title": "Aperture Antennas",
+                  "details": "Explores antennas like horns and reflectors. Details how they use an opening or surface to direct radio waves, offering high gain and directivity for applications like radar and satellite communication."
+                },
+                {
+                  "title": "Microstrip Antennas",
+                  "details": "Introduces planar antennas fabricated on printed circuit boards. Discusses their compact size, low profile, and widespread use in mobile devices, GPS, and Wi-Fi applications."
+                }
+              ]
+            },
+            {
+              "title": "Antenna Performance Metrics",
+              "description": "Learn about the key parameters used to evaluate antenna performance. Understanding these metrics is crucial for selecting the right antenna for a given application and ensuring optimal communication quality.",
+              "subtopics": [
+                {
+                  "title": "Radiation Pattern",
+                  "details": "Explains the directional characteristics of an antenna's signal transmission or reception. Covers concepts like main lobe, side lobes, and nulls, visualized through radiation patterns."
+                },
+                {
+                  "title": "Gain and Directivity",
+                  "details": "Defines gain as the antenna's ability to focus power in a specific direction compared to an isotropic radiator. Differentiates it from directivity, which is solely based on the radiation pattern."
+                },
+                {
+                  "title": "Bandwidth",
+                  "details": "Describes the range of frequencies over which an antenna operates effectively. Explains how bandwidth affects the antenna's ability to handle different signals and maintain performance."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Antennas are fundamental to all wireless communication. By understanding their principles, types, and performance, you can better appreciate the technology connecting our world and select appropriate antennas for diverse applications."
+        },
+        {
+          "id": "cc_1761345464986",
+          "createdAt": "2025-10-24T22:37:44.986Z",
+          "topic": "Power Automate",
+          "summary": "Power Automate is a cloud-based service for automating repetitive tasks and business processes across multiple applications and services. It enables users to create workflows without extensive coding knowledge, boosting productivity and efficiency.",
+          "overview": "This crash course introduces Power Automate, covering its core concepts, common use cases, and how to build your first automated workflows. We'll explore triggers, actions, connectors, and best practices for creating efficient automations that save time and reduce manual effort. Learn to streamline your daily tasks and business processes effectively.",
+          "main_topics": [
+            {
+              "title": "Understanding Power Automate Fundamentals",
+              "description": "Dive into the foundational elements of Power Automate. Learn what it is, why it's important for businesses, and the basic components that make automation possible. This section sets the stage for building your own flows.",
+              "subtopics": [
+                {
+                  "title": "What is Power Automate?",
+                  "details": "Explore Power Automate's purpose as a Microsoft service for automating digital workflows. Understand its role in modern business for efficiency and task management across applications."
+                },
+                {
+                  "title": "Key Concepts: Triggers and Actions",
+                  "details": "Learn about triggers that start a flow (e.g., new email) and actions that perform tasks (e.g., save attachment). These are the building blocks of every automated process."
+                },
+                {
+                  "title": "Connectors Explained",
+                  "details": "Discover how connectors link Power Automate to various applications and services like Office 365, SharePoint, Twitter, and more. Understand the vast integration possibilities."
+                }
+              ]
+            },
+            {
+              "title": "Building Your First Automated Flows",
+              "description": "Get hands-on experience creating simple, effective automated workflows. This section guides you through the process of designing, building, and testing your first Power Automate flows for common tasks.",
+              "subtopics": [
+                {
+                  "title": "Creating a Simple Flow",
+                  "details": "Step-by-step guide to building a basic flow, from selecting a trigger to adding actions. We'll use practical examples like email notifications."
+                },
+                {
+                  "title": "Using Templates",
+                  "details": "Leverage pre-built templates to quickly create sophisticated flows for common scenarios. Learn how to adapt and customize templates to your specific needs."
+                },
+                {
+                  "title": "Testing and Monitoring Flows",
+                  "details": "Understand how to test your flows to ensure they work correctly and how to monitor their performance and troubleshoot any issues that arise."
+                }
+              ]
+            },
+            {
+              "title": "Advanced Features and Best Practices",
+              "description": "Explore more complex aspects of Power Automate, including conditional logic, variables, and error handling. Learn best practices for creating robust, scalable, and maintainable automated solutions.",
+              "subtopics": [
+                {
+                  "title": "Conditions and Loops",
+                  "details": "Implement decision-making in your flows using conditions (if/then logic) and repeat actions using loops for more dynamic and powerful automations."
+                },
+                {
+                  "title": "Variables and Expressions",
+                  "details": "Learn to use variables to store and manipulate data within your flows and utilize expressions for advanced data operations and logic."
+                },
+                {
+                  "title": "Error Handling Strategies",
+                  "details": "Implement effective error handling to manage failures gracefully, ensuring your flows are resilient and reliable in production environments."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Power Automate empowers you to automate tasks and streamline processes efficiently. Start building your own flows today to save time, reduce errors, and boost your productivity across your digital tools."
+        },
+        {
           "id": "cc_1761328623086",
           "createdAt": "2025-10-24T17:57:03.086Z",
           "topic": "Machine Vision",
@@ -1488,6 +1616,202 @@
         }
       ],
       "summaries": [
+        {
+          "id": "sum_1761608217021",
+          "createdAt": "2025-10-27T23:36:57.021Z",
+          "fileName": "2022-BMVC-BNEW.pdf",
+          "document_title": "TRAINING BINARIZED NEURAL NETWORKS THE EASY WAY",
+          "executive_summary": "This paper introduces BNEW, a novel and simplified method for training Binarized Neural Networks (BNNs) that incorporate both binary weights and activations. BNEW leverages a continuation method with a concave regularization function to encourage weights to become binary. This approach bypasses the need for auxiliary parameters during training and is easily applicable to existing architectures. The method demonstrates strong empirical results, achieving state-of-the-art performance on the ImageNet dataset and competitive results on CIFAR datasets. While BNEW offers a theoretically justified and effective training scheme, its full performance is only apparent after the fine-tuning phase, and hyperparameter tuning for the regularization strength is crucial.",
+          "key_findings": [
+            "BNEW offers a simple yet effective method for training Binarized Neural Networks (BNNs) with both binary weights and activations, eliminating the need for auxiliary training parameters and providing a strong theoretical foundation.",
+            "The proposed BNEW method achieves state-of-the-art accuracy on the ImageNet dataset, outperforming existing methods like ReActNet when trained with STE.",
+            "BNEW demonstrates competitive performance on CIFAR-10 and CIFAR-100 datasets, with its effectiveness potentially enhanced by distillation and longer training durations."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "Title page with authors Alasdair Paren and Rudra P. K. Poudel, and affiliations from the University of Oxford and Toshiba Europe Ltd.",
+                "Abstract introduces BNEW, a training method for BNNs with binary weights and activations, highlighting memory and energy efficiency improvements.",
+                "BNEW splits training into two phases: first training with binary activations and floating-point weights, then adding a concave regularizer to promote binary weights."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "Discusses the trend towards larger neural networks and their computational costs, motivating the need for efficient models.",
+                "Introduces Binarized Neural Networks (BNNs) as an extreme form of network quantization for reduced memory and computation.",
+                "Highlights challenges in training BNNs due to discrete parameters and reviews existing methods like Straight Through Estimator (STE) and Mirror Descent."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "Defines model parameters and a canonical binary quantization scheme, distinguishing between binary weights (w_b) and real-valued weights (w_r).",
+                "Explains that BNNs enable bitwise operations (XNOR) for significant speedups in inference.",
+                "Details the Straight Through Estimator (STE) for approximating the gradient of the sign function in BNNs, using two common derivative approximations."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "Discusses the typical assumption of ample training resources for BNNs, with the focus on efficient inference hardware.",
+                "Defines the general loss function as an expectation over training samples and the learning task as minimizing this loss over feasible parameter space.",
+                "Introduces BNEW (Binary Network the Easy Way) as a continuation method inspired by Bai et al.'s principled approach using a concave regularizer."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "Reviews the Straight Through Estimator (STE) method, detailing its use of auxiliary parameters and parameter updates.",
+                "Explains Binary Mirror Descent (BMD), which uses a tanh mapping and temperature parameter, noting its similarity to STE as temperature increases.",
+                "Describes Binary Optimiser (BOP) by Helwegen et al., which uses an exponential moving average of gradients and a threshold for weight updates."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "Introduces ProxQuant by Bai et al., which trains a single set of real-valued weights and uses regularization to encourage binarization without auxiliary parameters.",
+                "Explains the proximal operator used in ProxQuant and its algorithm, noting its focus on small models and CIFAR datasets.",
+                "Outlines the proposed BNEW algorithm, formulating the problem with a relaxed constraint and a concave regularization term to drive weights towards binary values."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "Details the BNEW parameter update rule, derived from a proximal problem, which involves projecting onto the feasible set.",
+                "Describes the three-phase BNEW training procedure: pre-training with binary activations and real weights, a quantization phase to encourage binary weights, and fine-tuning.",
+                "Highlights differences in BNEW's pre-training phase compared to ProxQuant, including using Adam and projecting weights after each iteration to prevent accuracy drops."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "Discusses the choice of regularization function, comparing BNEW's proposed R_BNEW with functions from ProxQuant.",
+                "Argues R_BNEW is superior due to its gradient properties, encouraging binary values first for parameters closer to {-1, 1} and preventing oscillations.",
+                "Presents experimental setup for small-scale BNNs on CIFAR-10 and CIFAR-100, comparing BNEW against STE, BMD, and BOP."
+              ]
+            },
+            {
+              "page_range": "9",
+              "summary_points": [
+                "Presents results for CIFAR experiments, showing comparable accuracies across methods, with slight advantages for BOP and BNEW with distillation on CIFAR-100.",
+                "Notes the typical accuracy degradation for BNNs and the benefit of longer training and distillation.",
+                "Details the ImageNet experiment setup using a ReActNet-A architecture and compares BNEW with other methods."
+              ]
+            },
+            {
+              "page_range": "10",
+              "summary_points": [
+                "Reports ImageNet results where BNEW achieves 69.7% accuracy, surpassing the previous state-of-the-art from ReActNet trained with STE.",
+                "Concludes that BNEW is an effective and simple method for training BNNs with binary weights and activations, offering empirical and theoretical advantages.",
+                "Acknowledges BNEW's weaknesses, including the late indication of performance and dependence on the regularization hyperparameter, while suggesting future work on extending to other quantization schemes."
+              ]
+            },
+            {
+              "page_range": "11",
+              "summary_points": [
+                "Contains a list of references cited in the paper, spanning various topics related to neural networks, quantization, and optimization methods.",
+                "Includes seminal works like Courbariaux et al. (BinaryConnect), Hubara et al. (BNNs), and Rastegari et al. (XNOR-Net).",
+                "References papers on specific architectures (ReActNet) and optimization techniques (Adam, Mirror Descent)."
+              ]
+            },
+            {
+              "page_range": "12",
+              "summary_points": [
+                "Continues the list of references, covering topics such as deep residual learning, image datasets (ImageNet, CIFAR), and various quantization and BNN training algorithms.",
+                "Includes references related to specific BNN architectures and training strategies like Bi-real net and Real-to-binary convolutions.",
+                "Lists additional optimization methods and theoretical contributions relevant to the field of efficient neural networks."
+              ]
+            },
+            {
+              "page_range": "13",
+              "summary_points": [
+                "Concludes the list of references with papers on ternary quantization, low bitwidth training, and advanced optimization techniques for BNNs.",
+                "References works that explore different quantization levels and gradient approximations.",
+                "The final entries cover diverse aspects of neural network quantization and optimization research."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sum_1761345616350",
+          "createdAt": "2025-10-24T22:40:16.351Z",
+          "fileName": "jmrsp.2022.57.64.pdf",
+          "document_title": "Analysis of Mechatronics Degree Evaluation Models",
+          "executive_summary": "This paper addresses the challenge of evaluating the \"mechatronizability\" of products, a key factor for designers in determining the complexity and intelligence level of multifunctional mechatronic systems. It reviews existing metric models proposed by Leonida (2017) and Tabourot and Balland (2017) for quantifying mechatronics degree. The study applies these models to a hydraulic pump to critically analyze their effectiveness and aims to contribute towards proposing an optimal metric for product mechatronizability, particularly beneficial for Small and Medium Enterprises transitioning to mechatronic activities.",
+          "key_findings": [
+            "Existing mechatronics evaluation models, such as those proposed by Leonida and Tabourot, focus on quantifying aspects like functional integration, dematerialization, and complexity.",
+            "The application of these models to a hydraulic pump revealed varying degrees of mechatronics, with the functional complexity indicator consistently showing low values, correlating with products having fewer interconnections.",
+            "There is a need for refined metric models to support SMEs in evaluating and designing mechatronic products, enabling better decision-making regarding product intelligence and complexity from the early design stages."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "This page contains the copyright information, journal details, and the title of the original research paper.",
+                "It includes the authors' names (Jean Bosco Samon and Brice Landry Tekam Guessom) and their affiliation (Department of Mechanical Engineering, University of Ngaoundere, Cameroon).",
+                "The abstract provides an overview of the paper's focus on evaluating mechatronic systems using metrics like functional integration, complexity, and dematerialization, applied to a hydraulic pump."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "The introduction defines mechatronics as a revolution in industry, highlighting its synergistic integration of mechanics, electronics, automation, and computer science.",
+                "It discusses the growth of mechatronics, including its connection to the Internet of Things and research perspectives on ontology development, education, and reliability.",
+                "The page emphasizes the necessity of mechatronics for the 'factory of the future' and explores the challenges faced by SMEs in adopting mechatronic processes compared to larger companies."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "This page delves into the definition of mechatronics, distinguishing between physical integration (combining multi-domain components) and functional integration (adding sensing, communication, and processing to mechanical functions).",
+                "It states the paper's aim to propose metrics for evaluating technological solutions in mechatronic products to help companies define functional integration levels.",
+                "The section introduces the problem of evaluating the degree of mechatronics at the design stage and outlines the paper's approach using metrics, reviewing models by Tabourot and Leonida for critical synthesis."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "This page introduces the 'Materials and Methods' section, defining a metric as a quantitative evaluation tool combining criteria or indicators.",
+                "It details Leonida's (2017) proposed metrics: Functional Integration Indicator (IntegMax), Functional Dematerialization Indicator (DemMax), and Functional Complexity Indicator (ComplexiMax), including their formulas and interpretations.",
+                "Formulas and interpretations are provided for IntegMax (measuring component collaboration), DemMax (measuring integration of E, I, A domains), and ComplexiMax (measuring interpenetration between domains in functions)."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "This page continues the explanation of metrics proposed by Tabourot and Balland (2017), presenting their versions of the Functional Integration Indicator (IntegMax) and Functional Dematerialization Indicator (DemMax).",
+                "The Tabourot and Balland DemMax indicator is described as a sum of four sub-indicators (DemMaxEIA, DemMaxinfo, DemMaxdiag, DemMaxinterv) with associated weights.",
+                "It notes that the Functional Complexity Indicator proposed by Leonida (2017) is the same as that proposed by Tabourot and Balland (2017)."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "This page details the 'Results and Discussion' section, specifically the application of the metrics to a hydraulic pump (Fig. 1).",
+                "It outlines the process (Fig. 2) and defines the functions (F1, F2) and environment (Fig. 3) of the hydraulic pump.",
+                "The functional flow chart (Fig. 4) and incidence matrix (Table 1) between modules and functions are presented, along with the application of Tabourot and Balland's metrics, yielding an IntegMax of 0.50 and a low DemMax of 0.38."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "This page presents the application of metrics proposed by Leonida (2017) to the hydraulic pump, including the Functional Integration Indicator (IntegMax = 0.50), Functional Dematerialization Indicator (DemMax = 0.5), and Functional Complexity Indicator (ComplexiMax = 0.02).",
+                "Supporting tables (Table 2: Component scores, Table 3: EIA function definition, Table 4: Factor scores) are included to justify the calculations.",
+                "Table 5 provides a comparative summary of the metric models proposed by Tabourot and Balland (2017) and Leonida (2017), highlighting differences in their formulas for IntegMax and DemMax."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "The 'Synthesis' section compares the metrics proposed by Tabourot and Balland versus Leonida, noting differences in what their IntegMax indicators focus on (components vs. functional modules) and how DemMax considers certain functions.",
+                "The 'Conclusion' reiterates that the models apply after product functions are established and suggests their use for comparing products across generations or manufacturers by measuring mechatronizability.",
+                "The final sections include acknowledgments, author contributions, ethics statements, and a list of references cited in the paper."
+              ]
+            }
+          ]
+        },
         {
           "id": "sum_1761329243629",
           "createdAt": "2025-10-24T18:07:23.629Z",

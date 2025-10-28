@@ -271,7 +271,11 @@ function downloadSummaryAsTxt(data) {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-
+/*
+  practiceTest.js
+  
+  Handles practice test page logic (placeholder for now).
+*/
 export function initSummary(isLoggedIn) {
   const summaryContainer = document.querySelector(".summary-container");
   
