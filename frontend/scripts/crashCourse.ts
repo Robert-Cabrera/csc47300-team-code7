@@ -62,13 +62,14 @@ class CrashCourse {
 
   static async getValidJsonResponse(prompt: string): Promise<CrashCourseSchema> {
     const userData = getUserData();
+    const GEMINI_MODEL = 'gemini-2.5-flash-lite';
 
     let response: Response;
     try {
       response = await fetch('/api/crash-course', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, userId: userData?.id })
+        body: JSON.stringify({ prompt, userId: userData?.id, model: GEMINI_MODEL })
       });
     } catch (networkError: any) {
       throw new Error('Network error while generating crash course');

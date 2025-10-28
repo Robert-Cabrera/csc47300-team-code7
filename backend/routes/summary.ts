@@ -64,7 +64,8 @@ router.post('/', upload.single('pdf'), async (req: express.Request, res: express
 
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-    const summaryPromptPath = path.join(__dirname, '..', 'data_objects', 'SummaryPrompt.json');
+  // Always resolve to the source data_objects directory, not dist
+  const summaryPromptPath = path.join(__dirname, '../../data_objects/SummaryPrompt.json');
     const chunkedSummarySchema = JSON.parse(fs.readFileSync(summaryPromptPath, 'utf8'));
 
     // @ts-ignore
