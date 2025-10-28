@@ -1,3 +1,29 @@
+# Features to be implemented for Midterm
+### Feature 1: AI-Powered Crash Course Generator
+
+**Description:**
+This feature allows a logged-in user to generate a structured, summary-style "crash course" on any topic using an AI model (referred to via CrashCourse methods).
+
+**Code Link:**
+[View Implementation](./frontend/scripts/crashCourse.js)
+
+
+### Feature 2: Practice Test Generator & Grader
+
+This feature enables logged-in users to generate a multiple-choice practice test based on a specified course and topic, and then submit it for instant grading.
+
+**Code Link:**
+[View Implementation](./frontend/scripts/practiceTest.js)
+
+### Feature 3: AI-Powered PDF Document Summarization
+
+**Description:**
+This feature allows logged-in users to upload a PDF file and generate a structured, comprehensive summary using an AI model. It is designed to handle large documents by dynamically adjusting the summarization strategy.
+
+**Code Link:**
+[View Implementation](./frontend/scripts/summary.js)
+
+
 # File Structure
 
 ```
