@@ -2,3 +2,7 @@
 backend/keys.env
 *.env
 .env
+
+# Build outputs
+/frontend/dist/
+/backend/dist/

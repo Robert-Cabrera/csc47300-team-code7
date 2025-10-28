@@ -342,14 +342,54 @@ function showEmptyState(container, loadMoreBtn, type) {
 // ============================================================================
 
 function viewSummary(summary) {
-  // TODO: Implement summary viewing functionality
-  console.log('View summary:', summary);
-  // Could redirect to summary page with loaded data, or show in modal
+  // Save summary data and open dedicated summary view page
+  if (!summary.id) {
+    summary.id = summary.createdAt ? String(summary.createdAt) : String(Date.now());
+  }
+
+  try {
+    const raw = localStorage.getItem('allSummaries');
+    const list = raw ? JSON.parse(raw) : [];
+    const idx = list.findIndex(s => s && s.id && s.id === summary.id);
+    if (idx >= 0) {
+      list[idx] = summary;
+    } else {
+      list.unshift(summary);
+    }
+    localStorage.setItem('allSummaries', JSON.stringify(list));
+  } catch (e) {
+    console.warn('Failed to update allSummaries in localStorage', e);
+  }
+
+  localStorage.setItem('summaryView', JSON.stringify(summary));
+  window.open('./summary_view.html', '_blank');
 }
 
 function viewCrashCourse(course) {
-  // TODO: Implement crash course viewing functionality
-  console.log('View crash course:', course);
-  // Could redirect to crash course page with loaded data, or show in modal
+  // Ensure the course has an id we can use to track it
+  if (!course.id) {
+    // prefer existing createdAt timestamp, otherwise generate one
+    course.id = course.createdAt ? String(course.createdAt) : String(Date.now());
+  }
+
+  // Persist or update the global list of crash courses in localStorage
+  try {
+    const raw = localStorage.getItem('allCrashCourses');
+    const list = raw ? JSON.parse(raw) : [];
+    const idx = list.findIndex(c => c && c.id && c.id === course.id);
+    if (idx >= 0) {
+      list[idx] = course; // update existing
+    } else {
+      list.unshift(course); // add newest to front
+    }
+    localStorage.setItem('allCrashCourses', JSON.stringify(list));
+  } catch (e) {
+    // If storage fails, at least save the single-view payload
+    console.warn('Failed to update allCrashCourses in localStorage', e);
+  }
+
+  // Save selected course for the view page and open it
+  localStorage.setItem('crashCourseView', JSON.stringify(course));
+  window.open('./crash_course_view.html', '_blank');
 }
 

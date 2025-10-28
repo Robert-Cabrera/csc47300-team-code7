@@ -19,9 +19,6 @@ export function initPracticeTest(isLoggedIn) {
     if (testForm) testForm.style.display = "block";
     if (testLocked) testLocked.style.display = "none";
 
-    // KALELO YOU NEED TO CHANGE this 
-    const API_URL = 'http://localhost:3000/api/practice-test/generate-test';
-
   const form = document.getElementById('practiceTestForm');
   const courseInput = document.getElementById('practiceTestCourseInput');
   const topicInput  = document.getElementById('practiceTestTopicInput');
@@ -215,7 +212,7 @@ export function initPracticeTest(isLoggedIn) {
     outputEl.innerHTML = '';
 
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(`${window.location.origin}/api/practice-test/generate-test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: currentController.signal,

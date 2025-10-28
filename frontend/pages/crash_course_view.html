@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crash Course View</title>
+  <link rel="stylesheet" href="../stylesheets/viewer.css" />
+  <script type="module" src="/dist/script.js"></script>
+</head>
+
+<body>
+  <div class="navigation-bar">
+    <div class="nav-left">
+      <a href="../index.html">
+        <img src="../assets/NoteSmith_logo.png" alt="Logo" class="logo" />
+      </a>
+    </div>
+    <div class="nav-center">
+      <a href="./crash_course.html">Crash Course</a>
+      <a href="./practice_tests.html">Practice Test</a>
+      <a href="./summary.html">Summary</a>
+      <button id="theme-toggle" class="theme-toggle">Theme</button>
+    </div>
+    <div class="nav-right">
+      <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+    </div>
+  </div>
+
+  <div class="crash-container">
+    <aside class="crash-sidebar" id="crash-sidebar">
+      <div class="crash-sidebar-header">
+        <button id="crash-sidebar-collapse-btn" class="crash-sidebar-collapse-btn" title="Collapse Sidebar">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <div class="crash-sidebar-title">Saved Courses</div>
+      </div>
+      <div class="crash-sidebar-loading" id="crash-sidebar-loading" style="display:none;">
+        <div class="spinner" aria-hidden="true"></div>
+      </div>
+      <ul id="crash-list" class="crash-list"></ul>
+    </aside>
+
+    <main class="crash-main">
+      <div class="crash-content">
+        <div id="output" class="crash-output" style="display:block;">
+          <h3 id="crash-title" class="crash-title"></h3>
+          <p id="crash-overview" class="crash-topic-desc"></p>
+          <div id="crash-overview-details" class="crash-overview"></div>
+          <div id="crash-topic-list" class="crash-subtopic-list"></div>
+          <div id="crash-conclusion" class="crash-conclusion"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="../scripts/viewer.js"></script>
+</body>
+</html>

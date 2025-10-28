@@ -1,0 +1,300 @@
+
+@import "./style.css";
+
+
+/* Summary Page *------------------------------------------------------------------------------------------*/
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 5rem;
+}
+
+/* Summary container */
+.summary-container {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: var(--clr_container_bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px var(--clr_nav_shadow);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.summary-title {
+  text-align: center;
+  color: var(--clr_primary);
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Upload box with animation */
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px dashed var(--clr_locked_border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--clr_locked_bg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.upload-box:hover {
+  border-color: var(--clr_primary);
+  background: var(--clr_hover_bg);
+}
+
+.upload-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--clr_text_muted);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Button */
+#summarizeBtn {
+  display: block;
+  margin: 1.5rem auto 0;
+  padding: 0.7rem 1.2rem;
+  background: #133670;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: ease 0.2s, transform 0.2s ease;
+}
+
+
+
+#summarizeBtn:hover {
+  background: #3b74ce;
+  transform: translateY(-2px);
+}
+
+/* Output */
+#summary-output {
+  margin: 2rem auto 0;
+  max-width: 1200px;
+  padding: 1.5rem;
+  border-radius: 10px;
+  background: var(--clr_output_bg);
+  border: 1px solid var(--clr_output_border);
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Locked message for Summary */
+#summary-locked {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--clr_text_muted);
+  padding: 2rem;
+  border: 2px dashed var(--clr_locked_border);
+  border-radius: 8px;
+  background: var(--clr_locked_bg);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+
+/* PDF Info Box */
+.pdf-info-box {
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.pdf-info-text {
+  text-align: center;
+}
+
+.pdf-file-name {
+  font-weight: 600;
+  color: var(--clr_primary);
+  margin-bottom: 0.3rem;
+}
+
+.pdf-page-count {
+  color: var(--clr_text_muted);
+  font-size: 0.95rem;
+}
+
+.pdf-status {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.pdf-status.error {
+  color: var(--clr_error);
+}
+
+.remove-pdf-btn {
+  padding: 0.6rem 1.2rem;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.2s ease;
+}
+
+.remove-pdf-btn:hover {
+  background: #c82333;
+}
+
+/* Error State */
+.pdf-error-icon {
+  font-size: 3rem;
+  color: #dc3545;
+}
+
+.pdf-error-title {
+  font-weight: 600;
+  color: #dc3545;
+  font-size: 1.2rem;
+}
+
+.pdf-error-message {
+  color: var(--clr_text_muted);
+  margin-top: 0.5rem;
+}
+
+/* Summary Page *------------------------------------------------------------------------------------------*/
+
+.summary-output {
+  max-width: 100%;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.summary-title-main {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--clr_primary);
+  margin-bottom: 1.5rem;
+}
+
+.summary-section {
+  margin-bottom: 2rem;
+  padding: 0rem 0.8rem;
+  background: var(--clr_card_bg);
+  border-radius: 8px;
+}
+
+.summary-section.executive-summary {
+  border-left: 4px solid var(--clr_primary);
+}
+
+.summary-section.key-findings {
+  border-left: 4px solid var(--clr_accent);
+}
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 650;
+  color: var(--clr_primary);
+  margin-bottom: 0.8rem;
+}
+
+.key-findings .section-title {
+  color: var(--clr_accent);
+}
+
+.section-content {
+  font-size: 1.05rem;
+  color: var(--clr_text);
+  line-height: 1.6;
+}
+
+.findings-list {
+  margin-left: 1.2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.findings-list li {
+  margin-bottom: 0.6rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--clr_text);
+  font-size: 1.05rem;
+}
+
+.findings-list li::before {
+  content: attr(data-index) ".";
+  position: absolute;
+  left: 0;
+  color: var(--clr_accent);
+  font-weight: bold;
+}
+
+.sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.page-summary-card {
+  padding: 0rem 0.8rem;
+  background: var(--clr_card_bg);
+  border-radius: 8px;
+  border-left: 3px solid var(--clr_primary);
+}
+
+.page-summary-card h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--clr_primary);
+  margin: 0;
+  padding: 0;
+}
+
+.page-summary-card ul {
+  margin-left: 1.2rem;
+  list-style: disc;
+}
+
+.page-summary-card li {
+  margin-bottom: 0.4rem;
+  color: var(--clr_text);
+}
+
+.download-section {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.download-btn {
+  padding: 0.8rem 2rem;
+  background: var(--clr_contrasting_accent);
+  color: var(--clr_body_bg);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.download-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}

@@ -50,7 +50,7 @@ router.post("/generate-test", async (req, res) => {
         // explicitly (ChatGoogleGenerativeAI looks for GOOGLE_API_KEY by
         // default, or accepts apiKey in the constructor).
         const model = new ChatGoogleGenerativeAI({
-            model: "gemini-2.5-pro",
+            model: "gemini-2.5-flash-lite",
             temperature: 0.7,
             apiKey: API_KEY,
         });

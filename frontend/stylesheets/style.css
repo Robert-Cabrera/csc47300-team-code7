@@ -1,22 +1,3 @@
-/*
-
-    Main stylesheet for NoteSmith web application.
-    Handles global styles, theme variables, layout, navigation bar, 
-    dashboard, crash course, and summary page UI.
-
-    The way we separate styles for pages is based on container classes
-    For example,    .dashboard-container    - dashboard.html
-                    .crash-course-container - crash_course.html
-                    .summary-container      - summary.html
-                    .home-container         - index.html 
-
-
-    Notes: 
-    - Should probably separate into multiple CSS files for maintainability.
-    
-*/
-
-
 /* Import font Google Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
@@ -32,11 +13,9 @@
     'opsz' 24
 }
 
-/* Should honestly separate these into multiple css files - David*/
-/* Base dark/light theme colors. Feel free to change them or set your own colors*/
 :root {
   --clr_primary: #133670;
-  --clr_accent: #3b74ce;
+  --clr_accent: #576e94;
   --clr_contrasting_accent: #e67229;
   --clr_error: #670202;
 
@@ -45,6 +24,7 @@
   --clr_nav_shadow: rgba(0, 0, 0, 0.1);
   --clr_hover_bg: rgba(39, 35, 104, 0.08);
   --clr_theme_btn_bg: #ffffff;
+  --clr_title_with_bg: #f0f8ff;
 
   --clr_text_base: #333;
   --clr_text_nav: #222;
@@ -66,11 +46,13 @@
 
   --clr_text_base: #e0e0e0;
   --clr_text_nav: #f0f0f0;
-  --clr_primary: #5c9eff;
-  --clr_accent: #87baff;
+  --clr_primary: #3e80e2;
+  --clr_secondary_accent: #6882af;
+  --clr_accent: #94b4e0;
   --clr_darker_accent: #705a39;
   --clr_contrasting_accent: #e0c191;
   --clr_error: #ff5252;
+  --clr_title_with_bg: #f0f8ff;
 
   --clr_container_bg: #2a2a2a;
   --clr_output_bg: #303030;
@@ -78,6 +60,33 @@
   --clr_locked_bg: #222222;
   --clr_locked_border: #444444;
   --clr_text_muted: #aaaaaa;
+}
+
+
+/* Quick visual scaling for better readability */
+:root {
+  --global-visual-scale: 0.85; /* set to 0.75 to match your preferred 75% look */
+}
+
+body {
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform: scale(var(--global-visual-scale));
+  width: calc(100% / var(--global-visual-scale)); 
+  zoom: calc(var(--global-visual-scale) * 100%); 
+}
+
+/* Disable scaling on small screens (mobile/tablet) so touch targets remain usable */
+@media (max-width: 900px) {
+  :root {
+    --global-visual-scale: 1;
+  }
+  body {
+    transform: none;
+    width: auto;
+    zoom: 100%;
+  }
 }
 
 /* --- Dashboard Specific Styles --- */
@@ -161,24 +170,28 @@
 /* Tests List Container & Empty State */
 .tests-list-container {
   min-height: 200px;
-  /* Ensure it takes up space even when empty */
   background-color: var(--clr_container_bg);
   border: 1px dashed var(--clr_output_border);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-}
-
-.empty-state {
+  padding: 7px 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.98rem;
+  color: var(--clr_text_base);
+  background: none;
+  transition: background 0.15s, color 0.15s, transform 0.12s;
   text-align: center;
   padding: 20px;
-}
 
-.empty-state p {
-  color: var(--clr_text_muted);
-  margin-bottom: 15px;
+  .crash-course-list-item.active {
+    display: inline-block;
+    /* shrink background to text width */
+    background: var(--clr_accent);
+    color: #fff;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 999px;
+  }
 }
 
 /* Loading state */
@@ -206,8 +219,7 @@
   backdrop-filter: blur(2px);
 }
 
-.summaries-list-container,
-.crash-courses-list-container {
+.summaries-list-container {
   position: relative;
   /* Make container the positioning context for overlay */
 }
@@ -332,8 +344,7 @@
   -webkit-box-orient: vertical;
 }
 
-.summaries-list-container,
-.crash-courses-list-container {
+.summaries-list-container {
   min-height: 200px;
   background-color: var(--clr_container_bg);
   border: 1px dashed var(--clr_output_border);
@@ -343,8 +354,7 @@
   flex-direction: column;
 }
 
-.summaries-list-container:has(.history-list),
-.crash-courses-list-container:has(.history-list) {
+.summaries-list-container:has(.history-list) {
   border-style: solid;
   flex-direction: row;
   align-items: center;
@@ -354,8 +364,7 @@
 }
 
 /* Container holds both the scrollable list and arrow button */
-.summaries-list-container .history-list,
-.crash-courses-list-container .history-list {
+.summaries-list-container .history-list {
   flex: 1;
   overflow-x: hidden;
   /* No scroll initially, enabled by JS when all items loaded */
@@ -531,6 +540,8 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+
+
 /* Navigation Bar *------------------------------------------------------------------------------------------*/
 .navigation-bar {
   position: sticky;
@@ -690,290 +701,7 @@ body {
 
 /* Navigation Bar *------------------------------------------------------------------------------------------*/
 
-/* Crash Course *------------------------------------------------------------------------------------------*/
 
-.crash-course-container {
-  max-width: 70%;
-  margin: 3rem auto;
-  padding: 2rem;
-  background: var(--clr_container_bg);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px var(--clr_nav_shadow);
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-/* Locked message */
-#locked-message {
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--clr_text_muted);
-  padding: 2rem;
-  border: 2px dashed var(--clr_locked_border);
-  background: var(--clr_locked_bg);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-/* Form layout */
-#crash-course-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* Center form row */
-.form-row {
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
-}
-
-/* Input width */
-#topicInput {
-  flex: 1;
-  max-width: 400px;
-  padding: 0.6rem 1rem;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* Button styling */
-#generateBtn {
-  padding: 0.8rem 1.4rem;
-  background: #133670;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: normal;
-  cursor: pointer;
-  transition: ease-in-out 0.2s, transform 0.2s ease;
-  font-family: 'Poppins', sans-serif;
-}
-
-#generateBtn:hover {
-  background: var(--clr_accent);
-  transform: translateY(-2px);
-}
-
-/* Output box */
-#output {
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 1.5rem;
-  border-radius: 10px;
-  background: var(--clr_output_bg);
-  border: 1px solid var(--clr_output_border);
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-#output h3 {
-  margin-top: 0;
-  color: var(--clr_primary);
-  font-size: 2em;
-  margin-bottom: 1rem;
-}
-
-#output ul {
-  list-style: none;
-  padding: 0;
-}
-
-#output ul li {
-  margin: 0.6rem 0;
-  padding-left: 1.2rem;
-  position: relative;
-}
-
-#output ul li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--clr_primary);
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-#locked-message {
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--clr_text_muted);
-  padding: 2rem;
-  border: 2px dashed var(--clr_locked_border);
-  border-radius: 8px;
-  background: var(--clr_locked_bg);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-#locked-message p {
-  margin-top: 1rem;
-}
-
-/* Crash Course *------------------------------------------------------------------------------------------*/
-
-/* Summary Page *------------------------------------------------------------------------------------------*/
-
-/* Summary container */
-.summary-container {
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding: 2rem;
-  background: var(--clr_container_bg);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px var(--clr_nav_shadow);
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.summary-title {
-  text-align: center;
-  color: var(--clr_primary);
-  margin-bottom: 1.5rem;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* Upload box with animation */
-.upload-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border: 2px dashed var(--clr_locked_border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  background: var(--clr_locked_bg);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-}
-
-.upload-box:hover {
-  border-color: var(--clr_primary);
-  background: var(--clr_hover_bg);
-}
-
-.upload-box p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--clr_text_muted);
-  font-family: 'Poppins', sans-serif;
-}
-
-/* Button */
-#summarizeBtn {
-  display: block;
-  margin: 1.5rem auto 0;
-  padding: 0.7rem 1.2rem;
-  background: #133670;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: ease 0.2s, transform 0.2s ease;
-}
-
-
-
-#summarizeBtn:hover {
-  background: #3b74ce;
-  transform: translateY(-2px);
-}
-
-/* Output */
-#summary-output {
-  margin: 2rem auto 0;
-  max-width: 1200px;
-  padding: 1.5rem;
-  border-radius: 10px;
-  background: var(--clr_output_bg);
-  border: 1px solid var(--clr_output_border);
-  font-family: 'Poppins', sans-serif;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-/* Locked message for Summary */
-#summary-locked {
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--clr_text_muted);
-  padding: 2rem;
-  border: 2px dashed var(--clr_locked_border);
-  border-radius: 8px;
-  background: var(--clr_locked_bg);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-
-/* PDF Info Box */
-.pdf-info-box {
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-}
-
-.pdf-info-text {
-  text-align: center;
-}
-
-.pdf-file-name {
-  font-weight: 600;
-  color: var(--clr_primary);
-  margin-bottom: 0.3rem;
-}
-
-.pdf-page-count {
-  color: var(--clr_text_muted);
-  font-size: 0.95rem;
-}
-
-.pdf-status {
-  color: #28a745;
-  font-weight: bold;
-  margin-top: 0.5rem;
-}
-
-.pdf-status.error {
-  color: var(--clr_error);
-}
-
-.remove-pdf-btn {
-  padding: 0.6rem 1.2rem;
-  background: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  transition: background-color 0.2s ease;
-}
-
-.remove-pdf-btn:hover {
-  background: #c82333;
-}
-
-/* Error State */
-.pdf-error-icon {
-  font-size: 3rem;
-  color: #dc3545;
-}
-
-.pdf-error-title {
-  font-weight: 600;
-  color: #dc3545;
-  font-size: 1.2rem;
-}
-
-.pdf-error-message {
-  color: var(--clr_text_muted);
-  margin-top: 0.5rem;
-}
-
-/* Summary Page *------------------------------------------------------------------------------------------*/
 
 /* Practice Test Page Styles -------------------------------------------------------*/
 
@@ -1319,259 +1047,39 @@ body {
 
 
 /* Login/Signup Page *------------------------------------------------------------------------------------------*/
-/* ============================================ CRASH COURSE OUTPUT STYLES ============================================ */
 
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 220px;
-  padding: 2rem;
-}
-
-.loading-text {
-  color: var(--clr_text_muted);
-  font-size: 1.1rem;
-  margin-top: 1rem;
-}
-
-.crash-output {
-  max-width: 90%;
-  width: 90%;
-  margin: 2rem auto;
-  padding: 1.5rem;
-}
-
-.crash-title {
-  text-align: center;
-  font-size: 2em;
-  color: var(--clr_primary);
-  margin-bottom: 0.7rem;
-}
-
-.crash-title.error-message {
-  color: var(--clr_error) !important;
-  font-size: 2em !important;
-  padding-top: 1rem !important;
-  margin-top: 0rem 0 !important;
-}
-
-.crash-shine {
-  position: relative;
-  display: inline-block;
-  color: var(--clr_primary);
-  background: linear-gradient(90deg,
-      var(--clr_primary),
-      var(--clr_contrasting_accent),
-      var(--clr_primary));
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: crashShine 4.2s linear infinite;
-}
-
-@keyframes crashShine {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-.crash-summary {
-  font-size: 1.1rem;
-  color: var(--clr_text);
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.crash-overview {
-  margin-bottom: 1.5rem;
-  color: var(--clr_text);
-}
-
-.crash-overview strong {
-  font-weight: 650;
-  color: var(--clr_accent);
-}
-
-.crash-topics {
-  margin-bottom: 2rem;
-}
-
-.crash-topic {
-  margin-bottom: 2rem;
-}
-
-.crash-topic-title {
-  font-size: 1.5em;
-  font-weight: 600;
-  color: var(--clr_primary);
-  margin-bottom: 0.5rem;
-}
-
-.crash-topic-desc {
-  margin-bottom: 0.5rem;
-  color: var(--clr_text);
-}
-
-.crash-subtopics {
-  margin-left: 1.2rem;
-  margin-bottom: 0.2rem;
-  list-style: disc;
-}
-
-.crash-subtopic {
-  margin-bottom: 0.4rem;
-}
-
-.crash-subtopic-title {
-  font-weight: 650;
-  color: var(--clr_accent);
-}
-
-.crash-subtopic-details {
-  color: var(--clr_text);
-}
-
-.crash-conclusion {
-  margin-top: 2rem;
-  font-size: 1.08rem;
-}
-
-.crash-conclusion strong {
-  font-weight: 600;
-  color: var(--clr_primary);
-}
 
 /* ============================================ SUMMARY OUTPUT STYLES ============================================ */
 
-.summary-output {
-  max-width: 100%;
-  width: 90%;
-  margin: 2rem auto;
-  padding: 1.5rem;
-}
 
-.summary-title-main {
-  text-align: center;
-  font-size: 2rem;
-  color: var(--clr_primary);
-  margin-bottom: 1.5rem;
-}
-
-.summary-section {
-  margin-bottom: 2rem;
-  padding: 0rem 0.8rem;
-  background: var(--clr_card_bg);
-  border-radius: 8px;
-}
-
-.summary-section.executive-summary {
-  border-left: 4px solid var(--clr_primary);
-}
-
-.summary-section.key-findings {
-  border-left: 4px solid var(--clr_accent);
-}
-
-.section-title {
-  font-size: 1.3rem;
-  font-weight: 650;
-  color: var(--clr_primary);
-  margin-bottom: 0.8rem;
-}
-
-.key-findings .section-title {
-  color: var(--clr_accent);
-}
-
-.section-content {
-  font-size: 1.05rem;
-  color: var(--clr_text);
-  line-height: 1.6;
-}
-
-.findings-list {
-  margin-left: 1.2rem;
-  list-style: none;
-  padding: 0;
-}
-
-.findings-list li {
-  margin-bottom: 0.6rem;
-  padding-left: 1.5rem;
-  position: relative;
-  color: var(--clr_text);
-  font-size: 1.05rem;
-}
-
-.findings-list li::before {
-  content: attr(data-index) ".";
-  position: absolute;
-  left: 0;
-  color: var(--clr_accent);
-  font-weight: bold;
-}
-
-.sections-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.page-summary-card {
-  padding: 0rem 0.8rem;
-  background: var(--clr_card_bg);
-  border-radius: 8px;
-  border-left: 3px solid var(--clr_primary);
-}
-
-.page-summary-card h5 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--clr_primary);
-  margin: 0;
-  padding: 0;
-}
-
-.page-summary-card ul {
-  margin-left: 1.2rem;
-  list-style: disc;
-}
-
-.page-summary-card li {
-  margin-bottom: 0.4rem;
-  color: var(--clr_text);
-}
-
-.download-section {
-  text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.download-btn {
-  padding: 0.8rem 2rem;
-  background: var(--clr_contrasting_accent);
-  color: var(--clr_body_bg);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.download-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
 
 /* ============================================ END OUTPUT STYLES ============================================ */
+
+
+
+/* For dashboard */
+
+
+.crash-courses-list-container {
+  position: relative;
+  /* Make container the positioning context for overlay */
+}
+
+.crash-courses-list-container {
+  min-height: 200px;
+  background-color: var(--clr_container_bg);
+  border: 1px dashed var(--clr_output_border);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.crash-courses-list-container:has(.history-list) {
+  border-style: solid;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  overflow: hidden;
+  /* Prevent container overflow */
+}
