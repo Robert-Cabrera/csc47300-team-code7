@@ -46,6 +46,12 @@ csc47300-team-code7/
 
 #  Notes and Updates
 
+ ## TS Migration - Oct 28 2025
+ Started migrating the JS (both front and back end) to TS. To run the website use the following command from the source directory:
+ ```
+npm install && npm run build:frontend && npm run build:backend && npm start
+```
+
  ## Directory Refactoring - Oct 17 2025:
  Separated the files into `frontend/` and `backend/` for better organization, ensuring the biggest directory is the root directory as requested in the last email
 
