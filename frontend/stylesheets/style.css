@@ -1115,8 +1115,125 @@ body {
   border-bottom: 1px solid var(--clr_output_border);
 }
 
+/* ===== AUTH COLLAPSIBLE (NOT POPUP) ===== */
 
-/* Login/Signup Page *------------------------------------------------------------------------------------------*/
+/* Optional: keep if you like the inline layout of buttons */
+.auth-anchor {
+  display: inline-block;
+}
+
+/* Collapsible panel lives in normal flow, expanding below the button */
+/* Constrain and center the collapsible panels */
+.auth-collapse {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    max-height 260ms ease,
+    opacity 200ms ease,
+    transform 200ms ease,
+    margin-top 200ms ease,
+    padding 200ms ease;
+
+  background: var(--clr_container_bg);
+  border: 1px solid var(--clr_output_border);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--clr_nav_shadow);
+
+  /* New additions for width control */
+  width: 100%;
+  max-width: 400px;       /* limits how wide it grows */
+  margin: 0 auto;         /* centers horizontally */
+
+  padding: 0 16px;
+}
+
+/* When open, expand vertically and keep centered */
+.auth-collapse.open {
+  max-height: 900px;
+  opacity: 1;
+  transform: translateY(0);
+  padding: 16px;
+  margin-top: 10px;
+}
+
+
+/* Header + content styles (kept from your previous block) */
+.auth-collapse h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  color: var(--clr_primary);
+  text-align: center;
+}
+
+.auth-form { display: grid; gap: 10px; }
+
+.auth-field label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--clr_text_muted);
+  margin-bottom: 4px;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--clr_output_border);
+  border-radius: 8px;
+  background: var(--clr_output_bg);
+  color: var(--clr_text_base);
+  font-family: 'Poppins', sans-serif;
+}
+
+.auth-field input:focus {
+  outline: none;
+  border-color: var(--clr_primary);
+  background: var(--clr_hover_bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clr_primary) 20%, transparent);
+}
+
+.auth-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.auth-actions .btn-primary {
+  background: var(--clr_primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.auth-actions .btn-primary:hover {
+  background: var(--clr_accent);
+  transform: translateY(-1px);
+}
+
+.auth-actions .btn-ghost {
+  background: transparent;
+  color: var(--clr_text_base);
+  border: 1px solid var(--clr_output_border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.auth-error { color: var(--clr_error); font-size: 0.9rem; margin-top: 2px; }
+.auth-helper { margin-top: 6px; font-size: 0.85rem; color: var(--clr_text_muted); }
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  .auth-collapse,
+  .auth-collapse.open {
+    transition: none;
+  }
+}
+
 /* ============================================ CRASH COURSE OUTPUT STYLES ============================================ */
 
 .loading-container {

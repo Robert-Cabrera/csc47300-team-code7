@@ -108,46 +108,101 @@ export function initAuth() {
   */
 
   if (isLoginPage) {
-    const signUpBtn = document.querySelector('.SignUpBtn');
-    const signUpBtnPage = document.querySelector('.SignUpBtn');
-    const loginBtnPage = document.querySelector('.LoginBtn');
+    // === Collapsible panels (not popups) ===
+const signUpBtn = document.getElementById('signUpBtn');
+const loginBtnPage = document.getElementById('loginBtnPage');
+const signupPanel = document.getElementById('signupPanel');
+const loginPanel  = document.getElementById('loginPanel');
 
-    // Login button: auto-login as Alice
-    // TODO: Form to enter credentials and check against users.json/ backend
-    if (loginBtnPage) {
-      loginBtnPage.addEventListener('click', async () => {
-      try {
-        const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: 'Alice',
-          password: 'password123'
-        })
-        });
+function closePanel(panel, btn) {
+  if (!panel) return;
+  panel.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
 
-        const data = await response.json();
+function openPanel(panel, btn) {
+  if (!panel) return;
+  // close the other one (single-open behavior)
+  if (panel === signupPanel) closePanel(loginPanel, loginBtnPage);
+  if (panel === loginPanel) closePanel(signupPanel, signUpBtn);
+  panel.classList.add('open');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+}
 
-        if (data.success) {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userData", JSON.stringify(data.user));
-        window.location.href = "dashboard.html";
-        } else {
-        console.error('Login failed:', data.error);
-        }
-      } catch (err) {
-        console.error('Error during login:', err);
-      }
-      });
+function togglePanel(panel, btn) {
+  if (panel.classList.contains('open')) {
+    closePanel(panel, btn);
+  } else {
+    openPanel(panel, btn);
+    // Focus first input for convenience
+    const firstInput = panel.querySelector('input');
+    if (firstInput) firstInput.focus();
+  }
+}
+
+if (signUpBtn && signupPanel) {
+  signUpBtn.addEventListener('click', () => togglePanel(signupPanel, signUpBtn));
+}
+
+if (loginBtnPage && loginPanel) {
+  loginBtnPage.addEventListener('click', () => togglePanel(loginPanel, loginBtnPage));
+}
+
+// Cancel buttons collapse their panel
+const signupCancel = document.getElementById('signupCancel');
+if (signupCancel) signupCancel.addEventListener('click', () => closePanel(signupPanel, signUpBtn));
+
+const loginCancel = document.getElementById('loginCancel');
+if (loginCancel) loginCancel.addEventListener('click', () => closePanel(loginPanel, loginBtnPage));
+
+
+// === Sign Up: demo persistence (replace with Supabase later) ===
+const signupForm = document.getElementById('signupForm');
+if (signupForm) {
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!signupForm.reportValidity()) return;
+    const data = Object.fromEntries(new FormData(signupForm).entries());
+
+    // DEMO ONLY: store user locally so Login can verify
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userData", JSON.stringify({
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      password: data.password   // plaintext for demo; replace with real auth
+    }));
+    window.location.href = "dashboard.html";
+  });
+}
+
+// === Login: check demo credentials ===
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!loginForm.reportValidity()) return;
+
+    const data = Object.fromEntries(new FormData(loginForm).entries());
+    const user = getUserData();
+    const errorEl = document.getElementById('loginError');
+
+    if (!user) {
+      if (errorEl) { errorEl.textContent = "No account found. Please sign up first."; errorEl.hidden = false; }
+      return;
     }
 
-    // Sign up button
-    if (signUpBtn) {
-     
-      // TODO: Change to actual sign-up logic
-      signUpBtnPage.addEventListener('click', async () => {
-        alert('Sign-up is not implemented yet. Please use the Login button to log in as Alice.');
-      });
+    const idMatch = [user.id, user.username, user.email].includes(data.identifier);
+    const pwMatch = data.password === user.password;
+
+    if (idMatch && pwMatch) {
+      localStorage.setItem("isLoggedIn", "true");
+      window.location.href = "dashboard.html";
+    } else {
+      if (errorEl) { errorEl.textContent = "Invalid credentials. Check your username/email and password."; errorEl.hidden = false; }
     }
+  });
+}
+
   }
 }
