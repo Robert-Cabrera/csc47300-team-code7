@@ -177,32 +177,112 @@ if (signupForm) {
 }
 
 // === Login: check demo credentials ===
+
+// === Login via users.json (fallback to localStorage for newly signed-up demo users) ===
 const loginForm = document.getElementById('loginForm');
-if (loginForm) {
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!loginForm.reportValidity()) return;
+//const loginCancel = document.getElementById('loginCancel');
+const loginErrorEl = document.getElementById('loginError');
 
-    const data = Object.fromEntries(new FormData(loginForm).entries());
-    const user = getUserData();
-    const errorEl = document.getElementById('loginError');
+loginCancel?.addEventListener('click', () => closePanel(loginPanel, loginBtnPage));
 
-    if (!user) {
-      if (errorEl) { errorEl.textContent = "No account found. Please sign up first."; errorEl.hidden = false; }
-      return;
+// cache to avoid re-fetch
+let USERS_JSON_CACHE = null;
+
+// Try a couple of likely paths so it works from /pages/login-signup.html
+async function loadUsersJSON() {
+  if (USERS_JSON_CACHE) return USERS_JSON_CACHE;
+
+  const candidates = [
+    '/data/users.json',     // absolute from site root (preferred)
+    '../data/users.json',   // relative from /pages/login-signup.html
+    '../../data/users.json' // fallback just in case of deeper nesting
+  ];
+
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (res.ok) {
+        const json = await res.json();
+        // Expecting shape: { users: [ ... ] }
+        const list = Array.isArray(json?.users) ? json.users : [];
+        USERS_JSON_CACHE = list;
+        return USERS_JSON_CACHE;
+      }
+    } catch {
+      // try next candidate
     }
+  }
 
-    const idMatch = [user.id, user.username, user.email].includes(data.identifier);
-    const pwMatch = data.password === user.password;
-
-    if (idMatch && pwMatch) {
-      localStorage.setItem("isLoggedIn", "true");
-      window.location.href = "dashboard.html";
-    } else {
-      if (errorEl) { errorEl.textContent = "Invalid credentials. Check your username/email and password."; errorEl.hidden = false; }
-    }
-  });
+  USERS_JSON_CACHE = [];
+  return USERS_JSON_CACHE;
 }
+
+// Find by id OR username OR email (case-insensitive)
+function findUser(list, identifier) {
+  const needle = String(identifier ?? '').trim().toLowerCase();
+  return list.find(u => {
+    const byId   = String(u.id ?? '').toLowerCase() === needle;
+    const byUser = String(u.username ?? '').toLowerCase() === needle;
+    const byMail = String(u.email ?? '').toLowerCase() === needle;
+    return byId || byUser || byMail;
+  }) || null;
+}
+
+loginForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!loginForm.reportValidity()) return;
+
+  loginErrorEl && (loginErrorEl.hidden = true, loginErrorEl.textContent = '');
+
+  const form = new FormData(loginForm);
+  const identifier = form.get('identifier'); // username OR email OR id
+  const password   = form.get('password');
+
+  // 1) Try users.json first (e.g., Alice from your JSON)
+  const users = await loadUsersJSON();
+  const hit   = findUser(users, identifier);
+
+  if (hit && String(hit.password) === String(password)) {
+    // success from users.json
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userData", JSON.stringify({
+      id: hit.id,
+      username: hit.username,
+      email: hit.email,
+      profilePicture: hit.profilePicture ?? ""
+    }));
+    window.location.href = "dashboard.html";
+    return;
+  }
+
+  // 2) Fallback: allow locally signed-up demo user (your current Sign Up flow)
+  const localUserRaw = localStorage.getItem("userData");
+  if (localUserRaw) {
+    try {
+      const localUser = JSON.parse(localUserRaw);
+      const idMatch = [
+        localUser.id, localUser.username, localUser.email
+      ].map(v => String(v ?? '').toLowerCase())
+       .includes(String(identifier ?? '').toLowerCase());
+      const pwMatch = String(password) === String(localUser.password);
+
+      if (idMatch && pwMatch) {
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "dashboard.html";
+        return;
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }
+
+  // 3) If neither matched, show error
+  if (loginErrorEl) {
+    loginErrorEl.textContent = "Invalid credentials. Check your username/email and password.";
+    loginErrorEl.hidden = false;
+  }
+});
+
 
   }
 }

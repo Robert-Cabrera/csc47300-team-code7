@@ -27,6 +27,9 @@ app.get('/favicon.ico', (req, res) => {
     });
 });
 
+// Serve /data/* from backend/data_objects (makes users.json fetchable in browser)
+app.use('/data', express.static(path.join(__dirname, 'data_objects')));
+
 // Serve everything from frontend folder so all folders are accessible
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
