@@ -98,7 +98,7 @@ router.get('/user/:userId/crash-courses', async (req, res) => {
     }
 });
 
-// Get user by ID (for dashboard history) - DEPRECATED, keeping for backward compatibility
+// Get user by ID (for dashboard history) 
 router.get('/user/:userId', (req, res) => {
     try {
         const { userId } = req.params;
@@ -110,6 +110,7 @@ router.get('/user/:userId', (req, res) => {
             res.json({
                 id: user.id,
                 username: user.username,
+                name: user.name,
                 email: user.email,
                 profilePicture: user.profilePicture,
                 crashCourses: user.crashCourses || [],
@@ -126,23 +127,26 @@ router.get('/user/:userId', (req, res) => {
 // Login endpoint
 router.post('/login', (req, res) => {
     try {
+        // Accept 'username' which may actually be either the username or the email
         const { username, password } = req.body;
-        
+
         if (!username || !password) {
             return res.status(400).json({ success: false, error: 'Username and password required' });
         }
-        
+
         const usersData = readUsers();
+        // Allow login by username OR email (keeps existing payload shape)
         const user = usersData.users.find(u => 
-            u.username === username && u.password === password
+            (u.username === username || u.email === username) && u.password === password
         );
-        
+
         if (user) {
             res.json({ 
                 success: true, 
                 user: { 
                     id: user.id, 
                     username: user.username, 
+                    name: user.name,
                     email: user.email,
                     profilePicture: user.profilePicture 
                 } 
@@ -157,16 +161,43 @@ router.post('/login', (req, res) => {
 
 // Register endpoint
 router.post('/register', (req, res) => {
-    // TODO: Implement registration logic
-    /*
-        There's many util functions already made for user management in
-        backend/utils/userManager.js that can be used here.
+    try {
+        const { username, name, email, password } = req.body;
 
-        For example:
-        readUsers() - to read existing users
-        generateUserId() - to create a new unique user ID (incremental _001, _002, etc)
-        insertUserSorted(newUser) - to insert the new user in sorted order by ID
-    */
+        if (!username || !email || !password) {
+            return res.status(400).json({ success: false, error: 'Username, email and password are required' });
+        }
+
+        const usersData = readUsers();
+
+        // Check for existing username or email
+        const exists = usersData.users.find(u => u.username === username || u.email === email);
+        if (exists) {
+            return res.status(409).json({ success: false, error: 'Username or email already in use' });
+        }
+
+        // Create new user object
+        const newId = generateUserId();
+        const newUser = {
+            id: newId,
+            username,
+            name,
+            email,
+            password, // NOTE: plaintext for demo only
+            createdAt: new Date().toISOString(),
+            profilePicture: "",
+            crashCourses: [],
+            summaries: []
+        };
+
+        // Insert and persist
+        insertUserSorted(newUser);
+
+    // Return minimal public user info (include name so frontend displays it)
+    res.status(201).json({ success: true, user: { id: newUser.id, username: newUser.username, name: newUser.name, email: newUser.email, profilePicture: newUser.profilePicture } });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
 });
 
 module.exports = router;

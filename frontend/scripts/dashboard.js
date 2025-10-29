@@ -43,7 +43,7 @@ export function initDashboard(isLoggedIn) {
     
     if (dashboardHeader && userData) {
       // Update the header to show the user's name
-      dashboardHeader.textContent = `Welcome back, ${userData.username}!`;
+      dashboardHeader.textContent = `Welcome back, ${userData.name}!`;
     }
 
     // Load user data initially

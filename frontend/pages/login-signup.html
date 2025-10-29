@@ -13,8 +13,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NoteSmith</title>
-    <link rel="stylesheet" href="../stylesheets/style.css" />
-  <script type="module" src="/dist/script.js"></script>
+    <link rel="stylesheet" href="../stylesheets/loginStyle.css" />
+    <script type="module" src="/dist/script.js"></script>
   </head>
 
   <body>
@@ -45,8 +45,129 @@
           signing up.
         </p>
 
-        <button class="SignUpBtn">Sign Up</button>
-        <button class="LoginBtn">Login</button>
+        <div class="auth-btns">
+          <!-- Sign Up -->
+          <button
+            class="SignUpBtn"
+            id="signUpBtn"
+            aria-expanded="false"
+            aria-controls="signupPanel"
+          >
+            Sign Up
+          </button>
+          <div
+            id="signupPanel"
+            class="auth-collapse"
+            role="region"
+            aria-labelledby="signUpBtn"
+          >
+            <h3>Create an account</h3>
+            <form class="auth-form" id="signupForm" novalidate>
+              
+              <div class="auth-field">
+                <label for="su-username">
+                  Username (ID)
+                </label>
+                <input
+                  id="su-username"
+                  name="username"
+                  type="text"
+                  required
+                  minlength="6"
+                  autocomplete="name"
+                />
+              </div>
+               <div class="auth-field">
+                <label for="su-name">Name</label>
+                <input
+                  id="su-name"
+                  name="name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+              <div class="auth-field">
+                <label for="su-email">Email</label>
+                <input
+                  id="su-email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+              <div class="auth-field">
+                <label for="su-password">Password</label>
+                <input
+                  id="su-password"
+                  name="password"
+                  type="password"
+                  required
+                  minlength="8"
+                  autocomplete="new-password"
+                />
+              </div>
+              <div class="auth-actions">
+                <button type="button" class="btn-ghost" id="signupCancel">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-primary">Sign Up</button>
+              </div>
+              <div class="auth-helper">
+                By continuing you agree to our Terms & Privacy.
+              </div>
+            </form>
+          </div>
+
+          <!-- Login -->
+          <button
+            class="LoginBtn"
+            id="loginBtnPage"
+            aria-expanded="false"
+            aria-controls="loginPanel"
+          >
+            Login
+          </button>
+          <div
+            id="loginPanel"
+            class="auth-collapse"
+            role="region"
+            aria-labelledby="loginBtnPage"
+          >
+            <h3>Log in</h3>
+            <form class="auth-form" id="loginForm" novalidate>
+              <div class="auth-field">
+                <label for="li-identifier">Username or Email</label>
+                <input
+                  id="li-identifier"
+                  name="identifier"
+                  type="text"
+                  required
+                  autocomplete="username email"
+                />
+              </div>
+              <div class="auth-field">
+                <label for="li-password">Password</label>
+                <input
+                  id="li-password"
+                  name="password"
+                  type="password"
+                  required
+                  minlength="8"
+                  autocomplete="current-password"
+                />
+              </div>
+              <div class="auth-actions">
+                <button type="button" class="btn-ghost" id="loginCancel">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-primary">Log In</button>
+              </div>
+              <div class="auth-error" id="loginError" hidden></div>
+            </form>
+          </div>
+        </div>
       </section>
     </div>
   </body>

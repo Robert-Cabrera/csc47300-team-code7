@@ -20,14 +20,14 @@ export function getUserData() {
 
 function handleLogout(e) {
   e.preventDefault();
-  
+
   // Clear localStorage
   localStorage.removeItem("isLoggedIn");
   localStorage.removeItem("userData");
-  
+
   // Determine if we are on index.html or not
   const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
-  
+
   // Redirect to home page
   if (isIndex) {
     window.location.href = "./index.html";
@@ -60,6 +60,67 @@ function updateNavbar(loginBtn, userName) {
 }
 
 // ============================================================================
+// BACKEND FUNCTIONS
+// ============================================================================
+
+async function tryBackendLogin(data) {
+  try {
+    const resp = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: data.identifier, password: data.password })
+    });
+
+    if (resp.ok) {
+      const body = await resp.json();
+      if (body && body.success && body.user) {
+        // Persist minimal user data locally (demo only)
+        localStorage.setItem('userData', JSON.stringify(body.user));
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = 'dashboard.html';
+        return { success: true };
+      }
+      return { success: false, status: resp.status };
+    }
+
+    // Explicit 401 or other non-ok status — return status so caller can act
+    return { success: false, status: resp.status };
+  } catch (err) {
+    // Network or server not available — fall through to local/demo check
+    console.warn('Backend login failed, falling back to local demo check:', err);
+    return { success: false, status: null, error: err };
+  }
+}
+
+async function tryBackendRegister(data) {
+  try {
+    const resp = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: data.username, name:data.name, email: data.email, password: data.password })
+    });
+
+    if (resp.status === 201) {
+      const body = await resp.json();
+      if (body && body.success && body.user) {
+        // Persist returned user and log in
+        localStorage.setItem('userData', JSON.stringify(body.user));
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = 'dashboard.html';
+        return { success: true };
+      }
+      return { success: false, status: resp.status };
+    }
+
+    // Conflict (409) or bad request (400)
+    return { success: false, status: resp.status };
+  } catch (err) {
+    console.warn('Backend register failed, falling back to local demo sign-up:', err);
+    return { success: false, status: null, error: err };
+  }
+}
+
+// ============================================================================
 // MAIN FUNCTION TO INITIALIZE AUTH LOGIC
 // ============================================================================
 
@@ -77,7 +138,7 @@ export function initAuth() {
   if (isLoggedIn && loginBtn) {
 
     const userData = getUserData();
-    const userName = userData && userData.username ? userData.username : "User";
+    const userName = userData && userData.name ? userData.name : "User";
 
     updateNavbar(loginBtn, userName);
   }
@@ -101,53 +162,126 @@ export function initAuth() {
   }
 
   // Handle login/sign-up
-
-  /* Behavior for now:
-      * Auto logs in as test user Alice (user_001) on login button click
-      * Redirects to dashboard on success
-  */
-
   if (isLoginPage) {
-    const signUpBtn = document.querySelector('.SignUpBtn');
-    const signUpBtnPage = document.querySelector('.SignUpBtn');
-    const loginBtnPage = document.querySelector('.LoginBtn');
+    // === Collapsible panels (not popups) ===
+    const signUpBtn = document.getElementById('signUpBtn');
+    const loginBtnPage = document.getElementById('loginBtnPage');
+    const signupPanel = document.getElementById('signupPanel');
+    const loginPanel = document.getElementById('loginPanel');
 
-    // Login button: auto-login as Alice
-    // TODO: Form to enter credentials and check against users.json/ backend
-    if (loginBtnPage) {
-      loginBtnPage.addEventListener('click', async () => {
-      try {
-        const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: 'Alice',
-          password: 'password123'
-        })
-        });
+    function closePanel(panel, btn) {
+      if (!panel) return;
+      panel.classList.remove('open');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
 
-        const data = await response.json();
+    function openPanel(panel, btn) {
+      if (!panel) return;
+      // close the other one (single-open behavior)
+      if (panel === signupPanel) closePanel(loginPanel, loginBtnPage);
+      if (panel === loginPanel) closePanel(signupPanel, signUpBtn);
+      panel.classList.add('open');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+    }
 
-        if (data.success) {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userData", JSON.stringify(data.user));
-        window.location.href = "dashboard.html";
-        } else {
-        console.error('Login failed:', data.error);
-        }
-      } catch (err) {
-        console.error('Error during login:', err);
+    function togglePanel(panel, btn) {
+      if (panel.classList.contains('open')) {
+        closePanel(panel, btn);
+      } else {
+        openPanel(panel, btn);
+        // Focus first input for convenience
+        const firstInput = panel.querySelector('input');
+        if (firstInput) firstInput.focus();
       }
+    }
+
+    if (signUpBtn && signupPanel) {
+      signUpBtn.addEventListener('click', () => togglePanel(signupPanel, signUpBtn));
+    }
+
+    if (loginBtnPage && loginPanel) {
+      loginBtnPage.addEventListener('click', () => togglePanel(loginPanel, loginBtnPage));
+    }
+
+    // Cancel buttons collapse their panel
+    const signupCancel = document.getElementById('signupCancel');
+    if (signupCancel) signupCancel.addEventListener('click', () => closePanel(signupPanel, signUpBtn));
+
+    const loginCancel = document.getElementById('loginCancel');
+    if (loginCancel) loginCancel.addEventListener('click', () => closePanel(loginPanel, loginBtnPage));
+
+
+    // === Sign Up: demo persistence (replace with Supabase later) ===
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!signupForm.reportValidity()) return;
+        const data = Object.fromEntries(new FormData(signupForm).entries());
+
+        // ADDED BY ROBERT: Register via backend API
+        const result = await tryBackendRegister(data);
+        if (result && result.success) {return;}
+
+        // If backend returned 409 -> username/email conflict
+        if (result && result.status === 409) {
+          alert('Username or email already in use. Please choose another.');
+          return;
+        }
+x
+        // If backend unavailable, fall back to demo localStorage behavior
+        const localId = `user_local_${Date.now()}`;
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userData', JSON.stringify({
+          id: localId,
+          username: data.username,
+          name: data.name,
+          email: data.email,
+          password: data.password // plaintext for demo; replace with real auth
+        }));
+
+        window.location.href = 'dashboard.html';
       });
     }
 
-    // Sign up button
-    if (signUpBtn) {
-     
-      // TODO: Change to actual sign-up logic
-      signUpBtnPage.addEventListener('click', async () => {
-        alert('Sign-up is not implemented yet. Please use the Login button to log in as Alice.');
+    // === Login: check credentials (try backend users.json via /api/login, fall back to local demo)
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!loginForm.reportValidity()) return;
+
+        const data = Object.fromEntries(new FormData(loginForm).entries());
+        const errorEl = document.getElementById('loginError');
+
+        // ADDED BY ROBERT: Try backend login first
+        const backendResult = await tryBackendLogin(data);
+        if (backendResult && backendResult.success) {return;}
+
+        // If backend explicitly returned 401 -> show invalid credentials and stop
+        if (backendResult && backendResult.status === 401) {
+          if (errorEl) { errorEl.textContent = 'Invalid credentials.'; errorEl.hidden = false; } return; }
+
+        // Fallback: check demo user stored in localStorage (unchanged behavior)
+        const user = getUserData();
+        if (!user) {
+          if (errorEl) { errorEl.textContent = 'No account found. Please sign up first.'; errorEl.hidden = false; }
+          return;
+        }
+
+        const idMatch = [user.id, user.username, user.email].includes(data.identifier);
+        const pwMatch = data.password === user.password;
+
+        if (idMatch && pwMatch) {
+          localStorage.setItem('isLoggedIn', 'true');
+          window.location.href = 'dashboard.html';
+        } else {
+          if (errorEl) { errorEl.textContent = 'Invalid credentials. Check your username/email and password.'; errorEl.hidden = false; }
+        }
       });
     }
+
   }
 }
