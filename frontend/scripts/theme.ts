@@ -1,7 +1,7 @@
 /*
   theme.ts
 
-  TypeScript migration of theme.js. Handles theme toggling and logo updates.
+  Handles theme toggling and logo updates for all logo elements.
 */
 
 export function initTheme(): void {
@@ -13,9 +13,23 @@ export function initTheme(): void {
 
   if (!toggleButton) return;
 
-  const logoElement = document.querySelector('.logo') as HTMLImageElement | null;
+  // --- Update all matching logos, not just the first ---
+  function updateLogo(theme: string): void {
+    const logoElements = document.querySelectorAll('.logo') as NodeListOf<HTMLImageElement>;
+    if (!logoElements.length) return;
 
-  function updateButtonIcon(theme: string) {
+    const basePath = isIndex ? './assets/' : '../assets/';
+    const newSrc =
+      theme === 'dark-theme'
+        ? `${basePath}NoteSmith_logo_dark.png`
+        : `${basePath}NoteSmith_logo.png`;
+
+    logoElements.forEach((logo) => {
+      logo.src = newSrc;
+    });
+  }
+
+  function updateButtonIcon(theme: string): void {
     if (theme === 'dark-theme') {
       toggleButton.setAttribute('aria-label', 'Switch to light theme');
       toggleButton.textContent = 'Light Mode';
@@ -25,12 +39,7 @@ export function initTheme(): void {
     }
   }
 
-  function updateLogo(theme: string) {
-    if (!logoElement) return;
-    const basePath = isIndex ? './assets/' : '../assets/';
-    logoElement.src = theme === 'dark-theme' ? basePath + 'NoteSmith_logo_dark.png' : basePath + 'NoteSmith_logo.png';
-  }
-
+  // --- Apply current or preferred theme ---
   if (currentTheme) {
     body.classList.add(currentTheme);
     updateButtonIcon(currentTheme);
@@ -44,19 +53,14 @@ export function initTheme(): void {
     updateLogo('light-theme');
   }
 
+  // --- Theme toggle handler ---
   toggleButton.addEventListener('click', () => {
     const isDark = body.classList.contains('dark-theme');
+    const newTheme = isDark ? 'light-theme' : 'dark-theme';
 
-    if (isDark) {
-      body.classList.remove('dark-theme');
-      localStorage.setItem('theme', 'light-theme');
-      updateButtonIcon('light-theme');
-      updateLogo('light-theme');
-    } else {
-      body.classList.add('dark-theme');
-      localStorage.setItem('theme', 'dark-theme');
-      updateButtonIcon('dark-theme');
-      updateLogo('dark-theme');
-    }
+    body.classList.toggle('dark-theme', !isDark);
+    localStorage.setItem('theme', newTheme);
+    updateButtonIcon(newTheme);
+    updateLogo(newTheme);
   });
 }
