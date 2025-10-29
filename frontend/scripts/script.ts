@@ -1,6 +1,5 @@
 /*
 	script.ts - Main Entry Point (converted from script.js)
-	Minimal migration with lightweight types for module exports.
 */
 
 /* for my sanity, since it wasnt loading cuz auth.js wasnt in dist for some reason */

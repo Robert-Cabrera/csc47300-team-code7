@@ -66,7 +66,7 @@
 /* Quick visual scaling for better readability */
 /* This is David, I changed the scaling back */
 :root {
-  --global-visual-scale: 1; /* set to 0.75 to match your preferred 75% look */
+  --global-visual-scale: 1; 
 }
 
 body {
