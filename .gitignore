@@ -6,3 +6,4 @@ backend/keys.env
 # Build outputs
 /frontend/dist/
 /backend/dist/
+/node_modules
