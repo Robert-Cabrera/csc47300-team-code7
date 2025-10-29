@@ -1,15 +1,14 @@
 @import "./style.css";
 
          /* ============================================ CRASH COURSE PAGE STYLES ============================================ */
-       .crash-course-container {
-   
-           height: 40%;
-           width: 80%;
-           margin: 2rem auto;
-           padding: 0;
-           background: transparent;
-           box-shadow: none;
-       }
+      .crash-course-container {
+          height: auto; /* allow content to define height */
+          width: 100%; /* let later max-width control sizing */
+          margin: 2rem auto;
+          padding: 0;
+          background: transparent;
+          box-shadow: none;
+      }
 
        /* Hero Section */
        .crash-hero {
@@ -227,15 +226,15 @@
 
        /* Crash Course *------------------------------------------------------------------------------------------*/
 
-       .crash-course-container {
-           max-width: 80%;
-           margin: 3rem auto;
-           padding: 2rem;
-           background: var(--clr_container_bg);
-           border-radius: 12px;
-           box-shadow: 0 6px 18px var(--clr_nav_shadow);
-           transition: background-color 0.3s, box-shadow 0.3s;
-       }
+      .crash-course-container {
+          max-width: 80%;
+          margin: 3rem auto;
+          padding: 2rem;
+          background: var(--clr_container_bg);
+          border-radius: 12px;
+          box-shadow: 0 6px 18px var(--clr_nav_shadow);
+          transition: background-color 0.3s, box-shadow 0.3s;
+      }
 
        /* Locked message */
        #locked-message {

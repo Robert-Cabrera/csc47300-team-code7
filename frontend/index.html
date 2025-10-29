@@ -39,14 +39,53 @@
         </div>
 
         <div class="nav-right">
-            <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+            <a href="./pages/login-signup.html" id="loginBtn" class="login">Login/Sign Up</a>
         </div>
     </div>
 
     <div class="home-container">
         <section class="index-section">
-            <h1>Smith your notes, hammer your tests (puns are hard)</h1>
-            <p>NoteSmith will make your academic life 10x easier at the low price of 1,000,000,000 Lebanese Pounds!</p>
+            <div class="hero-grid">
+                <div class="hero-left">
+                    <h1>Turn messy notes into test‑ready mastery</h1>
+                    <p>Streamline your study workflow: generate crash courses, practice with targeted tests, and summarize faster — all in one place.</p>
+                    <div class="cta-buttons">
+                        <a class="btn primary" href="./pages/login-signup.html">Get started free</a>
+                        <a class="btn primary" href="#features">Explore features</a>
+                    </div>
+                </div>
+                <div class="hero-right" aria-hidden="true">
+                    <figure class="hero-visual">
+                        <img src="./assets/NoteSmith_logo.png" alt="Logo" class="logo"> <!-- hero-image later-->
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="workflow-section" aria-labelledby="workflow-title">
+            <h2 id="workflow-title">Your study workflow, simplified</h2>
+            <div class="workflow-steps">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Upload or choose a topic</h3>
+                    <p>Start with your PDF/notes or pick any subject you need to learn.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Generate a crash course</h3>
+                    <p>Get clean, structured explanations and visuals to learn quickly.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Practice what matters</h3>
+                    <p>Personalized questions target weak spots so each rep counts.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <h3>Summarize and retain</h3>
+                    <p>Auto‑summaries help you review in minutes, not hours.</p>
+                </div>
+            </div>
         </section>
 
         <section id="features" class="features-section">
@@ -70,7 +109,112 @@
             </div>
         </section>
 
+        <section class="stats-section" aria-labelledby="stats-title">
+            <div class="stats-container">
+                <h2 id="stats-title">Results That Speak for Themselves</h2>
+                <p class="stats-subtitle">Students using NoteSmith see measurable improvements in their grades</p>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number" data-target="23">0</div>
+                        <div class="stat-label">Average Grade Point Increase</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" data-target="87">0</div>
+                        <div class="stat-label">% See Improvement Within 2 Weeks</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" data-target="45">0</div>
+                        <div class="stat-label">% Reduction in Study Time</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reviews-section" aria-labelledby="reviews-title">
+            <div class="reviews-container">
+                <h2 id="reviews-title">What Students Are Saying</h2>
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="review-stars">★★★★</div>
+                        <p class="review-text">"NoteSmith completely chnanged my life. I became 6'2 and a million dollars dropped at my front door. would recommend. lost a star since it wasnt 100mil."</p>
+                        <div class="review-author">
+                            <strong>David Z.</strong>
+                            <span>High on Life Major</span>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">"The practice tests are incredible. They're so much better than anything I've used before. My test scores improved by 2 full letter grades."</p>
+                        <div class="review-author">
+                            <strong>Sarah K.</strong>
+                            <span>Computer Science</span>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">"I love how fast the summaries are. What used to take me hours now takes minutes. This is the study tool I've been waiting for."</p>
+                        <div class="review-author">
+                            <strong>Michael R.</strong>
+                            <span>Engineering</span>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">"Honestly thought it was too good to be true, but NoteSmith delivered. My GPA went up a full point this semester."</p>
+                        <div class="review-author">
+                            <strong>Emma L.</strong>
+                            <span>Pre-Med</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+
+    <footer class="info-hub" aria-labelledby="info-hub-title">
+            <div class="info-hub-inner">
+                <h2 id="info-hub-title">Need to know</h2>
+                <div class="info-columns">
+                    <div class="info-col">
+                        <h3>FAQs</h3>
+                        <details>
+                            <summary>Is NoteSmith free?</summary>
+                            <p>Yes, you can get started for free. Additional features may require an upgrade later.</p>
+                        </details>
+                        <details>
+                            <summary>Do I need to upload PDFs?</summary>
+                            <p>No. You can upload your notes or start from any topic to generate a crash course.</p>
+                        </details>
+                        <details>
+                            <summary>Will my data be private?</summary>
+                            <p>Your content is processed for your account only. See Important Info for policy links.</p>
+                        </details>
+                    </div>
+                    <div class="info-col">
+                        <h3>Contact</h3>
+                        <p>Questions or feedback? We’d love to help.</p>
+                        <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
+                    </div>
+                    <div class="info-col">
+                        <h3>Important Info</h3>
+                        <ul class="info-list">
+                            <li><a class="info-link" href="#">Terms of Use</a></li>
+                            <li><a class="info-link" href="#">Privacy Policy</a></li>
+                            <li><a class="info-link" href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
 </body>
 
 </html>
