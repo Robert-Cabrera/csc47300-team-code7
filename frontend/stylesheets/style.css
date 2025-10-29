@@ -65,7 +65,7 @@
 
 /* Quick visual scaling for better readability */
 :root {
-  --global-visual-scale: 0.85; /* set to 0.75 to match your preferred 75% look */
+  --global-visual-scale: 1; 
 }
 
 body {
