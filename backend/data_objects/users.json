@@ -10,6 +10,198 @@
       "profilePicture": "",
       "crashCourses": [
         {
+          "id": "cc_1761767927921",
+          "createdAt": "2025-10-29T19:58:47.921Z",
+          "topic": "Chase Sapphire Case Study: Critical Issues and Answers",
+          "summary": "This crash course dissects critical issues surrounding the Chase Sapphire credit card portfolio. We'll explore common problems, analyze their impact, and discuss effective resolution strategies for cardholders and the issuer.",
+          "overview": "This course delves into common challenges faced by Chase Sapphire cardholders, such as redemption complexities, benefits confusion, and fraud concerns. We will also examine how Chase addresses these issues, focusing on customer service, policy updates, and product evolution. The goal is to provide a clear understanding of the critical aspects of managing and resolving issues with these premium credit cards.",
+          "main_topics": [
+            {
+              "title": "Understanding Chase Sapphire Benefits and Redemptions",
+              "description": "Navigate the intricate world of Chase Sapphire's rewards program. This section clarifies complex redemption options, outlines key benefits, and addresses common misunderstandings that lead to user frustration and missed opportunities.",
+              "subtopics": [
+                {
+                  "title": "Maximizing Ultimate Rewards Points",
+                  "details": "Learn strategies for earning and redeeming Ultimate Rewards points across travel, statement credits, and other options to get the most value from your card. Understand transfer partners and their benefits."
+                },
+                {
+                  "title": "Navigating Travel Insurance and Perks",
+                  "details": "Explore the nuances of travel insurance, including trip delay/cancellation, baggage delay, and rental car insurance. Understand coverage limits and how to file a claim effectively."
+                },
+                {
+                  "title": "Common Redemption Pitfalls",
+                  "details": "Identify frequent mistakes in booking travel or redeeming points, such as overlooking blackout dates, not comparing cash prices, or misunderstanding point valuations."
+                }
+              ]
+            },
+            {
+              "title": "Addressing Account and Service Issues",
+              "description": "This topic focuses on resolving common problems encountered with Chase Sapphire accounts, from application rejections and credit limit disputes to unauthorized charges and customer service experiences. We provide actionable steps for resolution.",
+              "subtopics": [
+                {
+                  "title": "Disputing Transactions and Fraud",
+                  "details": "Learn the process for reporting unauthorized charges, understanding the difference between a dispute and fraud, and what documentation is needed for a successful resolution."
+                },
+                {
+                  "title": "Credit Limit and Account Management",
+                  "details": "Understand factors influencing credit limits, how to request an increase, and strategies for managing your account responsibly to maintain a good standing with Chase."
+                },
+                {
+                  "title": "Effective Customer Service Interaction",
+                  "details": "Gain insights into how to communicate effectively with Chase customer service representatives to ensure your issues are heard, understood, and resolved promptly."
+                }
+              ]
+            },
+            {
+              "title": "Strategic Responses to Evolving Card Features",
+              "description": "Analyze how Chase adapts its Sapphire products to market changes and customer feedback. This section covers recent updates, potential future shifts, and how cardholders can best respond to maintain value.",
+              "subtopics": [
+                {
+                  "title": "Evaluating Recent Policy Changes",
+                  "details": "Examine significant changes to benefits, fees, or rewards structures. Understand the implications for your card usage and overall value proposition. Analyze Chase's rationale."
+                },
+                {
+                  "title": "The Impact of Competition",
+                  "details": "Discuss how Chase Sapphire responds to competitive offerings from other premium travel cards. Understand the strategic implications for product development and customer retention."
+                },
+                {
+                  "title": "Future Trends in Premium Cards",
+                  "details": "Anticipate potential innovations in rewards programs, digital integration, and personalized benefits. Consider how these trends might shape the future of the Chase Sapphire line."
+                }
+              ]
+            }
+          ],
+          "conclusion": "By understanding these critical issues and their resolutions, Chase Sapphire cardholders can optimize their rewards, navigate challenges effectively, and continue to leverage their card's premium benefits."
+        },
+        {
+          "id": "cc_1761767892682",
+          "createdAt": "2025-10-29T19:58:12.682Z",
+          "topic": "US Military Operations in the Last 5 Years",
+          "summary": "Examines recent US military engagements, focusing on key theaters, evolving strategies, and the impact of technological advancements. Covers counter-terrorism, great power competition, and humanitarian efforts.",
+          "overview": "This crash course explores significant US military operations from roughly 2019 to 2024. We will delve into the primary geographical areas of focus, the strategic shifts in response to global dynamics, and the integration of new technologies. The course aims to provide a clear understanding of the US military's recent global posture and operational priorities.",
+          "main_topics": [
+            {
+              "title": "Counter-Terrorism and Insurgency Operations",
+              "description": "Focuses on ongoing efforts against terrorist groups in regions like the Middle East and Africa. Details persistent challenges, evolving tactics, and the transition from large-scale deployments to specialized operations.",
+              "subtopics": [
+                {
+                  "title": "Afghanistan Withdrawal and Aftermath",
+                  "details": "Covers the final stages of US military presence in Afghanistan, the withdrawal process, and subsequent security implications for the region and beyond. Examines lessons learned from two decades of conflict."
+                },
+                {
+                  "title": "Operations Against ISIS Remnants",
+                  "details": "Details continued efforts to degrade and defeat remaining ISIS cells and affiliates across Syria, Iraq, and other areas. Highlights partner force training and intelligence-driven operations."
+                },
+                {
+                  "title": "Sahel Region Counter-Insurgency",
+                  "details": "Explores US support and operations aimed at combating extremist groups in North and West Africa, focusing on training, advising, and intelligence sharing with partner nations."
+                }
+              ]
+            },
+            {
+              "title": "Great Power Competition and Strategic Deterrence",
+              "description": "Examines the shift in focus towards potential conflicts with major state adversaries like China and Russia. Covers military readiness, joint force modernization, and presence operations.",
+              "subtopics": [
+                {
+                  "title": "Indo-Pacific Presence and Alliances",
+                  "details": "Discusses US military posture, exercises, and strengthening alliances in the Indo-Pacific to counter growing regional assertiveness. Emphasizes freedom of navigation operations."
+                },
+                {
+                  "title": "European Deterrence Initiative (EDI)",
+                  "details": "Details US efforts to bolster defense capabilities and reassure NATO allies in Europe, particularly in response to Russian actions. Covers troop rotations and equipment pre-positioning."
+                },
+                {
+                  "title": "Arctic Security Operations",
+                  "details": "Covers increasing US military interest and operations in the Arctic due to climate change and geopolitical significance. Focuses on domain awareness and logistical challenges."
+                }
+              ]
+            },
+            {
+              "title": "Global Support and Humanitarian Missions",
+              "description": "Highlights the role of the US military in responding to global crises beyond direct combat. Includes disaster relief, pandemic support, and strategic mobility.",
+              "subtopics": [
+                {
+                  "title": "COVID-19 Pandemic Response",
+                  "details": "Details the US military's logistical and medical support during the global COVID-19 pandemic, including transport of supplies and personnel, and hospital support."
+                },
+                {
+                  "title": "Humanitarian Assistance and Disaster Relief (HADR)",
+                  "details": "Covers significant operations providing aid and support following natural disasters worldwide, showcasing the military's capability for rapid global response and humanitarian missions."
+                },
+                {
+                  "title": "Strategic Mobility and Logistical Operations",
+                  "details": "Explains the critical role of airlift, sealift, and ground transportation in projecting and sustaining US military power globally, enabling rapid deployment and support."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Recent US military operations reflect a strategic pivot towards great power competition while maintaining counter-terrorism efforts and global support roles, adapting to a complex and evolving security landscape."
+        },
+        {
+          "id": "cc_1761767891564",
+          "createdAt": "2025-10-29T19:58:11.564Z",
+          "topic": "US Military Operations (Last 5 Years)",
+          "summary": "An overview of significant US military operations over the past five years, covering counter-terrorism, strategic competition, and humanitarian aid missions. Learn about the evolving landscape of global security and the US's role.",
+          "overview": "This crash course explores major US military engagements and operations from roughly 2019 to 2024. We'll examine key theaters of operation, evolving threats, and the strategic objectives guiding these missions. Topics include counter-terrorism efforts, responses to geopolitical shifts, and the use of technology in modern warfare.",
+          "main_topics": [
+            {
+              "title": "Counter-Terrorism and Stability Operations",
+              "description": "Focuses on ongoing efforts to combat terrorist organizations globally and maintain stability in volatile regions. This includes actions in the Middle East and Africa against groups like ISIS and Al-Qaeda.",
+              "subtopics": [
+                {
+                  "title": "Afghanistan Withdrawal",
+                  "details": "Examining the complex withdrawal from Afghanistan in 2021, its implications, and the subsequent security environment. This includes the end of a two-decade military presence."
+                },
+                {
+                  "title": "Operations Against ISIS",
+                  "details": "Detailing the continued, albeit reduced, operations against remnants of ISIS in Syria and Iraq. This involves supporting local partners and preventing resurgence."
+                },
+                {
+                  "title": "Africa Counter-Terrorism",
+                  "details": "Exploring US counter-terrorism efforts across Africa, focusing on partnerships and operations aimed at destabilizing extremist groups like Al-Shabaab and affiliates."
+                }
+              ]
+            },
+            {
+              "title": "Great Power Competition",
+              "description": "Highlights the shift in US military focus towards strategic competition with major global powers, particularly China and Russia. This involves deterrence and presence operations.",
+              "subtopics": [
+                {
+                  "title": "Indo-Pacific Rebalance",
+                  "details": "Understanding the US military's increased focus on the Indo-Pacific region, including exercises and naval presence to counter China's growing influence."
+                },
+                {
+                  "title": "European Deterrence Initiative",
+                  "details": "Analyzing the reinforcement of NATO's eastern flank and US commitment to European security in response to Russian actions, especially post-2022."
+                },
+                {
+                  "title": "Arctic Operations",
+                  "details": "Exploring the growing importance of the Arctic and the US military's developing capabilities and presence in this strategically vital region."
+                }
+              ]
+            },
+            {
+              "title": "Humanitarian Assistance and Disaster Relief (HADR)",
+              "description": "Covers the role of the US military in providing aid during global crises, natural disasters, and public health emergencies. These operations showcase a different facet of military capability.",
+              "subtopics": [
+                {
+                  "title": "COVID-19 Response",
+                  "details": "Assessing the US military's contribution to the global COVID-19 pandemic response, including logistical support and medical aid distribution."
+                },
+                {
+                  "title": "Natural Disaster Response",
+                  "details": "Examining significant HADR missions following major natural disasters, such as earthquakes or hurricanes, providing critical support and resources."
+                },
+                {
+                  "title": "Refugee Support Operations",
+                  "details": "Detailing instances where the military has provided logistical and humanitarian support for large-scale refugee movements and crises."
+                }
+              ]
+            }
+          ],
+          "conclusion": "US military operations in the last five years reflect a dynamic global landscape, balancing counter-terrorism with heightened great power competition and essential humanitarian roles."
+        },
+        {
           "id": "cc_1761643760286",
           "createdAt": "2025-10-28T09:29:20.286Z",
           "topic": "Engineering Economics",

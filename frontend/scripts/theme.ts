@@ -16,26 +16,37 @@ export function initTheme(): void {
   // --- Update all matching logos, not just the first ---
   function updateLogo(theme: string): void {
     const logoElements = document.querySelectorAll('.logo') as NodeListOf<HTMLImageElement>;
-    if (!logoElements.length) return;
-
-    const basePath = isIndex ? './assets/' : '../assets/';
-    const newSrc =
-      theme === 'dark-theme'
+    if (logoElements.length) {
+      const basePath = isIndex ? './assets/' : '../assets/';
+      const newSrc = theme === 'dark-theme'
         ? `${basePath}NoteSmith_logo_dark.png`
         : `${basePath}NoteSmith_logo.png`;
+      logoElements.forEach((logo) => {
+        logo.src = newSrc;
+      });
+    }
 
-    logoElements.forEach((logo) => {
-      logo.src = newSrc;
-    });
+    // Update hero video source
+    const heroVideo = document.querySelector('.hero-video') as HTMLVideoElement | null;
+    if (heroVideo) {
+      const source = heroVideo.querySelector('source');
+      if (source) {
+        const videoSrc = theme === 'dark-theme'
+          ? (isIndex ? './assets/note_smith_animated_logo_dark.mp4' : '../assets/note_smith_animated_logo_dark.mp4')
+          : (isIndex ? './assets/note_smith_animated_logo_light.mp4' : '../assets/note_smith_animated_logo_light.mp4');
+        source.setAttribute('src', videoSrc);
+        heroVideo.load();
+      }
+    }
   }
 
   function updateButtonIcon(theme: string): void {
     if (theme === 'dark-theme') {
       toggleButton.setAttribute('aria-label', 'Switch to light theme');
-      toggleButton.textContent = 'Light Mode';
+      toggleButton.innerHTML = '<span class="material-symbols-outlined">light_mode</span>';
     } else {
       toggleButton.setAttribute('aria-label', 'Switch to dark theme');
-      toggleButton.textContent = 'Dark Mode';
+      toggleButton.innerHTML = '<span class="material-symbols-outlined">dark_mode</span>';
     }
   }
 
@@ -58,7 +69,8 @@ export function initTheme(): void {
     const isDark = body.classList.contains('dark-theme');
     const newTheme = isDark ? 'light-theme' : 'dark-theme';
 
-    body.classList.toggle('dark-theme', !isDark);
+    body.classList.remove('dark-theme', 'light-theme');
+    body.classList.add(newTheme);
     localStorage.setItem('theme', newTheme);
     updateButtonIcon(newTheme);
     updateLogo(newTheme);

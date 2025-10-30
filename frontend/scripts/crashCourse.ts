@@ -4,7 +4,7 @@
   TypeScript migration of crashCourse.js. Preserves behavior and exports `initCrashCourse(isLoggedIn)`.
 */
 
-import { getUserData } from '../scripts/auth.js';
+import { getUserData } from './auth.js';
 
 type Subtopic = { title: string; details: string };
 type MainTopic = { title: string; description: string; subtopics: Subtopic[] };

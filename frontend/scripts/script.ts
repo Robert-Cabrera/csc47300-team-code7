@@ -6,7 +6,7 @@
 console.log("Main script loaded");
 
 import { initTheme } from './theme.js';
-import { initAuth, isUserLoggedIn } from '../scripts/auth.js';
+import { initAuth, isUserLoggedIn } from './auth.js';
 import { initNavbar } from './navbar.js';
 import { initCrashCourse } from './crashCourse.js';
 import { initSummary } from './summary.js';

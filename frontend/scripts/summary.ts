@@ -5,7 +5,7 @@
   and some small safety checks. Exports `initSummary(isLoggedIn: boolean)`.
 */
 
-import { getUserData } from '../scripts/auth.js';
+import { getUserData } from './auth.js';
 
 declare const pdfjsLib: any; // pdf.js is loaded globally in the page
 

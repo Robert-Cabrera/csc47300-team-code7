@@ -12,6 +12,7 @@
   font-weight: 600;
   color: var(--clr_primary);
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .crash-topic-desc, .summary-exec {
