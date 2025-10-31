@@ -36,7 +36,7 @@ const testSchema = z.object({
 
 router.post("/generate-test", async (req, res) => {
     try {
-        let { course, topic, num_questions } = req.body;
+        let { course, topic, num_questions, difficulty } = req.body;
 
         if (!course || !topic) {
             return res.status(400).json({ error: "Fields 'course' and 'topic' are required." });
@@ -45,6 +45,7 @@ router.post("/generate-test", async (req, res) => {
         if (typeof num_questions !== "number" || num_questions < 1 || num_questions > 50) {
             return res.status(400).json({ error: "Field 'num_questions' must be 1–50." });
         }
+        if (!difficulty) difficulty = "medium";
 
         // Initialize LangChain model with structured output. Pass the API key
         // explicitly (ChatGoogleGenerativeAI looks for GOOGLE_API_KEY by
@@ -61,11 +62,12 @@ router.post("/generate-test", async (req, res) => {
         });
 
         const userInput = `Generate a practice test with the following parameters:
-Course: ${course}
-Topic: ${topic}
-Number of Questions: ${num_questions}
+                        Course: ${course}
+                        Topic: ${topic}
+                        Number of Questions: ${num_questions}
+                        Difficulty: ${difficulty}
 
-Create ${num_questions} high-quality multiple-choice questions covering key concepts in ${topic} for the ${course} course.`;
+Create ${num_questions} high-quality multiple-choice questions covering key concepts in ${topic} for the ${course} course. The test should be at a(n) ${difficulty} level.`;
 
         // Invoke the model with structured output
         const result = await structuredModel.invoke([

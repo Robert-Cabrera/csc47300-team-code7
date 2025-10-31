@@ -22,6 +22,7 @@ export function initPracticeTest(isLoggedIn) {
   const form = document.getElementById('practiceTestForm');
   const courseInput = document.getElementById('practiceTestCourseInput');
   const topicInput  = document.getElementById('practiceTestTopicInput');
+  const difficultySelect = document.getElementById('practiceTestDifficulty');
 
   const loadingOverlay = document.getElementById('pt-loading');
   const outputEl = document.getElementById('pt-output');
@@ -189,6 +190,14 @@ export function initPracticeTest(isLoggedIn) {
   function escapeAttr(str) {
     return escapeHtml(str).replaceAll('`', '&#96;');
   }
+ 
+  const barFill = document.getElementById('difficultyBarFill');
+
+  difficultySelect.addEventListener('change', function() {
+    const difficulty_render = difficultySelect.value;
+    barFill.className = 'difficulty-bar-fill ' + difficulty_render;
+  });
+
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -196,9 +205,12 @@ export function initPracticeTest(isLoggedIn) {
 
     const course = courseInput.value.trim();
     const topic  = topicInput.value.trim();
+    const difficulty = difficultySelect.value;
 
-    if (!course || !topic) {
-      showError('Please provide both Course and Topic.');
+    if (!course || !topic || !difficulty) {
+      showError('Please provide Course, Topic, and Difficulty.');
+      difficultySelect.classList.add('error');
+      setTimeout(() => difficultySelect.classList.remove('error'), 1200);
       return;
     }
 
@@ -219,6 +231,7 @@ export function initPracticeTest(isLoggedIn) {
         body: JSON.stringify({
           course,
           topic,
+          difficulty,
           num_questions: 5
         })
       });

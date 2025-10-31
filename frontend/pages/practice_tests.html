@@ -52,9 +52,9 @@
 
 
     <div id="test-form">
-      <header class="dashboard-header">
-        <h2>Practice Test</h2>
-        <p>Fill in your course and topic to generate a practice test.</p>
+      <header class="practice-test-dashboard-header">
+        <h2>Practice Test AI Generator</h2>
+        <p>Fill in your course and topic to generate a personalized practice test powered by AI. Select your desired difficulty level! </p>
       </header>
 
       <form id="practiceTestForm" class="practice-test-form">
@@ -66,6 +66,20 @@
         <div class="form-group">
           <label for="practiceTestTopicInput">Topic</label>
           <input type="text" id="practiceTestTopicInput" name="topic" placeholder="e.g., Memory Hierarchy" required />
+        </div>
+
+        <div class="form-group">
+          <label for="practiceTestDifficulty">Difficulty</label>
+            <select id="practiceTestDifficulty" name="difficulty" class="difficulty-select" required>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          <div class="difficulty-bar-wrapper">
+            <div class="difficulty-bar-background">
+                <div class="difficulty-bar-fill easy" id="difficultyBarFill"></div>
+            </div>
+        </div>
         </div>
 
         <button type="submit" id="submitBtn" class="submit-btn">Generate Test</button>

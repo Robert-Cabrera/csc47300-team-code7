@@ -15,8 +15,7 @@
 
 /* Summary container */
 .summary-container {
-  max-width: 90%;
-  width: 90%;
+  width: 80%;
   margin: 3rem auto;
   padding: 2rem;
   background: var(--clr_container_bg);
