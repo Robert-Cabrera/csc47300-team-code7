@@ -98,15 +98,15 @@
             <div class="tool-cards">
                 <a href="./crash_course.html" class="card tool-card">
                     <h4>Crash Course</h4>
-                    <p>this just goes to the crash course tab</p>
+                    <p>Get a fast, AI-powered overview of any topic</p>
                 </a>
                 <a href="./summary.html" class="card tool-card">
                     <h4>Summary Generator</h4>
-                    <p>and guess what this box does</p>
+                    <p>Summarize your notes in seconds with AI</p>
                 </a>
                 <a href="./practice_tests.html" class="card tool-card">
-                    <h4>Placeholder for test when it comes</h4>
-                    <p>yup, you know where this takes you</p>
+                    <h4>Practice Tests</h4>
+                    <p>Test your knowledge with AI-generated quizzes</p>
                 </a>
             </div>
         </section>
@@ -168,6 +168,7 @@
 
     <template id="history-item-template">
         <div class="history-item">
+            <span class="material-symbols-outlined delete-icon" title="Delete">delete</span>
             <div class="history-item-header">
                 <div class="history-item-title" data-title></div>
                 <div class="history-item-date" data-date></div>
@@ -175,6 +176,18 @@
             <div class="history-item-preview" data-preview></div>
         </div>
     </template>
+
+    <!-- Confirmation modal (hidden until needed) -->
+    <div id="modalOverlay" class="modal-overlay" aria-hidden="true">
+        <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <h3 id="modalTitle" data-modal-title>Confirm</h3>
+            <p data-modal-message>Are you sure?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn cancel-btn">Cancel</button>
+                <button type="button" class="btn confirm-btn primary">Delete</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

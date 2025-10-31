@@ -306,6 +306,112 @@ body {
   flex-shrink: 0;
 }
 
+/* ensure absolutely positioned children (delete icon) are contained inside the card */
+.history-item {
+  position: relative;
+}
+
+.history-item .delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: rgba(59, 59, 59, 0.558);
+  background: transparent;
+  padding: 4px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 1; /* always visible */
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.history-item .delete-icon:hover {
+  transform: scale(1.06);
+  color: var(--clr_error);
+}
+
+/* Modal overlay + dialog */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  z-index: 2000;
+}
+.modal-overlay.show {
+  display: flex;
+}
+
+/* Ensure nothing breaks modal positioning */
+html, body {
+  position: static !important;
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
+  contain: none !important;
+  will-change: auto !important;
+}
+
+/* Fix any local stacking context */
+.home-container,
+.dashboard-container {
+  position: static !important;
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
+  contain: none !important;
+  will-change: auto !important;
+}
+
+.confirm-modal {
+  background: var(--clr_container_bg);
+  color: var(--clr_text_base);
+  padding: 18px;
+  border-radius: 10px;
+  width: 380px;
+  max-width: 94%;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  border: 1px solid var(--clr_output_border);
+}
+.confirm-modal h3 {
+  margin: 0 0 8px 0;
+}
+.confirm-modal p {
+  margin: 0 0 12px 0;
+}
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.confirm-btn {
+  background: var(--clr_error);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins';
+}
+.cancel-btn {
+  background: var(--clr_output_bg);
+  color: var(--clr_text_base);
+  border: 1px solid var(--clr_output_border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: 'Poppins';
+  cursor: pointer;
+}
+
+
 .history-item:hover {
   transform: translateY(2px);
   box-shadow: 0 6px 16px var(--clr_nav_shadow);

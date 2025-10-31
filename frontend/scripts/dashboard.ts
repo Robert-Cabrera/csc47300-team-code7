@@ -85,14 +85,7 @@ async function initializeUserData(userData: UserData | null): Promise<void> {
   try {
     currentUserData = { id: userData.id };
 
-    const statsResponse = await fetch(`/api/user/${userData.id}/stats`);
-    if (!statsResponse.ok) {
-      console.error('Failed to fetch user stats');
-      return;
-    }
-
-    const stats: StatsResponse = await statsResponse.json();
-    updateStats(stats.totalSummaries, stats.totalCrashCourses);
+    updateStats();
 
     await loadMoreObjects('summaries', 0);
     await loadMoreObjects('crash-courses', 0);
@@ -199,12 +192,21 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
 // HELPER FUNCTIONS
 // ============================================================================
 
-function updateStats(totalSummaries = 0, totalCrashCourses = 0): void {
+async function updateStats(): Promise<void> {
+  
+  let userData = getUserData() as UserData | null;
+  const statsResponse = await fetch(`/api/user/${userData.id}/stats`);
+    if (!statsResponse.ok) {
+      console.error('Failed to fetch user stats');
+      return;
+    }
+  
+  const stats: StatsResponse = await statsResponse.json();
   const statsSection = document.querySelector<HTMLDivElement>('.dashboard-stats');
   if (statsSection) {
     statsSection.style.display = 'flex';
-    (document.getElementById('statSummaries') as HTMLElement).textContent = String(totalSummaries);
-    (document.getElementById('statCrashCourses') as HTMLElement).textContent = String(totalCrashCourses);
+    (document.getElementById('statSummaries') as HTMLElement).textContent = String(stats.totalSummaries);
+    (document.getElementById('statCrashCourses') as HTMLElement).textContent = String(stats.totalCrashCourses);
   }
 }
 
@@ -285,6 +287,17 @@ function createSummaryItem(summary: Summary): HTMLElement {
   else console.warn('[data-preview] not found in history-item template');
 
   item.addEventListener('click', () => viewSummary(summary));
+  // Add delete icon event
+  const deleteIcon = item.querySelector('.delete-icon');
+  if (deleteIcon) {
+    deleteIcon.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const ok = await showConfirm('Delete summary', 'Are you sure you want to delete this summary?');
+      if (ok) {
+        await deleteSummary(summary.id);
+      }
+    });
+  }
   return item;
 }
 
@@ -324,7 +337,132 @@ function createCrashCourseItem(course: CrashCourse): HTMLElement {
   else console.warn('[data-preview] not found in history-item template');
 
   item.addEventListener('click', () => viewCrashCourse(course));
+  // Add delete icon event
+  const deleteIcon = item.querySelector('.delete-icon');
+  if (deleteIcon) {
+    deleteIcon.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const ok = await showConfirm('Delete crash course', 'Are you sure you want to delete this crash course?');
+      if (ok) {
+        await deleteCrashCourse(course.id);
+      }
+    });
+  }
   return item;
+}
+
+// Add delete functions outside of item creation
+// --- DELETE FUNCTIONS ---
+async function deleteSummary(summaryId?: string) {
+  if (!currentUserData?.id || !summaryId) return;
+  try {
+  // summary routes are mounted under /api/summary on the server
+  const res = await fetch(`/api/summary/user/${currentUserData.id}/${summaryId}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Failed to delete summary');
+    await updateStats();
+    await loadMoreObjects('summaries', 0);
+  } catch (err) {
+    await showInfo('Error deleting summary');
+    console.error(err);
+  }
+}
+
+async function deleteCrashCourse(courseId?: string) {
+  if (!currentUserData?.id || !courseId) return;
+  try {
+  // crash course routes are mounted under /api/crash-course on the server
+  const res = await fetch(`/api/crash-course/user/${currentUserData.id}/${courseId}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Failed to delete crash course');
+    await loadMoreObjects('crash-courses', 0);
+    await updateStats();
+  } catch (err) {
+    await showInfo('Error deleting crash course');
+    console.error(err);
+  }
+}
+
+// --- CONFIRMATION MODAL ---
+function showConfirm(title: string, message: string): Promise<boolean> {
+  const overlay = document.getElementById('modalOverlay') as HTMLElement | null;
+  if (!overlay) return Promise.resolve(window.confirm(message));
+
+  const titleEl = overlay.querySelector('[data-modal-title]') as HTMLElement | null;
+  const msgEl = overlay.querySelector('[data-modal-message]') as HTMLElement | null;
+  const confirmBtn = overlay.querySelector('.confirm-btn') as HTMLButtonElement | null;
+  const cancelBtn = overlay.querySelector('.cancel-btn') as HTMLButtonElement | null;
+
+  if (titleEl) titleEl.textContent = title;
+  if (msgEl) msgEl.textContent = message;
+  if (!confirmBtn || !cancelBtn) return Promise.resolve(window.confirm(message));
+
+  confirmBtn.textContent = 'Delete';
+  cancelBtn.style.display = '';
+
+  overlay.classList.add('show');
+  overlay.setAttribute('aria-hidden', 'false');
+
+  return new Promise<boolean>((resolve) => {
+    function cleanup(result: boolean) {
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden', 'true');
+      confirmBtn.removeEventListener('click', onConfirm);
+      cancelBtn.removeEventListener('click', onCancel);
+      overlay.removeEventListener('click', onOverlayClick);
+      resolve(result);
+    }
+
+    const onConfirm = () => cleanup(true);
+    const onCancel = () => cleanup(false);
+    const onOverlayClick = (e: Event) => { if (e.target === overlay) cleanup(false); };
+
+    confirmBtn.addEventListener('click', onConfirm);
+    cancelBtn.addEventListener('click', onCancel);
+    overlay.addEventListener('click', onOverlayClick);
+  });
+}
+
+// --- INFO MODAL (OK only) ---
+function showInfo(message: string, title = 'Notice'): Promise<void> {
+  const overlay = document.getElementById('modalOverlay') as HTMLElement | null;
+  if (!overlay) {
+    window.alert(message);
+    return Promise.resolve();
+  }
+
+  const titleEl = overlay.querySelector('[data-modal-title]') as HTMLElement | null;
+  const msgEl = overlay.querySelector('[data-modal-message]') as HTMLElement | null;
+  const confirmBtn = overlay.querySelector('.confirm-btn') as HTMLButtonElement | null;
+  const cancelBtn = overlay.querySelector('.cancel-btn') as HTMLButtonElement | null;
+
+  if (titleEl) titleEl.textContent = title;
+  if (msgEl) msgEl.textContent = message;
+  if (!confirmBtn) return Promise.resolve();
+
+  const prevConfirmText = confirmBtn.textContent || '';
+  const prevCancelDisplay = cancelBtn ? cancelBtn.style.display : '';
+  if (cancelBtn) cancelBtn.style.display = 'none';
+  confirmBtn.textContent = 'OK';
+
+  overlay.classList.add('show');
+  overlay.setAttribute('aria-hidden', 'false');
+
+  return new Promise<void>((resolve) => {
+    function cleanup() {
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden', 'true');
+      confirmBtn.removeEventListener('click', onOk);
+      overlay.removeEventListener('click', onOverlayClick);
+      confirmBtn.textContent = prevConfirmText;
+      if (cancelBtn) cancelBtn.style.display = prevCancelDisplay;
+      resolve();
+    }
+
+    const onOk = () => cleanup();
+    const onOverlayClick = (e: Event) => { if (e.target === overlay) cleanup(); };
+
+    confirmBtn.addEventListener('click', onOk);
+    overlay.addEventListener('click', onOverlayClick);
+  });
 }
 
 // ============================================================================

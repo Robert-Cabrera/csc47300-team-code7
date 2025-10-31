@@ -151,6 +151,14 @@ export function initPracticeTest(isLoggedIn) {
           <input type="radio" id="${optId}" name="${qId}" value="${escapeAttr(opt)}" />
           <label for="${optId}">${escapeHtml(opt)}</label>
         `;
+        // Make clicking the li select the radio button
+        li.addEventListener('click', (e) => {
+          // Prevent double firing if label/input is clicked
+          if (e.target.tagName !== 'INPUT') {
+        const input = li.querySelector('input[type="radio"]');
+        if (input) input.checked = true;
+          }
+        });
         ul.appendChild(li);
       });
 
