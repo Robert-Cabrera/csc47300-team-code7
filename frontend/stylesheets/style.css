@@ -266,14 +266,28 @@ body {
   margin-bottom: 25px;
 }
 
+/* New outer container for layout */
+.history-outer-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 200px;
+}
+
 /* History items list - HORIZONTAL LAYOUT */
 .history-list {
   display: flex;
   gap: 20px;
   overflow-x: hidden;
-  /* Default: no scroll */
-  padding-bottom: 10px;
+  /* Add horizontal padding so items don't touch the edges */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px; /* For scrollbar visibility */
   scroll-behavior: smooth;
+  /* Ensure content respects the container's border-radius */
+  clip-path: inset(0 0 0 0 round 8px);
+  flex: 1;
+  min-width: 0;
 }
 
 .history-list::-webkit-scrollbar {
@@ -450,34 +464,19 @@ html, body {
   -webkit-box-orient: vertical;
 }
 
-.summaries-list-container {
-  min-height: 200px;
+.summaries-list-container,
+.crash-courses-list-container {
   background-color: var(--clr_container_bg);
+  min-height: 200px;
   border: 1px dashed var(--clr_output_border);
   border-radius: 8px;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
 }
 
-.summaries-list-container:has(.history-list) {
+/* When items are present, change border style */
+.history-list:has(.history-item) {
   border-style: solid;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-  overflow: hidden;
-  /* Prevent container overflow */
 }
-
-/* Container holds both the scrollable list and arrow button */
-.summaries-list-container .history-list {
-  flex: 1;
-  overflow-x: hidden;
-  /* No scroll initially, enabled by JS when all items loaded */
-  min-width: 0;
-  /* Allow flex item to shrink below content size */
-}
-
 .load-more-btn {
   background: var(--clr_container_bg);
   border: 1px solid var(--clr_output_border);
@@ -1771,10 +1770,11 @@ body {
 
 /* For dashboard */
 
+/*
 
 .crash-courses-list-container {
   position: relative;
-  /* Make container the positioning context for overlay */
+  /* Make container the positioning context for overlay 
 }
 
 .crash-courses-list-container {
@@ -1793,5 +1793,6 @@ body {
   align-items: center;
   gap: 15px;
   overflow: hidden;
-  /* Prevent container overflow */
+  /* Prevent container overflow 
 }
+  */

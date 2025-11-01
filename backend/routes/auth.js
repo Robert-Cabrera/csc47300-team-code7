@@ -45,7 +45,7 @@ router.get('/user/:userId/summaries', async (req, res) => {
         const limit = parseInt(req.query.limit) || ITEMS_PER_PAGE;
         
         // Simulate network/processing delay
-        await simulateDelay();
+        //await simulateDelay();
         
         const usersData = readUsers();
         const user = usersData.users.find(u => u.id === userId);
@@ -77,7 +77,7 @@ router.get('/user/:userId/crash-courses', async (req, res) => {
         const limit = parseInt(req.query.limit) || ITEMS_PER_PAGE;
         
         // Simulate network/processing delay
-        await simulateDelay();
+        //await simulateDelay();
         
         const usersData = readUsers();
         const user = usersData.users.find(u => u.id === userId);

@@ -57,6 +57,7 @@ interface FetchBatchResult<T> {
 // ============================================================================
 
 const ITEMS_PER_PAGE = 4; // Number of items to fetch per batch
+const SCROLL_SPEED_MULTIPLIER = 1.5; // Adjust this value to change scroll speed
 let currentUserData: { id: string } | null = null;
 
 // ============================================================================
@@ -76,6 +77,8 @@ export function initDashboard(isLoggedIn: boolean): void {
     }
 
     initializeUserData(userData);
+    enableHorizontalScroll('.summaries-list-container');
+    enableHorizontalScroll('.crash-courses-list-container');
   }
 }
 
@@ -149,11 +152,14 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
   if (!container) return;
 
   const isFirstLoad = startIndex === 0;
-  if (isFirstLoad) {
-    container.innerHTML = '';
-  } else if (loadMoreBtn) {
-    loadMoreBtn.style.display = 'none';
-  }
+  // well the first load is always zero here
+  // if (isFirstLoad) {
+  //   container.innerHTML = '';
+  // } else if (loadMoreBtn) {
+  //   loadMoreBtn.style.display = 'none';
+  // }
+
+  if (loadMoreBtn) loadMoreBtn.style.display = 'none';
 
   showLoadingAnimation(container, type);
 
@@ -164,6 +170,10 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
       ITEMS_PER_PAGE
     );
     removeLoadingAnimation(container, type);
+
+    if (isFirstLoad) {
+      container.innerHTML = ''; // Clear only after fetching, before rendering new items
+    }
 
     if (items.length === 0 && isFirstLoad) {
       showEmptyState(container, loadMoreBtn, type);
@@ -192,6 +202,19 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
 // HELPER FUNCTIONS
 // ============================================================================
 
+function enableHorizontalScroll(selector: string): void {
+  const container = document.querySelector<HTMLElement>(selector);
+  if (!container) return;
+
+  container.addEventListener('wheel', (event: WheelEvent) => {
+    if (event.deltaY !== 0) {
+      event.preventDefault();
+      event.stopPropagation(); // Stop the event from bubbling up
+      container.scrollBy({ left: event.deltaY * SCROLL_SPEED_MULTIPLIER, behavior: 'smooth' });
+    }
+  });
+}
+
 async function updateStats(): Promise<void> {
   
   let userData = getUserData() as UserData | null;
@@ -211,13 +234,7 @@ async function updateStats(): Promise<void> {
 }
 
 function getOrCreateHistoryList(container: HTMLElement): HTMLDivElement {
-  let historyList = container.querySelector<HTMLDivElement>('.history-list');
-  if (!historyList) {
-    historyList = document.createElement('div');
-    historyList.className = 'history-list';
-    container.appendChild(historyList);
-  }
-  return historyList;
+  return container as HTMLDivElement;
 }
 
 function updateLoadMoreButton(
@@ -234,7 +251,7 @@ function updateLoadMoreButton(
   if (hasMore) {
     loadMoreBtn.style.display = 'flex';
     loadMoreBtn.onclick = onClickHandler;
-    container.appendChild(loadMoreBtn);
+    container.parentElement?.appendChild(loadMoreBtn); // Append to outer container
   } else {
     loadMoreBtn.style.display = 'none';
   }
