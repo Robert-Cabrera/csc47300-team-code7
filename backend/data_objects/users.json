@@ -2038,6 +2038,52 @@
       ],
       "summaries": [
         {
+          "id": "sum_1762025040863",
+          "createdAt": "2025-11-01T19:24:00.863Z",
+          "fileName": "Trolley_Problem-PHIL_1A.pdf",
+          "document_title": "The Trolley Problem",
+          "executive_summary": "This document introduces and explores the famous philosophical thought experiment known as the Trolley Problem, originally conceived by Philippa Foot and popularized by Judith Jarvis Thomson. It presents several variations, including the original scenario, the Emergency Room Case, and the Footbridge Case, to probe ethical intuitions about saving lives. The core of the document lies in questioning whether it is morally permissible to sacrifice one person to save a larger group, examining the reasons behind our immediate responses and the factors that might influence moral judgments, such as institutional context and direct physical action.",
+          "key_findings": [
+            "The Trolley Problem, in its various forms, highlights a tension between utilitarian principles (maximizing good for the greatest number) and deontological ethics (adhering to moral duties and prohibitions, such as not directly causing harm).",
+            "Intuitive responses to the Trolley Problem often differ significantly between the original scenario (pulling a lever) and the Footbridge Case (pushing a person), even though the outcome of saving five lives at the cost of one is the same.",
+            "Factors such as direct physical involvement, institutional roles (like a doctor's oath), and potential long-term societal consequences can heavily influence moral decision-making in these hypothetical ethical dilemmas."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "Introduces the classic Trolley Problem: a runaway trolley will kill five workmen, but can be diverted to a side track, killing one workman.",
+                "Poses the central question: should one pull the lever to save five at the cost of one, or let the five die?",
+                "Mentions Philippa Foot as the originator and Judith Jarvis Thomson as a popularizer of the problem, noting its use in ethics and law courses."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "Discusses the high consensus (80-90%) in a BBC poll to pull the lever, questioning the role of numbers in moral decisions.",
+                "Introduces the Emergency Room Case: a healthy homeless person could have their organs harvested to save five patients needing transplants.",
+                "Asks if killing the homeless person to save five is morally equivalent to pulling the lever in the Trolley Problem."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "Explores reasons for moral distinctions between the Trolley Problem and the Emergency Room Case, such as institutional roles and the Hippocratic Oath.",
+                "Considers the potential negative societal impact of organ harvesting in hospitals, such as reduced trust and reluctance to seek medical care.",
+                "Introduces an attempt to create a scenario without institutional elements, leading to the Footbridge Case."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "Presents the Footbridge Case: a trolley will kill five workmen, but pushing a large stranger off a footbridge onto the tracks would stop the trolley and save them.",
+                "Asks the reader for their immediate intuitive response and reasoning for pushing the stranger or letting the five die.",
+                "Reiterates the core ethical dilemma of sacrificing one life to save five, highlighting how direct physical action (pushing) might elicit a different response than indirect action (pulling a lever)."
+              ]
+            }
+          ]
+        },
+        {
           "id": "sum_1761608217021",
           "createdAt": "2025-10-27T23:36:57.021Z",
           "fileName": "2022-BMVC-BNEW.pdf",

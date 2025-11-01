@@ -1,4 +1,4 @@
-/*
+/*  
   dashboard.ts
   
   Handles dashboard page functionality including user greeting and history display.
@@ -57,7 +57,18 @@ interface FetchBatchResult<T> {
 // ============================================================================
 
 const ITEMS_PER_PAGE = 4; // Number of items to fetch per batch
+const SCROLL_SPEED = 2; // Adjust for faster or slower scrolling
 let currentUserData: { id: string } | null = null;
+
+// Caching DOM elements for performance
+let summariesContainer: HTMLDivElement | null;
+let crashCoursesContainer: HTMLDivElement | null;
+let loadMoreSummariesBtn: HTMLButtonElement | null;
+let loadMoreCrashCoursesBtn: HTMLButtonElement | null;
+
+// State for history lists to avoid re-querying
+let summariesHistoryList: HTMLDivElement | null = null;
+let crashCoursesHistoryList: HTMLDivElement | null = null;
 
 // ============================================================================
 // INITIALIZATION FUNCTIONS
@@ -66,6 +77,12 @@ let currentUserData: { id: string } | null = null;
 export function initDashboard(isLoggedIn: boolean): void {
   const dashboardContainer = document.querySelector<HTMLDivElement>(".dashboard-container");
   if (!dashboardContainer) return;
+
+  // Query and cache elements once
+  summariesContainer = document.querySelector('.summaries-list-container');
+  crashCoursesContainer = document.querySelector('.crash-courses-list-container');
+  loadMoreSummariesBtn = document.getElementById('loadMoreSummaries') as HTMLButtonElement;
+  loadMoreCrashCoursesBtn = document.getElementById('loadMoreCrashCourses') as HTMLButtonElement;
 
   if (isLoggedIn) {
     const userData = getUserData() as UserData | null;
@@ -76,6 +93,7 @@ export function initDashboard(isLoggedIn: boolean): void {
     }
 
     initializeUserData(userData);
+
   }
 }
 
@@ -126,27 +144,26 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
   const typeConfig = {
     summaries: {
       containerClass: '.summaries-list-container',
-      loadMoreBtnId: 'loadMoreSummaries',
       createItemFn: createSummaryItem,
+      container: summariesContainer,
+      loadMoreBtn: loadMoreSummariesBtn,
+      historyList: summariesHistoryList,
+      setHistoryList: (list: HTMLDivElement) => { summariesHistoryList = list; },
     },
     'crash-courses': {
       containerClass: '.crash-courses-list-container',
-      loadMoreBtnId: 'loadMoreCrashCourses',
       createItemFn: createCrashCourseItem,
+      container: crashCoursesContainer,
+      loadMoreBtn: loadMoreCrashCoursesBtn,
+      historyList: crashCoursesHistoryList,
+      setHistoryList: (list: HTMLDivElement) => { crashCoursesHistoryList = list; },
     },
   } as const;
 
   const config = typeConfig[type];
-  if (!config) {
-    console.error(`Unknown type: ${type}`);
-    return;
-  }
-
-  const { containerClass, loadMoreBtnId, createItemFn } = config;
-  const container = document.querySelector<HTMLDivElement>(containerClass);
-  const loadMoreBtn = document.getElementById(loadMoreBtnId) as HTMLButtonElement | null;
-
+  const { createItemFn, container, loadMoreBtn } = config;
   if (!container) return;
+  let { historyList, setHistoryList } = config;
 
   const isFirstLoad = startIndex === 0;
   if (isFirstLoad) {
@@ -170,11 +187,14 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
       return;
     }
 
-    const historyList = getOrCreateHistoryList(container);
+    if (!historyList) {
+      historyList = getOrCreateHistoryList(container);
+      setHistoryList(historyList);
+    }
+
     items.forEach(obj => {
       historyList.appendChild(createItemFn(obj));
     });
-
     if (historyList.scrollWidth > historyList.clientWidth) {
       historyList.style.overflowX = 'auto';
     }
@@ -186,6 +206,21 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
     console.error(`Error loading ${type}:`, err);
     removeLoadingAnimation(container, type);
   }
+}
+
+// ============================================================================
+// SCROLLING
+// ============================================================================
+
+function enableHorizontalScroll(container: HTMLElement): void {
+  container.addEventListener('wheel', (event: WheelEvent) => {
+    // Prevent the page from scrolling vertically
+    if (container.scrollWidth > container.clientWidth) {
+      event.preventDefault();
+      // Scroll horizontally instead
+      container.scrollLeft += event.deltaY * SCROLL_SPEED;
+    }
+  });
 }
 
 // ============================================================================
@@ -215,6 +250,7 @@ function getOrCreateHistoryList(container: HTMLElement): HTMLDivElement {
   if (!historyList) {
     historyList = document.createElement('div');
     historyList.className = 'history-list';
+    enableHorizontalScroll(historyList); // Attach listener once on creation
     container.appendChild(historyList);
   }
   return historyList;
@@ -234,9 +270,13 @@ function updateLoadMoreButton(
   if (hasMore) {
     loadMoreBtn.style.display = 'flex';
     loadMoreBtn.onclick = onClickHandler;
-    container.appendChild(loadMoreBtn);
+    // Ensure button is a direct child of the container if it's not already
+    if (loadMoreBtn.parentElement !== container) {
+        container.appendChild(loadMoreBtn);
+    }
   } else {
     loadMoreBtn.style.display = 'none';
+    loadMoreBtn.onclick = null;
   }
 }
 
@@ -423,25 +463,19 @@ function showConfirm(title: string, message: string): Promise<boolean> {
 
 // --- INFO MODAL (OK only) ---
 function showInfo(message: string, title = 'Notice'): Promise<void> {
-  const overlay = document.getElementById('modalOverlay') as HTMLElement | null;
+  const overlay = document.getElementById('infoBoxOverlay') as HTMLElement | null;
   if (!overlay) {
     window.alert(message);
     return Promise.resolve();
   }
 
-  const titleEl = overlay.querySelector('[data-modal-title]') as HTMLElement | null;
-  const msgEl = overlay.querySelector('[data-modal-message]') as HTMLElement | null;
-  const confirmBtn = overlay.querySelector('.confirm-btn') as HTMLButtonElement | null;
-  const cancelBtn = overlay.querySelector('.cancel-btn') as HTMLButtonElement | null;
+  const titleEl = overlay.querySelector('[data-infobox-title]') as HTMLElement | null;
+  const msgEl = overlay.querySelector('[data-infobox-message]') as HTMLElement | null;
+  const okBtn = overlay.querySelector('.info-box-btn') as HTMLButtonElement | null;
 
   if (titleEl) titleEl.textContent = title;
   if (msgEl) msgEl.textContent = message;
-  if (!confirmBtn) return Promise.resolve();
-
-  const prevConfirmText = confirmBtn.textContent || '';
-  const prevCancelDisplay = cancelBtn ? cancelBtn.style.display : '';
-  if (cancelBtn) cancelBtn.style.display = 'none';
-  confirmBtn.textContent = 'OK';
+  if (!okBtn) return Promise.resolve();
 
   overlay.classList.add('show');
   overlay.setAttribute('aria-hidden', 'false');
@@ -450,17 +484,15 @@ function showInfo(message: string, title = 'Notice'): Promise<void> {
     function cleanup() {
       overlay.classList.remove('show');
       overlay.setAttribute('aria-hidden', 'true');
-      confirmBtn.removeEventListener('click', onOk);
+      okBtn.removeEventListener('click', onOk);
       overlay.removeEventListener('click', onOverlayClick);
-      confirmBtn.textContent = prevConfirmText;
-      if (cancelBtn) cancelBtn.style.display = prevCancelDisplay;
       resolve();
     }
 
     const onOk = () => cleanup();
     const onOverlayClick = (e: Event) => { if (e.target === overlay) cleanup(); };
 
-    confirmBtn.addEventListener('click', onOk);
+    okBtn.addEventListener('click', onOk);
     overlay.addEventListener('click', onOverlayClick);
   });
 }

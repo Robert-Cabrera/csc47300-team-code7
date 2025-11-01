@@ -13,12 +13,15 @@ import { initSummary } from './summary.js';
 import { initPracticeTest } from '../scripts/practiceTest.js';
 import { initDashboard } from './dashboard.js';
 import { initStatsAnimation } from './statsAnimation.js';
+import { initPopup } from './popup.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
 	// Initialize core functionality
 	initTheme();
 	initAuth();
 	initNavbar();
+	initPopup();
 
 	// Check login status (typed)
 	const isLoggedIn: boolean = isUserLoggedIn();
