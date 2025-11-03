@@ -5,7 +5,7 @@
 This feature allows a logged-in user to generate a structured, summary-style "crash course" on any topic using an AI model (referred to via CrashCourse methods).
 
 **Code Link:**
-[View Implementation](./frontend/scripts/crashCourse.js)
+[View Implementation](./frontend/scripts/crashCourse.ts)
 
 
 ### Feature 2: Practice Test Generator & Grader
@@ -21,7 +21,7 @@ This feature enables logged-in users to generate a multiple-choice practice test
 This feature allows logged-in users to upload a PDF file and generate a structured, comprehensive summary using an AI model. It is designed to handle large documents by dynamically adjusting the summarization strategy.
 
 **Code Link:**
-[View Implementation](./frontend/scripts/summary.js)
+[View Implementation](./frontend/scripts/summary.ts)
 
 
 # File Structure
