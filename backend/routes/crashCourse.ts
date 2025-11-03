@@ -2,7 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
-const { readUsers, writeUsers } = require('../../utils/userManager');
+import { readUsers, writeUsers } from '../utils/userManager';
 
 const router = express.Router();
 
@@ -125,4 +125,4 @@ router.delete('/user/:userId/:courseId', (req: express.Request, res: express.Res
   }
 });
 
-export = router;
+export default router;
