@@ -5,7 +5,7 @@ import pdfParse from 'pdf-parse';
 import fs from 'fs';
 import path from 'path';
 
-const { readUsers, writeUsers, findUserByID } = require('../../utils/userManager');
+import { readUsers, writeUsers, findUserByID } from '../utils/userManager';
 
 const router = express.Router();
 
@@ -151,4 +151,4 @@ router.delete('/user/:userId/:summaryId', (req: express.Request, res: express.Re
   }
 });
 
-export = router;
+export default router;

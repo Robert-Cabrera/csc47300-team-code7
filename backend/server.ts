@@ -10,26 +10,42 @@ const PORT = 3000;
 
 app.use(express.json());
 
+/**
+ * Resolve a route module and always return the actual Express router/middleware.
+ * Supports:
+ *  - CommonJS: module.exports = router
+ *  - ESM transpiled to CJS: exports.default = router
+ *  - modules that export { router }
+ */
 function resolveRouteModule(name: string) {
-  // Candidate locations (in order):
-  // 1) backend/dist/routes/<name>.js (when running compiled server)
-  // 2) backend/dist/../dist/routes/<name>.js (when running source server and compiled routes exist)
-  // 3) backend/../routes/<name>.js (source route)
+  // 1) backend/dist/routes/<name>.js (compiled)
+  // 2) backend/dist/../dist/routes/<name>.js (edge case if server compiled from elsewhere)
+  // 3) backend/../routes/<name>.js (source)
   const candidates = [
     path.join(__dirname, 'routes', `${name}.js`),
     path.join(__dirname, '..', 'dist', 'routes', `${name}.js`),
-    path.join(__dirname, '..', 'routes', `${name}.js`)
+    path.join(__dirname, '..', 'routes', `${name}.js`),
   ];
 
+  const load = (p: string) => {
+    const mod = require(p);
+    const router = mod?.default ?? mod?.router ?? mod;
+    // Express Router is a function (middleware) or has .use/.handle
+    if (typeof router === 'function' || (router && typeof router.use === 'function')) {
+      return router;
+    }
+    throw new TypeError(`Route "${name}" at "${p}" did not export an Express router/middleware`);
+  };
+
   for (const c of candidates) {
-    if (fs.existsSync(c)) return require(c);
+    if (fs.existsSync(c)) return load(c);
   }
 
-  // fallback to direct require (will throw)
-  return require(`./routes/${name}`);
+  // Fallback to relative require (may throw if missing)
+  return load(`./routes/${name}`);
 }
 
-// Import routes using resolver
+// Import routes using resolver (each route should `export default router`)
 const authRoutes = resolveRouteModule('auth');
 const crashCourseRoutes = resolveRouteModule('crashCourse');
 const summaryRoutes = resolveRouteModule('summary');
@@ -52,6 +68,7 @@ function findFrontendDir() {
 
 const frontendDir = findFrontendDir();
 const faviconPath = path.join(frontendDir, 'assets', 'favicon.ico');
+
 app.get('/favicon.ico', (req, res) => {
   res.sendFile(faviconPath, (err) => {
     if (err) res.status(404).send('Favicon not found');
