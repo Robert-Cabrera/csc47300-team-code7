@@ -33,7 +33,8 @@ function resolveRouteModule(name: string) {
 const authRoutes = resolveRouteModule('auth');
 const crashCourseRoutes = resolveRouteModule('crashCourse');
 const summaryRoutes = resolveRouteModule('summary');
-const practiceTestRoutes = resolveRouteModule('practiceTest');
+const practiceTestRoutesModule = resolveRouteModule('practiceTest');
+const practiceTestRoutes = practiceTestRoutesModule.default || practiceTestRoutesModule;
 
 app.use('/api', authRoutes);
 app.use('/api/crash-course', crashCourseRoutes);
