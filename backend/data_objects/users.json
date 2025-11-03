@@ -2650,6 +2650,68 @@
       ],
       "summaries": [
         {
+          "id": "sum_1762145634125",
+          "createdAt": "2025-11-03T04:53:54.125Z",
+          "fileName": "poems-27pages.pdf",
+          "document_title": "Reflections and Disappearances",
+          "executive_summary": "This document appears to be a series of diary entries or personal reflections, primarily chronicling the narrator's complex relationships and internal struggles. The first part details a burgeoning romance with Daisy, overshadowed by the narrator's involvement in an \"offbeat organization\" and the disappearance of a coworker named Clare, which draws the attention of a detective. The second part shifts to the perspective of a writer reflecting on her past, her successful children's book series featuring a character named Preston, and her own present-day anxieties and possible descent into delusion. Both parts explore themes of identity, reality versus perception, and the unsettling nature of hidden lives.",
+          "key_findings": [
+            "The narrative explores the blurred lines between reality and imagination, particularly through the lens of relationships and creative work.",
+            "The concept of \"offbeat organizations\" and hidden lives significantly impacts the narrator's relationships and personal safety.",
+            "A pervasive sense of unease and potential delusion pervades both narrative threads, questioning the stability of the narrators' perceptions."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1-5",
+              "summary_points": [
+                "The narrator describes meeting and becoming interested in Daisy, a florist, while ostensibly purchasing flowers for a memorial for the missing Clare.",
+                "Daisy visits the narrator's apartment, where she reacts negatively to a sculpture, and the narrator subtly tries to connect with her interest in plants.",
+                "A detective interrogates the narrator about Clare's disappearance, probing into the narrator's involvement with an \"offbeat organization,\" which the narrator deflects."
+              ]
+            },
+            {
+              "page_range": "6-10",
+              "summary_points": [
+                "Daisy visits the narrator's office, reacting coolly to his artwork, causing the narrator to reconsider revealing his more personal art until after their vacation.",
+                "During a tropical vacation, the narrator takes Daisy on a nighttime excursion to see night-blooming cereus flowers, a moment that seems to unsettle her.",
+                "Upon returning, the narrator works on a painting titled \"Sanctum Obscurum\" intended to evoke Daisy's memory of their trip and convey hidden messages."
+              ]
+            },
+            {
+              "page_range": "11-15",
+              "summary_points": [
+                "Daisy's reaction to the \"Sanctum Obscurum\" painting is dismissive, revealing her lack of understanding and a growing suspicion about the narrator's life.",
+                "The narrator fears Daisy will reveal secrets about him and his \"offbeat organization\" to Detective Briceberg.",
+                "An emergency meeting is held with the \"organization,\" where members express horror at the extent of Daisy's knowledge and agree to handle the situation."
+              ]
+            },
+            {
+              "page_range": "16-20",
+              "summary_points": [
+                "The narrator reflects on the past, the creation of her children's book character Preston, and her father's influence.",
+                "The writer recounts attending a funeral for the person who inspired Preston, experiencing a sense of temporal dislocation and mistaken identity.",
+                "After the funeral, the writer has a one-night encounter with a man named Hank De Vere, leading to further unsettling experiences in a hotel room."
+              ]
+            },
+            {
+              "page_range": "21-25",
+              "summary_points": [
+                "The writer describes increasingly strange and disorienting events over the past year, including a distorted reflection in a mirror and odd occurrences with children.",
+                "At a Halloween reading at a library, the writer experiences a disconnect from her own work and witnesses unusual behavior among the children, including a fainting spell.",
+                "The writer questions the reality of her experiences, attributing them to her own fragile mental state, excessive drinking, and the influence of her past work."
+              ]
+            },
+            {
+              "page_range": "26-27",
+              "summary_points": [
+                "Returning home, the writer experiences further distortions of reality, perceiving the moon and the landscape outside her window as altered.",
+                "The writer notes the strange taste of her drink and sees unsettling shadows overlapping her reflection in the window, questioning if they are senility or manifestations from her stories.",
+                "The narrative concludes with the writer hearing familiar, unsettling giggling and seeing shadows that she believes are taking over, expressing a fear that she can no longer see."
+              ]
+            }
+          ]
+        },
+        {
           "id": "sum_1761345616350",
           "createdAt": "2025-10-24T22:40:16.351Z",
           "fileName": "jmrsp.2022.57.64.pdf",

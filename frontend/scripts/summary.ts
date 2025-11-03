@@ -268,7 +268,7 @@ export function initSummary(isLoggedIn: boolean): void {
     if (summarizeBtn) {
       summarizeBtn.disabled = true;
       summarizeBtn.style.cursor = 'not-allowed';
-      summarizeBtn.style.backgroundColor = 'gray';
+      summarizeBtn.style.background = 'gray';
     }
 
     const newRemoveBtn = pdfInfo.querySelector('#removePdfBtn') as HTMLButtonElement | null;
@@ -285,7 +285,7 @@ export function initSummary(isLoggedIn: boolean): void {
     if (summarizeBtn) {
       summarizeBtn.disabled = false;
       summarizeBtn.style.cursor = '';
-      summarizeBtn.style.backgroundColor = '';
+      summarizeBtn.style.background = '';
     }
   }
 
