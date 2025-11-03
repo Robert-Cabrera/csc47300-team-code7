@@ -20,6 +20,7 @@ import { initSummary } from './summary.js';
 import { initPracticeTest } from '../scripts/practiceTest.js';
 import { initDashboard } from './dashboard.js';
 import { initStatsAnimation } from './statsAnimation.js';
+import { initPopup } from './popup.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initTheme();
 	initAuth();
 	initNavbar();
+	initPopup();
 
 	// Check login status
 	const isLoggedIn: boolean = isUserLoggedIn();
