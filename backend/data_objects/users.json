@@ -4001,6 +4001,17 @@
         }
       ],
       "summaries": []
+    },
+    {
+      "id": "user_004",
+      "username": "tyguest",
+      "name": "tyler",
+      "email": "tyguest@gmail.com",
+      "password": "tyler12345",
+      "createdAt": "2025-11-03T22:40:40.078Z",
+      "profilePicture": "",
+      "crashCourses": [],
+      "summaries": []
     }
   ]
 }

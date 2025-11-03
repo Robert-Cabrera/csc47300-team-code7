@@ -9,6 +9,6 @@
     "strict": false,
     "skipLibCheck": true
   },
-  "include": ["server.ts", "routes/**/*.ts", "../shared/**/*.ts"],
+  "include": ["server.ts", "routes/**/*.ts", "utils/**/*.ts", "../shared/**/*.ts"],
   "exclude": ["node_modules"]
 }
