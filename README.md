@@ -40,7 +40,7 @@ csc47300-team-code7/
     ├── routes/                # Express route handlers (API endpoints)
     ├── utils/                 # Utility functions (will be helpful when adding database)
     ├── data_objects/          # JSON objects files
-    └── server.js              # Express server entry point
+    └── server.ts              # Express server entry point
 ```
 
 
