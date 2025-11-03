@@ -43,13 +43,11 @@
       </div>
     </div>
 
-
     <div id="test-locked" style="display:none;">
       <lottie-player src="../assets/lock_icon.json" background="transparent" speed="1"
         style="width:150px; height:150px; margin:auto;" loop autoplay></lottie-player>
       <p>You must be logged in to access Practice Tests.</p>
     </div>
-
 
     <div id="test-form">
       <header class="practice-test-dashboard-header">
@@ -57,7 +55,7 @@
         <p>Fill in your course and topic to generate a personalized practice test powered by AI. Select your desired difficulty level! </p>
       </header>
 
-      <form id="practiceTestForm" class="practice-test-form">
+      <form id="practiceTestForm" class="practice-test-form" novalidate>
         <div class="form-group">
           <label for="practiceTestCourseInput">Course</label>
           <input type="text" id="practiceTestCourseInput" name="course" placeholder="e.g., Computer Organization" required />
@@ -85,11 +83,16 @@
         <button type="submit" id="submitBtn" class="submit-btn">Generate Test</button>
       </form>
 
-      <!-- Error box (hidden until needed) -->
       <div id="pt-error" class="pt-error" style="display:none;"></div>
-
-      <!-- Rendered test appears here -->
       <div id="pt-output" class="pt-output" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Requirement Modal -->
+  <div id="requirementModal" class="modal-backdrop" hidden>
+    <div class="modal">
+      <p id="requirementModalMsg">You need to enter a course and topic before generating a test.</p>
+      <button type="button" id="requirementModalClose" class="modal-close">Close</button>
     </div>
   </div>
 
@@ -128,5 +131,41 @@
           </div>
       </div>
   </footer>
+
+  <!-- Modal Validation Script -->
+  <script type="module">
+    const form   = document.getElementById('practiceTestForm');
+    const course = document.getElementById('practiceTestCourseInput');
+    const topic  = document.getElementById('practiceTestTopicInput');
+
+    const modal      = document.getElementById('requirementModal');
+    const modalMsg   = document.getElementById('requirementModalMsg');
+    const modalClose = document.getElementById('requirementModalClose');
+
+    function openModal(message) {
+      modalMsg.textContent = message;
+      modal.hidden = false;
+      modalClose.focus();
+    }
+    function closeModal() { modal.hidden = true; }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    window.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+    form.addEventListener('submit', e => {
+      const missingCourse = !course.value.trim();
+      const missingTopic  = !topic.value.trim();
+
+      if (missingCourse || missingTopic) {
+        e.preventDefault();
+        const what = missingCourse && missingTopic
+          ? 'a course and a topic'
+          : missingCourse ? 'a course' : 'a topic';
+        openModal(`You need to enter ${what} before generating a test.`);
+      }
+    });
+  </script>
+
 </body>
 </html>
