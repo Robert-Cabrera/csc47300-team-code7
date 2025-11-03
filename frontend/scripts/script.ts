@@ -17,7 +17,7 @@ import { initAuth, isUserLoggedIn } from './auth.js';
 import { initNavbar } from './navbar.js';
 import { initCrashCourse } from './crashCourse.js';
 import { initSummary } from './summary.js';
-import { initPracticeTest } from '../scripts/practiceTest.js';
+import { initPracticeTest } from './practiceTest.js';
 import { initDashboard } from './dashboard.js';
 import { initStatsAnimation } from './statsAnimation.js';
 import { initPopup } from './popup.js';

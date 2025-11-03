@@ -9,7 +9,6 @@
 
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <script type="module" src="../dist/script.js"></script>
-
 </head>
 
 <body>
@@ -68,16 +67,16 @@
 
         <div class="form-group">
           <label for="practiceTestDifficulty">Difficulty</label>
-            <select id="practiceTestDifficulty" name="difficulty" class="difficulty-select" required>
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
+          <select id="practiceTestDifficulty" name="difficulty" class="difficulty-select" required>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
           <div class="difficulty-bar-wrapper">
             <div class="difficulty-bar-background">
-                <div class="difficulty-bar-fill easy" id="difficultyBarFill"></div>
+              <div class="difficulty-bar-fill easy" id="difficultyBarFill"></div>
             </div>
-        </div>
+          </div>
         </div>
 
         <button type="submit" id="submitBtn" class="submit-btn">Generate Test</button>
@@ -97,75 +96,39 @@
   </div>
 
   <footer class="info-hub" aria-labelledby="info-hub-title">
-      <div class="info-hub-inner">
-          <h2 id="info-hub-title">Need to know</h2>
-          <div class="info-columns">
-              <div class="info-col">
-                  <h3>FAQs</h3>
-                  <details>
-                      <summary>Is NoteSmith free?</summary>
-                      <p>Yes, you can get started for free. Additional features may require an upgrade later.</p>
-                  </details>
-                  <details>
-                      <summary>Do I need to upload PDFs?</summary>
-                      <p>No. You can upload your notes or start from any topic to generate a crash course.</p>
-                  </details>
-                  <details>
-                      <summary>Will my data be private?</summary>
-                      <p>Your content is processed for your account only. See Important Info for policy links.</p>
-                  </details>
-              </div>
-              <div class="info-col">
-                  <h3>Contact</h3>
-                  <p>Questions or feedback? We'd love to help.</p>
-                  <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
-              </div>
-              <div class="info-col">
-                  <h3>Important Info</h3>
-                  <ul class="info-list">
-                      <li><a class="info-link" href="#">Terms of Use</a></li>
-                      <li><a class="info-link" href="#">Privacy Policy</a></li>
-                      <li><a class="info-link" href="#">Accessibility</a></li>
-                  </ul>
-              </div>
-          </div>
+    <div class="info-hub-inner">
+      <h2 id="info-hub-title">Need to know</h2>
+      <div class="info-columns">
+        <div class="info-col">
+          <h3>FAQs</h3>
+          <details>
+            <summary>Is NoteSmith free?</summary>
+            <p>Yes, you can get started for free. Additional features may require an upgrade later.</p>
+          </details>
+          <details>
+            <summary>Do I need to upload PDFs?</summary>
+            <p>No. You can upload your notes or start from any topic to generate a crash course.</p>
+          </details>
+          <details>
+            <summary>Will my data be private?</summary>
+            <p>Your content is processed for your account only. See Important Info for policy links.</p>
+          </details>
+        </div>
+        <div class="info-col">
+          <h3>Contact</h3>
+          <p>Questions or feedback? We'd love to help.</p>
+          <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
+        </div>
+        <div class="info-col">
+          <h3>Important Info</h3>
+          <ul class="info-list">
+            <li><a class="info-link" href="#">Terms of Use</a></li>
+            <li><a class="info-link" href="#">Privacy Policy</a></li>
+            <li><a class="info-link" href="#">Accessibility</a></li>
+          </ul>
+        </div>
       </div>
+    </div>
   </footer>
-
-  <!-- Modal Validation Script -->
-  <script type="module">
-    const form   = document.getElementById('practiceTestForm');
-    const course = document.getElementById('practiceTestCourseInput');
-    const topic  = document.getElementById('practiceTestTopicInput');
-
-    const modal      = document.getElementById('requirementModal');
-    const modalMsg   = document.getElementById('requirementModalMsg');
-    const modalClose = document.getElementById('requirementModalClose');
-
-    function openModal(message) {
-      modalMsg.textContent = message;
-      modal.hidden = false;
-      modalClose.focus();
-    }
-    function closeModal() { modal.hidden = true; }
-
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-    window.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
-
-    form.addEventListener('submit', e => {
-      const missingCourse = !course.value.trim();
-      const missingTopic  = !topic.value.trim();
-
-      if (missingCourse || missingTopic) {
-        e.preventDefault();
-        const what = missingCourse && missingTopic
-          ? 'a course and a topic'
-          : missingCourse ? 'a course' : 'a topic';
-        openModal(`You need to enter ${what} before generating a test.`);
-      }
-    });
-  </script>
-
 </body>
 </html>
