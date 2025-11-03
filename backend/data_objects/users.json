@@ -10,6 +10,618 @@
       "profilePicture": "",
       "crashCourses": [
         {
+          "id": "cc_1762139199261",
+          "createdAt": "2025-11-03T03:06:39.261Z",
+          "topic": "Mechatronics in Spain",
+          "summary": "An introduction to the field of mechatronics, focusing on its development, applications, and educational landscape within Spain.",
+          "overview": "This crash course explores the interdisciplinary field of mechatronics, highlighting its key principles and its growing significance in Spain's industrial and technological sectors. We will cover foundational concepts, current applications, and the educational pathways available for aspiring mechatronics engineers in the country.",
+          "main_topics": [
+            {
+              "title": "Foundations of Mechatronics",
+              "description": "Understand the core principles that define mechatronics, integrating mechanical engineering, electronics, computer science, and control engineering.",
+              "subtopics": [
+                {
+                  "title": "Interdisciplinary Nature",
+                  "details": "Exploring how mechanical, electrical, computer, and control systems converge to create intelligent products and processes."
+                },
+                {
+                  "title": "Key Components",
+                  "details": "Overview of sensors, actuators, microcontrollers, and software essential for mechatronic systems."
+                },
+                {
+                  "title": "System Design Approach",
+                  "details": "Learning the methodologies for designing and analyzing mechatronic systems, emphasizing holistic integration."
+                }
+              ]
+            },
+            {
+              "title": "Mechatronics in Spanish Industry",
+              "description": "Discover the practical applications of mechatronics across various Spanish industries, driving innovation and efficiency.",
+              "subtopics": [
+                {
+                  "title": "Automotive Sector",
+                  "details": "Examining the role of mechatronics in modern vehicle design, manufacturing, and autonomous driving systems in Spain."
+                },
+                {
+                  "title": "Robotics and Automation",
+                  "details": "Highlighting the increasing use of industrial robots and automated solutions in Spanish factories and logistics."
+                },
+                {
+                  "title": "Aerospace and Defense",
+                  "details": "Understanding mechatronic applications in aircraft systems, drones, and advanced defense technologies developed in Spain."
+                }
+              ]
+            },
+            {
+              "title": "Education and Research in Spain",
+              "description": "An overview of the academic landscape, research institutions, and career opportunities for mechatronics professionals in Spain.",
+              "subtopics": [
+                {
+                  "title": "University Programs",
+                  "details": "Exploring bachelor's, master's, and doctoral degrees in Mechatronics offered by leading Spanish universities."
+                },
+                {
+                  "title": "Research Hubs",
+                  "details": "Identifying key research centers and initiatives pushing the boundaries of mechatronics innovation in Spain."
+                },
+                {
+                  "title": "Career Prospects",
+                  "details": "Discussing job roles, industry demands, and future trends for mechatronics engineers within the Spanish job market."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mechatronics is a vital and expanding field in Spain, offering exciting opportunities for innovation and career growth across numerous industrial sectors."
+        },
+        {
+          "id": "cc_1762133425510",
+          "createdAt": "2025-11-03T01:30:25.510Z",
+          "topic": "Fast Mechatronics",
+          "summary": "Learn the fundamentals of fast mechatronics, focusing on rapid prototyping, efficient design, and high-speed system integration for modern engineering applications.",
+          "overview": "This crash course provides a comprehensive introduction to the principles and practices of fast mechatronics. We'll explore accelerated design cycles, real-time control systems, and the integration of mechanical, electrical, and software components for high-performance applications, enabling quicker development and deployment of advanced mechatronic solutions.",
+          "main_topics": [
+            {
+              "title": "Accelerated Design & Prototyping",
+              "description": "Focuses on speeding up the design and creation process for mechatronic systems, utilizing modern tools and methodologies to reduce development time and costs.",
+              "subtopics": [
+                {
+                  "title": "Agile Development in Mechatronics",
+                  "details": "Implementing agile methodologies for iterative design, rapid feedback, and flexible project management in mechatronic development cycles."
+                },
+                {
+                  "title": "Rapid Prototyping Technologies",
+                  "details": "Utilizing 3D printing, CNC machining, and modular components for quick physical realization of mechatronic designs and functional prototypes."
+                },
+                {
+                  "title": "Simulation-Driven Design",
+                  "details": "Employing advanced simulation tools for virtual testing and validation, significantly reducing the need for physical prototypes early on."
+                }
+              ]
+            },
+            {
+              "title": "High-Speed Control Systems",
+              "description": "Explores the design and implementation of control algorithms and hardware capable of operating and reacting at high frequencies for dynamic systems.",
+              "subtopics": [
+                {
+                  "title": "Real-Time Operating Systems (RTOS)",
+                  "details": "Understanding RTOS principles for deterministic task scheduling and efficient resource management in time-critical mechatronic applications."
+                },
+                {
+                  "title": "Advanced Control Algorithms",
+                  "details": "Implementing PID, fuzzy logic, and model predictive control for precise and rapid response in dynamic mechatronic systems."
+                },
+                {
+                  "title": "Sensor Fusion for Speed",
+                  "details": "Integrating multiple high-frequency sensors and processing their data rapidly for accurate state estimation and control."
+                }
+              ]
+            },
+            {
+              "title": "System Integration & Optimization",
+              "description": "Covers the efficient merging of mechanical, electrical, and software elements, optimizing performance for speed and reliability in integrated mechatronic systems.",
+              "subtopics": [
+                {
+                  "title": "High-Bandwidth Communication",
+                  "details": "Selecting and implementing fast communication protocols (e.g., EtherCAT, CAN FD) for seamless inter-component data exchange."
+                },
+                {
+                  "title": "Power Electronics for Speed",
+                  "details": "Designing efficient power delivery and motor control circuits that can handle high speeds and rapid dynamic changes."
+                },
+                {
+                  "title": "Performance Bottleneck Analysis",
+                  "details": "Identifying and addressing performance limitations across hardware, software, and mechanical subsystems to maximize overall system speed."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mastering fast mechatronics empowers engineers to innovate rapidly, creating highly responsive and efficient systems for the next generation of technology."
+        },
+        {
+          "id": "cc_1762133384651",
+          "createdAt": "2025-11-03T01:29:44.651Z",
+          "topic": "Introduction to Quantum Computing",
+          "summary": "A brief overview of quantum computing, its fundamental principles, potential applications, and the challenges it faces. Learn about qubits, superposition, entanglement, and quantum algorithms.",
+          "overview": "This crash course introduces the fascinating world of quantum computing. We'll explore the core concepts that differentiate it from classical computing, such as qubits, superposition, and entanglement. You'll also get a glimpse into the revolutionary potential applications and the hurdles on the path to widespread adoption.",
+          "main_topics": [
+            {
+              "title": "What is Quantum Computing?",
+              "description": "Understanding the basic principles that power quantum computers, moving beyond classical bits to explore the unique properties of quantum mechanics leveraged for computation.",
+              "subtopics": [
+                {
+                  "title": "Classical Bits vs. Qubits",
+                  "details": "Classical computers use bits (0 or 1). Quantum computers use qubits, which can be 0, 1, or both simultaneously due to superposition."
+                },
+                {
+                  "title": "Superposition",
+                  "details": "A qubit can exist in multiple states at once. This allows quantum computers to explore many possibilities concurrently, offering immense processing power."
+                },
+                {
+                  "title": "Entanglement",
+                  "details": "Two or more qubits can become linked, sharing the same fate. Measuring one instantly influences the state of the others, regardless of distance."
+                }
+              ]
+            },
+            {
+              "title": "Quantum Algorithms",
+              "description": "Discover how quantum mechanics enables new types of algorithms that can solve certain problems exponentially faster than classical algorithms.",
+              "subtopics": [
+                {
+                  "title": "Shor's Algorithm",
+                  "details": "A quantum algorithm for factoring large numbers efficiently. It has significant implications for cryptography, potentially breaking current encryption methods."
+                },
+                {
+                  "title": "Grover's Algorithm",
+                  "details": "An algorithm for searching unsorted databases. It offers a quadratic speedup over classical search algorithms, though not exponential."
+                },
+                {
+                  "title": "Quantum Simulation",
+                  "details": "Using quantum computers to model complex quantum systems, which is invaluable for drug discovery, materials science, and fundamental physics research."
+                }
+              ]
+            },
+            {
+              "title": "Applications and Challenges",
+              "description": "Exploring the transformative potential of quantum computing across various fields and the significant engineering and scientific challenges that need to be overcome.",
+              "subtopics": [
+                {
+                  "title": "Potential Applications",
+                  "details": "Fields like medicine, finance, AI, and materials science stand to benefit greatly. Think drug design, portfolio optimization, and creating new materials."
+                },
+                {
+                  "title": "Hardware Challenges",
+                  "details": "Building stable, scalable quantum computers is difficult. Qubits are fragile and susceptible to noise (decoherence), requiring extreme conditions."
+                },
+                {
+                  "title": "Software and Error Correction",
+                  "details": "Developing quantum software and robust error correction techniques are crucial for reliable quantum computation and overcoming inherent noise."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Quantum computing is an evolving frontier promising revolutionary advancements. While challenges remain, understanding its core principles is key to anticipating its impact on science and technology."
+        },
+        {
+          "id": "cc_1762133350394",
+          "createdAt": "2025-11-03T01:29:10.394Z",
+          "topic": "Introduction to Python Programming",
+          "summary": "Learn the fundamentals of Python, a versatile and popular programming language. This crash course covers basic syntax, data types, control flow, functions, and an introduction to object-oriented concepts.",
+          "overview": "This crash course provides a rapid introduction to Python programming. We'll explore core concepts essential for beginners, from writing your first script to understanding fundamental programming structures. Perfect for those new to coding or looking to quickly grasp Python's essentials.",
+          "main_topics": [
+            {
+              "title": "Python Basics and Setup",
+              "description": "Get started with Python. Understand its installation, basic syntax, and how to write and run your first simple programs. Covers variables and fundamental data types.",
+              "subtopics": [
+                {
+                  "title": "Installation and Environment",
+                  "details": "Guide on downloading and installing Python. Setting up an IDE or text editor for Python development. Running a basic 'Hello, World!' script."
+                },
+                {
+                  "title": "Variables and Data Types",
+                  "details": "Understanding how to declare variables. Exploring fundamental types like integers, floats, strings, and booleans. Basic type conversion concepts."
+                },
+                {
+                  "title": "Basic Syntax and Operators",
+                  "details": "Rules for writing Python code. Arithmetic, comparison, and logical operators. Understanding indentation's role in Python code structure."
+                }
+              ]
+            },
+            {
+              "title": "Control Flow and Data Structures",
+              "description": "Learn how to control the execution of your programs using conditional statements and loops. Explore Python's built-in data structures like lists and dictionaries.",
+              "subtopics": [
+                {
+                  "title": "Conditional Statements",
+                  "details": "Using 'if', 'elif', and 'else' for decision-making. Nested conditionals and logical operations to create complex conditions."
+                },
+                {
+                  "title": "Loops (For and While)",
+                  "details": "Iterating over sequences with 'for' loops. Executing code repeatedly with 'while' loops. 'break' and 'continue' statements."
+                },
+                {
+                  "title": "Lists and Dictionaries",
+                  "details": "Creating and manipulating lists (ordered, mutable sequences). Working with dictionaries (key-value pairs, unordered). Basic methods for both."
+                }
+              ]
+            },
+            {
+              "title": "Functions and Modules",
+              "description": "Discover how to write reusable blocks of code using functions. Learn to organize your code by importing and using modules.",
+              "subtopics": [
+                {
+                  "title": "Defining and Calling Functions",
+                  "details": "Creating your own functions with 'def'. Passing arguments and returning values. Understanding function scope."
+                },
+                {
+                  "title": "Built-in Functions",
+                  "details": "Exploring commonly used Python built-in functions like 'print()', 'len()', 'type()', and 'input()'."
+                },
+                {
+                  "title": "Introduction to Modules",
+                  "details": "What modules are and why they are useful. Importing modules like 'math' or 'random'. Using functions from imported modules."
+                }
+              ]
+            }
+          ],
+          "conclusion": "You've gained foundational Python skills! Continue practicing by building small projects and exploring libraries to unlock Python's full potential."
+        },
+        {
+          "id": "cc_1762133350362",
+          "createdAt": "2025-11-03T01:29:10.362Z",
+          "topic": "Introduction to Python Programming",
+          "summary": "A beginner-friendly crash course covering fundamental Python concepts, syntax, data types, control flow, functions, and basic object-oriented programming principles. Learn to write and run simple Python programs.",
+          "overview": "This crash course provides a rapid introduction to Python, a versatile and popular programming language. We will explore core concepts, essential syntax, and practical examples to get you started with coding. Perfect for absolute beginners or those transitioning from other languages.",
+          "main_topics": [
+            {
+              "title": "Python Basics & Setup",
+              "description": "Understand what Python is, its applications, and how to set up your development environment. Learn about variables, basic data types, and simple input/output operations.",
+              "subtopics": [
+                {
+                  "title": "What is Python?",
+                  "details": "Discover Python's history, features, and why it's a great choice for beginners. Explore its use in web development, data science, and automation."
+                },
+                {
+                  "title": "Installation & Environment",
+                  "details": "Guide to installing Python on different operating systems and setting up an Integrated Development Environment (IDE) like VS Code or PyCharm."
+                },
+                {
+                  "title": "Variables & Data Types",
+                  "details": "Learn about assigning values to variables and explore fundamental data types: integers, floats, strings, and booleans. Understand type casting."
+                }
+              ]
+            },
+            {
+              "title": "Control Flow & Operations",
+              "description": "Master how to control the execution path of your programs using conditional statements (if, elif, else) and loops (for, while). Explore common operators.",
+              "subtopics": [
+                {
+                  "title": "Conditional Statements",
+                  "details": "Understand how to make decisions in your code using if, elif, and else statements based on specific conditions."
+                },
+                {
+                  "title": "Loops",
+                  "details": "Learn to repeat blocks of code efficiently using for loops (iterating over sequences) and while loops (repeating as long as a condition is true)."
+                },
+                {
+                  "title": "Operators",
+                  "details": "Explore arithmetic, comparison, logical, and assignment operators used to perform operations on variables and values."
+                }
+              ]
+            },
+            {
+              "title": "Data Structures & Functions",
+              "description": "Dive into common Python data structures like lists, tuples, dictionaries, and sets. Learn to define and use functions to organize and reuse code.",
+              "subtopics": [
+                {
+                  "title": "Lists and Tuples",
+                  "details": "Understand mutable lists and immutable tuples for storing ordered collections of items. Learn common operations like appending, indexing, and slicing."
+                },
+                {
+                  "title": "Dictionaries and Sets",
+                  "details": "Explore key-value pairs in dictionaries and unordered collections of unique items in sets. Learn how to add, access, and remove elements."
+                },
+                {
+                  "title": "Defining Functions",
+                  "details": "Learn to create reusable blocks of code using functions, including parameters, return values, and scope."
+                }
+              ]
+            },
+            {
+              "title": "Introduction to OOP",
+              "description": "Get a basic understanding of Object-Oriented Programming (OOP) concepts in Python, including classes, objects, attributes, and methods.",
+              "subtopics": [
+                {
+                  "title": "Classes and Objects",
+                  "details": "Learn the fundamental concepts of OOP: defining classes as blueprints and creating objects (instances) from them."
+                },
+                {
+                  "title": "Attributes and Methods",
+                  "details": "Understand how to define data (attributes) and behavior (methods) within a class."
+                },
+                {
+                  "title": "Inheritance Basics",
+                  "details": "A brief introduction to inheritance, allowing classes to inherit properties and methods from parent classes."
+                }
+              ]
+            }
+          ],
+          "conclusion": "You've now covered the essentials of Python programming! Continue practicing, building small projects, and exploring libraries to further enhance your coding skills."
+        },
+        {
+          "id": "cc_1762133168274",
+          "createdAt": "2025-11-03T01:26:08.274Z",
+          "topic": "AI for Mechatronics",
+          "summary": "Explore how Artificial Intelligence is revolutionizing mechatronics, enhancing automation, control, and intelligent decision-making in electromechanical systems. This course bridges AI concepts with practical mechatronic applications.",
+          "overview": "This crash course introduces the integration of Artificial Intelligence (AI) into mechatronics. We'll cover fundamental AI concepts relevant to mechatronics, explore machine learning for system optimization and control, and discuss real-world applications and future trends in intelligent mechatronic systems.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of AI in Mechatronics",
+              "description": "Understand the core AI principles and their relevance to mechatronic systems. Learn about different AI paradigms and how they can enhance system capabilities, from perception to decision-making.",
+              "subtopics": [
+                {
+                  "title": "AI Concepts Overview",
+                  "details": "Introduction to AI, machine learning, deep learning, and their basic definitions. Understanding intelligent agents and their role in mechatronics."
+                },
+                {
+                  "title": "AI for Perception",
+                  "details": "How AI techniques like computer vision and sensor fusion enable mechatronic systems to perceive their environment and interpret data effectively."
+                },
+                {
+                  "title": "AI for Decision Making",
+                  "details": "Exploring algorithms for intelligent decision-making, planning, and problem-solving in dynamic mechatronic environments."
+                }
+              ]
+            },
+            {
+              "title": "Machine Learning for System Optimization",
+              "description": "Leverage machine learning to improve the performance, efficiency, and adaptability of mechatronic systems. Focus on learning from data to optimize control parameters and predict system behavior.",
+              "subtopics": [
+                {
+                  "title": "Supervised Learning",
+                  "details": "Using labeled data for tasks like system modeling, fault detection, and predictive maintenance in mechatronic devices."
+                },
+                {
+                  "title": "Unsupervised Learning",
+                  "details": "Discovering patterns in unlabeled data for anomaly detection, clustering sensor readings, and understanding system states."
+                },
+                {
+                  "title": "Reinforcement Learning",
+                  "details": "Enabling systems to learn optimal control policies through trial and error, essential for adaptive and autonomous mechatronic applications."
+                }
+              ]
+            },
+            {
+              "title": "Applications and Future Trends",
+              "description": "Examine practical implementations of AI in mechatronics across various industries. Discuss emerging trends and the future potential of intelligent mechatronic systems.",
+              "subtopics": [
+                {
+                  "title": "Robotics and Automation",
+                  "details": "AI-powered robots for manufacturing, logistics, healthcare, and exploration. Intelligent control and navigation systems."
+                },
+                {
+                  "title": "Smart Systems",
+                  "details": "Integration of AI in autonomous vehicles, smart manufacturing (Industry 4.0), and human-robot collaboration."
+                },
+                {
+                  "title": "Emerging AI-Mechatronics Frontiers",
+                  "details": "Exploring advancements in AI hardware, edge computing for mechatronics, and explainable AI (XAI) in mechatronic systems."
+                }
+              ]
+            }
+          ],
+          "conclusion": "AI is transforming mechatronics, leading to smarter, more autonomous, and efficient systems. Embracing these technologies is key to innovation in electromechanical design and application."
+        },
+        {
+          "id": "cc_1762133156500",
+          "createdAt": "2025-11-03T01:25:56.500Z",
+          "topic": "Machine Learning for Mechatronics",
+          "summary": "Explore the fundamentals of machine learning and its practical applications in mechatronics, focusing on predictive maintenance, control systems, and sensor fusion for enhanced robotic and automated systems.",
+          "overview": "This crash course introduces machine learning concepts tailored for mechatronics engineers. We will cover core algorithms, data handling techniques, and real-world examples of ML implementation in robotic systems, industrial automation, and smart devices to improve performance and efficiency.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of Machine Learning",
+              "description": "Understand the basic principles of ML, including supervised, unsupervised, and reinforcement learning, and how they apply to mechatronic systems. Learn about common algorithms and their suitability for different tasks.",
+              "subtopics": [
+                {
+                  "title": "Types of ML",
+                  "details": "Explore supervised learning (regression, classification), unsupervised learning (clustering, dimensionality reduction), and reinforcement learning paradigms relevant to mechatronics."
+                },
+                {
+                  "title": "Key Algorithms",
+                  "details": "Overview of essential algorithms like Linear Regression, Support Vector Machines (SVM), K-Means Clustering, and Decision Trees, with an emphasis on their mechatronic use cases."
+                },
+                {
+                  "title": "Model Evaluation",
+                  "details": "Learn how to assess the performance of ML models using metrics like accuracy, precision, recall, and mean squared error, crucial for reliable mechatronic applications."
+                }
+              ]
+            },
+            {
+              "title": "Data Handling and Feature Engineering",
+              "description": "Discover the importance of data preprocessing, feature selection, and feature extraction techniques essential for building effective ML models in mechatronics. Address challenges like noisy sensor data.",
+              "subtopics": [
+                {
+                  "title": "Data Preprocessing",
+                  "details": "Techniques for cleaning, scaling, and normalizing sensor data to prepare it for ML algorithms. Handling missing values and outliers is critical."
+                },
+                {
+                  "title": "Feature Selection",
+                  "details": "Methods for identifying the most relevant input features from sensor streams to improve model accuracy and reduce computational cost in real-time systems."
+                },
+                {
+                  "title": "Feature Extraction",
+                  "details": "Creating new, informative features from raw sensor data (e.g., time-domain, frequency-domain features) that better represent the system's state."
+                }
+              ]
+            },
+            {
+              "title": "Applications in Mechatronics",
+              "description": "Investigate practical applications of machine learning in mechatronics, including predictive maintenance, advanced control systems, robotic navigation, and sensor fusion for enhanced system intelligence.",
+              "subtopics": [
+                {
+                  "title": "Predictive Maintenance",
+                  "details": "Using ML to forecast equipment failures by analyzing sensor data, enabling proactive maintenance and reducing downtime in industrial mechatronic systems."
+                },
+                {
+                  "title": "Advanced Control Systems",
+                  "details": "Implementing ML-based controllers (e.g., adaptive control, fuzzy logic) for improved performance, robustness, and energy efficiency in robots and vehicles."
+                },
+                {
+                  "title": "Sensor Fusion & Perception",
+                  "details": "Combining data from multiple sensors using ML for a more accurate understanding of the environment, crucial for autonomous navigation and human-robot interaction."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Machine learning offers powerful tools to revolutionize mechatronics, enabling smarter, more efficient, and adaptable systems. Continuous learning and experimentation are key to unlocking its full potential."
+        },
+        {
+          "id": "cc_1762133026044",
+          "createdAt": "2025-11-03T01:23:46.044Z",
+          "topic": "Overshooting PID",
+          "summary": "Learn about PID controller overshoot: what it is, why it happens, and how to mitigate it for smoother system response. Essential for control system tuning.",
+          "overview": "This crash course delves into the phenomenon of overshoot in Proportional-Integral-Derivative (PID) controllers. We'll explore its causes, effects on system performance, and practical strategies to minimize or eliminate it, ensuring a stable and efficient control loop.",
+          "main_topics": [
+            {
+              "title": "Understanding PID Control",
+              "description": "A foundational look at how PID controllers work, covering the roles of Proportional, Integral, and Derivative terms in regulating system output and achieving desired setpoints.",
+              "subtopics": [
+                {
+                  "title": "Proportional (P) Action",
+                  "details": "Reacts to the current error. Higher P gain means faster response but can increase overshoot."
+                },
+                {
+                  "title": "Integral (I) Action",
+                  "details": "Addresses past errors. Eliminates steady-state error but can worsen overshoot and oscillations."
+                },
+                {
+                  "title": "Derivative (D) Action",
+                  "details": "Predicts future error based on rate of change. Damping effect reduces overshoot and oscillations."
+                }
+              ]
+            },
+            {
+              "title": "What is Overshoot?",
+              "description": "Defining overshoot in the context of PID control, illustrating how the system output exceeds the setpoint before settling, and the implications for system stability and performance.",
+              "subtopics": [
+                {
+                  "title": "Definition and Visualization",
+                  "details": "The peak response that goes beyond the desired setpoint. Often seen as a 'hump' in step response graphs."
+                },
+                {
+                  "title": "Causes of Overshoot",
+                  "details": "Primarily caused by aggressive tuning (high P or I gains), system inertia, or sudden setpoint changes."
+                },
+                {
+                  "title": "Consequences of Overshoot",
+                  "details": "Can lead to instability, wear on mechanical components, and inaccurate process control, affecting safety and efficiency."
+                }
+              ]
+            },
+            {
+              "title": "Mitigation Strategies",
+              "description": "Practical techniques to reduce or eliminate overshoot, including advanced PID tuning methods, filter implementation, and system parameter adjustments.",
+              "subtopics": [
+                {
+                  "title": "Tuning Methods",
+                  "details": "Methods like Ziegler-Nichols or trial-and-error to find optimal P, I, and D gains. Often involves reducing P and I gains."
+                },
+                {
+                  "title": "Implementing Damping",
+                  "details": "Proper use of the Derivative term or adding a low-pass filter to the derivative calculation can significantly reduce overshoot."
+                },
+                {
+                  "title": "Advanced Techniques",
+                  "details": "Anti-windup strategies for the integral term and setpoint weighting can further refine response and minimize overshoot."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mastering PID overshoot control is key to achieving precise and stable system performance. By understanding its causes and applying appropriate tuning and strategies, you can ensure your control systems operate smoothly and efficiently."
+        },
+        {
+          "id": "cc_1762133008852",
+          "createdAt": "2025-11-03T01:23:28.852Z",
+          "topic": "Mechatronics PID Control",
+          "summary": "An introduction to Proportional-Integral-Derivative (PID) controllers, a fundamental feedback mechanism widely used in mechatronic systems to achieve precise and stable control of various parameters like speed, position, and temperature.",
+          "overview": "This crash course will demystify PID control, covering its core principles, how each component (P, I, D) contributes to system performance, methods for tuning PID parameters, and practical applications in mechatronics. You'll learn to analyze system responses and implement effective control strategies.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of Feedback Control",
+              "description": "Understand the basic concept of feedback control systems and why they are essential in mechatronics for achieving desired system behavior and overcoming disturbances. Explore closed-loop vs. open-loop systems.",
+              "subtopics": [
+                {
+                  "title": "What is Feedback?",
+                  "details": "Learn how feedback measures the system's output and compares it to the desired setpoint to generate an error signal."
+                },
+                {
+                  "title": "System Components",
+                  "details": "Identify key elements like sensors, actuators, controllers, and the plant (the system being controlled) within a feedback loop."
+                },
+                {
+                  "title": "Error Signal",
+                  "details": "Understand the definition and importance of the error signal (Setpoint - Measured Output) as the input to the controller."
+                }
+              ]
+            },
+            {
+              "title": "The PID Controller Components",
+              "description": "Delve into the individual roles of the Proportional (P), Integral (I), and Derivative (D) terms in influencing the controller's output and shaping the system's response.",
+              "subtopics": [
+                {
+                  "title": "Proportional (P) Control",
+                  "details": "How the P-term reacts to the current error, providing a control output proportional to the error's magnitude. Good for reducing steady-state error."
+                },
+                {
+                  "title": "Integral (I) Control",
+                  "details": "How the I-term addresses past errors by accumulating them over time, effectively eliminating steady-state error but potentially increasing overshoot."
+                },
+                {
+                  "title": "Derivative (D) Control",
+                  "details": "How the D-term anticipates future errors by considering the rate of change of the error, helping to dampen oscillations and improve stability."
+                }
+              ]
+            },
+            {
+              "title": "PID Tuning and Implementation",
+              "description": "Explore practical methods for determining the optimal PID gains (Kp, Ki, Kd) to achieve desired system performance, such as the Ziegler-Nichols method and manual tuning.",
+              "subtopics": [
+                {
+                  "title": "Tuning Objectives",
+                  "details": "Understand goals like minimizing rise time, overshoot, settling time, and steady-state error for optimal performance."
+                },
+                {
+                  "title": "Tuning Methods",
+                  "details": "Learn about common techniques like Ziegler-Nichols, manual tuning, and auto-tuning, and their pros and cons."
+                },
+                {
+                  "title": "Practical Considerations",
+                  "details": "Discuss real-world challenges like noise, actuator saturation, and non-linearities that affect PID performance."
+                }
+              ]
+            },
+            {
+              "title": "Applications in Mechatronics",
+              "description": "See how PID controllers are applied across various mechatronic systems to regulate speed, position, temperature, and other critical parameters for automated operation.",
+              "subtopics": [
+                {
+                  "title": "Robotic Arms",
+                  "details": "Controlling joint angles and end-effector position for precise movements in industrial robots and automated systems."
+                },
+                {
+                  "title": "Automotive Systems",
+                  "details": "Applications like cruise control, anti-lock braking systems (ABS), and engine idle speed regulation."
+                },
+                {
+                  "title": "Process Control",
+                  "details": "Maintaining temperature, pressure, or flow rates in manufacturing processes and environmental control systems."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mastering PID control is key to building robust and efficient mechatronic systems. By understanding its components and tuning techniques, you can significantly improve performance and achieve precise automation."
+        },
+        {
           "id": "cc_1761636779785",
           "createdAt": "2025-10-28T07:32:59.785Z",
           "topic": "Reinforcement Learning for Robotics",
@@ -2038,124 +2650,6 @@
       ],
       "summaries": [
         {
-          "id": "sum_1761608217021",
-          "createdAt": "2025-10-27T23:36:57.021Z",
-          "fileName": "2022-BMVC-BNEW.pdf",
-          "document_title": "TRAINING BINARIZED NEURAL NETWORKS THE EASY WAY",
-          "executive_summary": "This paper introduces BNEW, a novel and simplified method for training Binarized Neural Networks (BNNs) that incorporate both binary weights and activations. BNEW leverages a continuation method with a concave regularization function to encourage weights to become binary. This approach bypasses the need for auxiliary parameters during training and is easily applicable to existing architectures. The method demonstrates strong empirical results, achieving state-of-the-art performance on the ImageNet dataset and competitive results on CIFAR datasets. While BNEW offers a theoretically justified and effective training scheme, its full performance is only apparent after the fine-tuning phase, and hyperparameter tuning for the regularization strength is crucial.",
-          "key_findings": [
-            "BNEW offers a simple yet effective method for training Binarized Neural Networks (BNNs) with both binary weights and activations, eliminating the need for auxiliary training parameters and providing a strong theoretical foundation.",
-            "The proposed BNEW method achieves state-of-the-art accuracy on the ImageNet dataset, outperforming existing methods like ReActNet when trained with STE.",
-            "BNEW demonstrates competitive performance on CIFAR-10 and CIFAR-100 datasets, with its effectiveness potentially enhanced by distillation and longer training durations."
-          ],
-          "section_summaries": [
-            {
-              "page_range": "1",
-              "summary_points": [
-                "Title page with authors Alasdair Paren and Rudra P. K. Poudel, and affiliations from the University of Oxford and Toshiba Europe Ltd.",
-                "Abstract introduces BNEW, a training method for BNNs with binary weights and activations, highlighting memory and energy efficiency improvements.",
-                "BNEW splits training into two phases: first training with binary activations and floating-point weights, then adding a concave regularizer to promote binary weights."
-              ]
-            },
-            {
-              "page_range": "2",
-              "summary_points": [
-                "Discusses the trend towards larger neural networks and their computational costs, motivating the need for efficient models.",
-                "Introduces Binarized Neural Networks (BNNs) as an extreme form of network quantization for reduced memory and computation.",
-                "Highlights challenges in training BNNs due to discrete parameters and reviews existing methods like Straight Through Estimator (STE) and Mirror Descent."
-              ]
-            },
-            {
-              "page_range": "3",
-              "summary_points": [
-                "Defines model parameters and a canonical binary quantization scheme, distinguishing between binary weights (w_b) and real-valued weights (w_r).",
-                "Explains that BNNs enable bitwise operations (XNOR) for significant speedups in inference.",
-                "Details the Straight Through Estimator (STE) for approximating the gradient of the sign function in BNNs, using two common derivative approximations."
-              ]
-            },
-            {
-              "page_range": "4",
-              "summary_points": [
-                "Discusses the typical assumption of ample training resources for BNNs, with the focus on efficient inference hardware.",
-                "Defines the general loss function as an expectation over training samples and the learning task as minimizing this loss over feasible parameter space.",
-                "Introduces BNEW (Binary Network the Easy Way) as a continuation method inspired by Bai et al.'s principled approach using a concave regularizer."
-              ]
-            },
-            {
-              "page_range": "5",
-              "summary_points": [
-                "Reviews the Straight Through Estimator (STE) method, detailing its use of auxiliary parameters and parameter updates.",
-                "Explains Binary Mirror Descent (BMD), which uses a tanh mapping and temperature parameter, noting its similarity to STE as temperature increases.",
-                "Describes Binary Optimiser (BOP) by Helwegen et al., which uses an exponential moving average of gradients and a threshold for weight updates."
-              ]
-            },
-            {
-              "page_range": "6",
-              "summary_points": [
-                "Introduces ProxQuant by Bai et al., which trains a single set of real-valued weights and uses regularization to encourage binarization without auxiliary parameters.",
-                "Explains the proximal operator used in ProxQuant and its algorithm, noting its focus on small models and CIFAR datasets.",
-                "Outlines the proposed BNEW algorithm, formulating the problem with a relaxed constraint and a concave regularization term to drive weights towards binary values."
-              ]
-            },
-            {
-              "page_range": "7",
-              "summary_points": [
-                "Details the BNEW parameter update rule, derived from a proximal problem, which involves projecting onto the feasible set.",
-                "Describes the three-phase BNEW training procedure: pre-training with binary activations and real weights, a quantization phase to encourage binary weights, and fine-tuning.",
-                "Highlights differences in BNEW's pre-training phase compared to ProxQuant, including using Adam and projecting weights after each iteration to prevent accuracy drops."
-              ]
-            },
-            {
-              "page_range": "8",
-              "summary_points": [
-                "Discusses the choice of regularization function, comparing BNEW's proposed R_BNEW with functions from ProxQuant.",
-                "Argues R_BNEW is superior due to its gradient properties, encouraging binary values first for parameters closer to {-1, 1} and preventing oscillations.",
-                "Presents experimental setup for small-scale BNNs on CIFAR-10 and CIFAR-100, comparing BNEW against STE, BMD, and BOP."
-              ]
-            },
-            {
-              "page_range": "9",
-              "summary_points": [
-                "Presents results for CIFAR experiments, showing comparable accuracies across methods, with slight advantages for BOP and BNEW with distillation on CIFAR-100.",
-                "Notes the typical accuracy degradation for BNNs and the benefit of longer training and distillation.",
-                "Details the ImageNet experiment setup using a ReActNet-A architecture and compares BNEW with other methods."
-              ]
-            },
-            {
-              "page_range": "10",
-              "summary_points": [
-                "Reports ImageNet results where BNEW achieves 69.7% accuracy, surpassing the previous state-of-the-art from ReActNet trained with STE.",
-                "Concludes that BNEW is an effective and simple method for training BNNs with binary weights and activations, offering empirical and theoretical advantages.",
-                "Acknowledges BNEW's weaknesses, including the late indication of performance and dependence on the regularization hyperparameter, while suggesting future work on extending to other quantization schemes."
-              ]
-            },
-            {
-              "page_range": "11",
-              "summary_points": [
-                "Contains a list of references cited in the paper, spanning various topics related to neural networks, quantization, and optimization methods.",
-                "Includes seminal works like Courbariaux et al. (BinaryConnect), Hubara et al. (BNNs), and Rastegari et al. (XNOR-Net).",
-                "References papers on specific architectures (ReActNet) and optimization techniques (Adam, Mirror Descent)."
-              ]
-            },
-            {
-              "page_range": "12",
-              "summary_points": [
-                "Continues the list of references, covering topics such as deep residual learning, image datasets (ImageNet, CIFAR), and various quantization and BNN training algorithms.",
-                "Includes references related to specific BNN architectures and training strategies like Bi-real net and Real-to-binary convolutions.",
-                "Lists additional optimization methods and theoretical contributions relevant to the field of efficient neural networks."
-              ]
-            },
-            {
-              "page_range": "13",
-              "summary_points": [
-                "Concludes the list of references with papers on ternary quantization, low bitwidth training, and advanced optimization techniques for BNNs.",
-                "References works that explore different quantization levels and gradient approximations.",
-                "The final entries cover diverse aspects of neural network quantization and optimization research."
-              ]
-            }
-          ]
-        },
-        {
           "id": "sum_1761345616350",
           "createdAt": "2025-10-24T22:40:16.351Z",
           "fileName": "jmrsp.2022.57.64.pdf",
@@ -3350,6 +3844,100 @@
       "createdAt": "2025-10-31T08:38:06.929Z",
       "profilePicture": "",
       "crashCourses": [],
+      "summaries": []
+    },
+    {
+      "id": "user_003",
+      "username": "robertC",
+      "name": "Robert",
+      "email": "robertc@hotmail.com",
+      "password": "password123",
+      "createdAt": "2025-11-03T03:21:45.682Z",
+      "profilePicture": "",
+      "crashCourses": [
+        {
+          "id": "cc_1762140128857",
+          "createdAt": "2025-11-03T03:22:08.857Z",
+          "topic": "Elden Ring",
+          "summary": "A comprehensive guide to Elden Ring, covering its vast world, combat mechanics, character progression, and lore. Master the Lands Between with this essential crash course.",
+          "overview": "This crash course will introduce you to the fundamentals of Elden Ring. We'll explore world navigation, combat strategies, essential items, character building, and the deep lore that makes the game so captivating. Prepare to face the challenges of the Lands Between.",
+          "main_topics": [
+            {
+              "title": "Exploring the Lands Between",
+              "description": "Navigate the vast and dangerous open world of Elden Ring. Learn about key locations, essential traversal tools like Torrent, and how to discover hidden secrets and valuable resources scattered throughout the map.",
+              "subtopics": [
+                {
+                  "title": "World Map and Navigation",
+                  "details": "Understand the map system, discover map fragments, and utilize Sites of Grace for fast travel. Learn to orient yourself and plan your exploration routes effectively."
+                },
+                {
+                  "title": "Torrent and Spiritsprings",
+                  "details": "Master the use of your spectral steed, Torrent, for quick travel and combat. Utilize Spiritsprings to reach new heights and access otherwise unreachable areas of the map."
+                },
+                {
+                  "title": "Points of Interest",
+                  "details": "Identify and approach various landmarks like dungeons, catacombs, Evergaols, and ruins. Each offers unique challenges, rewards, and lore insights."
+                }
+              ]
+            },
+            {
+              "title": "Combat Fundamentals",
+              "description": "Master the challenging yet rewarding combat system of Elden Ring. Learn about weapon types, attack patterns, defensive maneuvers, and the crucial mechanics that will help you survive.",
+              "subtopics": [
+                {
+                  "title": "Melee and Ranged Attacks",
+                  "details": "Understand light/heavy attacks, charged attacks, and weapon skills (Ashes of War). Learn to manage stamina and choose appropriate weapons for different enemy types."
+                },
+                {
+                  "title": "Defense and Evasion",
+                  "details": "Master dodging, blocking with shields, and parrying. Learn enemy attack timings to effectively evade damage and create openings for counter-attacks."
+                },
+                {
+                  "title": "Status Effects and Spells",
+                  "details": "Understand various status effects (like bleed, frost, poison) and how to inflict or resist them. Learn the basics of casting Sorceries and Incantations."
+                }
+              ]
+            },
+            {
+              "title": "Character Progression and Builds",
+              "description": "Develop your Tarnished into a powerful warrior. Learn how to allocate stats, choose effective equipment, and synergize your build to overcome any obstacle.",
+              "subtopics": [
+                {
+                  "title": "Stats and Attributes",
+                  "details": "Understand the Vigor, Mind, Endurance, Strength, Dexterity, Intelligence, Faith, and Arcane stats and their impact on your character's performance."
+                },
+                {
+                  "title": "Weapons, Armor, and Ashes of War",
+                  "details": "Explore weapon scaling, upgrade materials, armor loadouts, and the strategic use of Ashes of War to customize your combat style."
+                },
+                {
+                  "title": "Build Archetypes",
+                  "details": "Get introduced to common build archetypes like Strength, Dexterity, Intelligence, Faith, and hybrid builds, and how to effectively pursue them."
+                }
+              ]
+            },
+            {
+              "title": "Lore and Storytelling",
+              "description": "Delve into the rich and fragmented lore of Elden Ring. Understand the key characters, factions, and the overarching narrative of the Shattering and the hunt for the Elden Ring.",
+              "subtopics": [
+                {
+                  "title": "The Shattering and the Demigods",
+                  "details": "Learn about the great war that fractured the Elden Ring and the subsequent rise of the demigod rulers of the Lands Between."
+                },
+                {
+                  "title": "Key Characters and Factions",
+                  "details": "Discover the motivations and roles of figures like Queen Marika, Radagon, Ranni, and the various factions vying for power."
+                },
+                {
+                  "title": "The Tarnished's Journey",
+                  "details": "Understand your role as a Tarnished, guided by Grace, seeking to restore order or forge a new path in the fractured world."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Armed with this knowledge, you are better prepared to face the trials of Elden Ring. May your journey through the Lands Between be filled with discovery, triumph, and a touch of madness."
+        }
+      ],
       "summaries": []
     }
   ]

@@ -1,16 +1,28 @@
-/*
-	statsAnimation.ts - Animate statistics numbers on scroll
+/* 
+  ? File: 
+      statsAnimation.ts
+
+  ? Main Contributors: 
+	  David
+  
+  ? Functionalities:
+	- Animate statistics numbers and progress bars when they enter the viewport
 */
 
+// Function to initialize stats animation
 export function initStatsAnimation(): void {
+
+	// Select all stat number elements
 	const statNumbers = document.querySelectorAll<HTMLElement>('.stat-number');
 	if (statNumbers.length === 0) return;
 
+	// Intersection Observer options
 	const observerOptions: IntersectionObserverInit = {
 		threshold: 0.25, 
 		rootMargin: '0px 0px -100px 0px' 
 	};
 
+	// Function to animate a single stat
 	const animateStat = (element: HTMLElement): void => {
 		const target = parseInt(element.getAttribute('data-target') || '0', 10);
 		animateNumber(element, target);
@@ -28,6 +40,7 @@ export function initStatsAnimation(): void {
 		}
 	};
 
+	// Create Intersection Observer (Could be done in CSS, but hey, more practice!)
 	const observer = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
@@ -38,7 +51,7 @@ export function initStatsAnimation(): void {
 		});
 	}, observerOptions);
 
-
+	// Observe each stat number
 	statNumbers.forEach(stat => {
 		const rect = stat.getBoundingClientRect();
 		const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
@@ -51,6 +64,7 @@ export function initStatsAnimation(): void {
 	});
 }
 
+// Helper function to animate number counting
 function animateNumber(element: HTMLElement, target: number): void {
 	// timing for animation
 	const duration = 2000;

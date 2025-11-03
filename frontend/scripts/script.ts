@@ -1,8 +1,15 @@
-/*
-	script.ts - Main Entry Point (converted from script.js)
+/* 
+  ? File: 
+      script.ts
+
+  ? Main Contributors: 
+	  Team
+  
+  ? Functionalities:
+	- Initialize core frontend functionalities on DOM load
+
 */
 
-/* for my sanity, since it wasnt loading cuz auth.js wasnt in dist for some reason */
 console.log("Main script loaded");
 
 import { initTheme } from './theme.js';
@@ -15,12 +22,13 @@ import { initDashboard } from './dashboard.js';
 import { initStatsAnimation } from './statsAnimation.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-	// Initialize core functionality
+	
+	// Initialize core functionality (each of this function returns early if not needed)
 	initTheme();
 	initAuth();
 	initNavbar();
 
-	// Check login status (typed)
+	// Check login status
 	const isLoggedIn: boolean = isUserLoggedIn();
 
 	// Initialize page-specific features
@@ -29,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	initSummary(isLoggedIn);
 	initPracticeTest(isLoggedIn);
 	
-	// coolness factor am i right?
+	// coolness factor am i right?  -David
+	// very cool indeed 			-Robert
 	initStatsAnimation();
 });
 

@@ -1,7 +1,18 @@
-/*
-  viewer.ts — unified for Crash Course + Summary views (TypeScript)
+/* 
+  ? File:
+      viewer.ts
+
+  ? Main Contributors:
+      Robert
+
+  ? Functionalities:
+    - Render and manage Crash Course viewer (main content + sidebar)
+    - Render and manage Summary viewer (main content + sidebar)
+    - Fetch history data from backend or local cache
+    - Handle sidebar collapse and item selection for both views
 */
 
+// ================================ TYPE DEFINITIONS -=====================================
 type Subtopic = { title?: string; details?: string };
 type MainTopic = { title?: string; description?: string; subtopics?: Subtopic[] };
 
@@ -28,27 +39,27 @@ type SummaryData = {
   createdAt?: number;
 };
 
+// ================================ DOM UTILITIES -=====================================
 function getEl<T extends HTMLElement>(id: string): T | null {
   return document.getElementById(id) as T | null;
 }
 
-// -----------------------------
-// Crash Course viewer section
-// -----------------------------
+// ================================ CRASH COURSE VIEWER -=====================================
 (function () {
+  // Render crash course content into the main panel
   function renderCrashCourse(data: CrashCourseData | any) {
     if (!data || typeof data !== 'object') return;
 
-    const topicEl = getEl<HTMLElement>('crash-title');
-    if (topicEl) topicEl.textContent = data.topic || '';
-
-    const summaryEl = getEl<HTMLElement>('crash-overview');
-    if (summaryEl) summaryEl.textContent = data.summary || '';
-
-    const overviewEl = getEl<HTMLElement>('crash-overview-details');
-    if (overviewEl) overviewEl.innerHTML = `<strong>Overview:</strong> ${data.overview || ''}`;
-
+    const title = getEl<HTMLElement>('crash-title');
+    const summary = getEl<HTMLElement>('crash-overview');
+    const overview = getEl<HTMLElement>('crash-overview-details');
     const mainTopics = getEl<HTMLElement>('crash-topic-list');
+    const conclusion = getEl<HTMLElement>('crash-conclusion');
+
+    if (title) title.textContent = data.topic || '';
+    if (summary) summary.textContent = data.summary || '';
+    if (overview) overview.innerHTML = `<strong>Overview:</strong> ${data.overview || ''}`;
+
     if (!mainTopics) return;
     mainTopics.innerHTML = '';
 
@@ -67,26 +78,29 @@ function getEl<T extends HTMLElement>(id: string): T | null {
         descDiv.textContent = topic.description || '';
         topicDiv.appendChild(descDiv);
 
+        // Build subtopic list when present
         if (Array.isArray(topic.subtopics)) {
-          const subtopicsList = document.createElement('ul');
-          subtopicsList.className = 'crash-subtopic-list';
+          const list = document.createElement('ul');
+          list.className = 'crash-subtopic-list';
           topic.subtopics.forEach((sub: Subtopic) => {
             const li = document.createElement('li');
             li.className = 'crash-subtopic-item';
             li.innerHTML = `<span class="crash-subtopic-title">${sub.title}:</span> <span class="crash-subtopic-details">${sub.details}</span>`;
-            subtopicsList.appendChild(li);
+            list.appendChild(li);
           });
-          topicDiv.appendChild(subtopicsList);
+          topicDiv.appendChild(list);
         }
 
         mainTopics.appendChild(topicDiv);
       });
     }
 
-    const conclusionEl = getEl<HTMLElement>('crash-conclusion');
-    if (conclusionEl) conclusionEl.innerHTML = `<strong>Conclusion:</strong> ${data.conclusion || ''}`;
+    if (conclusion) {
+      conclusion.innerHTML = `<strong>Conclusion:</strong> ${data.conclusion || ''}`;
+    }
   }
 
+  // Read current crash course payload from localStorage
   function getCrashCourseData(): CrashCourseData | null {
     try {
       const stored = localStorage.getItem('crashCourseView');
@@ -96,6 +110,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
     }
   }
 
+  // Render crash course items into the sidebar list
   function renderCrashCourseList(courses: CrashCourseData[] | any, currentId?: string) {
     const list = getEl<HTMLElement>('crash-list');
     if (!list) return;
@@ -106,14 +121,19 @@ function getEl<T extends HTMLElement>(id: string): T | null {
       li.textContent = course.topic || 'Untitled';
       li.className = 'crash-list-item';
       if (course.id === currentId) li.classList.add('active');
+      
       li.onclick = () => {
         localStorage.setItem('crashCourseView', JSON.stringify(course));
-        location.reload();
+        renderCrashCourse(course);
+        document.querySelectorAll('.crash-list-item').forEach(el => el.classList.remove('active'));
+        li.classList.add('active');
       };
+
       list.appendChild(li);
     });
   }
 
+  // Mount only on crash course pages
   if (document.querySelector('.crash-container')) {
     document.addEventListener('DOMContentLoaded', () => {
       const data = getCrashCourseData();
@@ -128,6 +148,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
         user = userDataRaw ? JSON.parse(userDataRaw) : null;
       } catch {}
 
+      // Fetch courses from backend, fallback to local cache
       (async function loadCourses() {
         let allCourses: any[] = [];
         if (user && user.id) {
@@ -148,6 +169,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
           } catch {}
         }
 
+        // Ensure each course has a stable id ( id -> createdAt -> random )
         allCourses = (allCourses || []).map((c: any) => {
           if (!c.id) c.id = c.createdAt ? String(c.createdAt) : String(c._id || Date.now() + Math.random());
           return c;
@@ -164,6 +186,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
         if (sidebarLoadingEl) sidebarLoadingEl.style.display = 'none';
       })();
 
+      // Sidebar collapse/expand control
       const collapseBtn = getEl<HTMLElement>('crash-sidebar-collapse-btn');
       const sidebar = getEl<HTMLElement>('crash-sidebar');
       if (collapseBtn && sidebar) {
@@ -177,22 +200,21 @@ function getEl<T extends HTMLElement>(id: string): T | null {
   }
 })();
 
-// -----------------------------
-// Summary viewer section
-// -----------------------------
+// ================================ SUMMARY VIEWER -=====================================
 (function () {
+  // Render summary content into the main panel
   function renderSummary(data: SummaryData | any) {
     if (!data || typeof data !== 'object') return;
 
     const titleEl = getEl<HTMLElement>('summary-title');
-    if (titleEl) titleEl.textContent = data.document_title || data.fileName || 'Summary';
-
     const execEl = getEl<HTMLElement>('summary-exec');
+    const findingsEl = getEl<HTMLElement>('summary-key-findings');
+    const sections = getEl<HTMLElement>('summary-sections');
+
+    if (titleEl) titleEl.textContent = data.document_title || data.fileName || 'Summary';
     if (execEl) execEl.textContent = data.executive_summary || '';
 
-    const findingsEl = getEl<HTMLElement>('summary-key-findings');
     if (findingsEl) findingsEl.innerHTML = '';
-
     if (Array.isArray(data.key_findings) && data.key_findings.length) {
       const heading = document.createElement('strong');
       heading.textContent = 'Key Findings:';
@@ -204,13 +226,11 @@ function getEl<T extends HTMLElement>(id: string): T | null {
         li.textContent = f;
         ul.appendChild(li);
       });
-      findingsEl.appendChild(heading);
-      findingsEl.appendChild(ul);
+      findingsEl?.appendChild(heading);
+      findingsEl?.appendChild(ul);
     }
 
-    const sections = getEl<HTMLElement>('summary-sections');
     if (sections) sections.innerHTML = '';
-
     if (Array.isArray(data.section_summaries)) {
       data.section_summaries.forEach((sec: SectionSummary) => {
         const container = document.createElement('div');
@@ -231,11 +251,12 @@ function getEl<T extends HTMLElement>(id: string): T | null {
         });
 
         container.appendChild(list);
-        sections.appendChild(container);
+        sections?.appendChild(container);
       });
     }
   }
 
+  // Read current summary payload from localStorage
   function getSummaryData(): SummaryData | null {
     try {
       const stored = localStorage.getItem('summaryView');
@@ -245,6 +266,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
     }
   }
 
+  // Render summary items into the sidebar list
   function renderSummaryList(list: SummaryData[] | any, currentId?: string) {
     const el = getEl<HTMLElement>('summary-list');
     if (!el) return;
@@ -265,14 +287,20 @@ function getEl<T extends HTMLElement>(id: string): T | null {
       li.textContent = s.document_title || s.fileName || 'Untitled';
       if (s.id) li.dataset.itemId = s.id;
       if (s.id === currentId) li.classList.add('active');
+      
       li.onclick = () => {
         localStorage.setItem('summaryView', JSON.stringify(s));
-        location.reload();
+        renderSummary(s);
+
+        document.querySelectorAll('.summary-list-item').forEach(el => el.classList.remove('active'));
+        li.classList.add('active');
       };
+      
       el.appendChild(li);
     });
   }
 
+  // Mount only on summary pages
   if (document.querySelector('.summary-container')) {
     document.addEventListener('DOMContentLoaded', () => {
       const data = getSummaryData();
@@ -287,6 +315,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
         user = userDataRaw ? JSON.parse(userDataRaw) : null;
       } catch {}
 
+      // Fetch summaries from backend, fallback to local cache
       (async function loadSummaries() {
         let allSummaries: any[] = [];
         if (user && user.id) {
@@ -307,6 +336,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
           } catch {}
         }
 
+        // Ensure each summary has a stable id
         allSummaries = (allSummaries || []).map((s: any) => {
           if (!s.id) s.id = s.createdAt ? String(s.createdAt) : String(Date.now() + Math.random());
           return s;
@@ -323,6 +353,7 @@ function getEl<T extends HTMLElement>(id: string): T | null {
         if (sidebarLoading) sidebarLoading.style.display = 'none';
       })();
 
+      // Sidebar collapse/expand control
       const collapseBtn = getEl<HTMLElement>('summary-sidebar-collapse-btn');
       const sidebar = getEl<HTMLElement>('summary-sidebar');
       if (collapseBtn && sidebar) {

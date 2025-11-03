@@ -1,264 +1,144 @@
-/*
-  crashCourse.ts
+/* 
+  ? File: 
+      crashCourse.ts
 
-  TypeScript migration of crashCourse.js. Preserves behavior and exports `initCrashCourse(isLoggedIn)`.
+  ? Main Contributors: 
+      Robert
+  
+  ? Functionalities:
+    - Generate crash course content based on user input topic
+    - Parse API response and render course sections in DOM
+    - Manage UI state (locked/unlocked, loading, error)
 */
 
 import { getUserData } from './auth.js';
 
+// ==================== UTILITY TYPES FOR SCHEMA VALIDATION =======================
 type Subtopic = { title: string; details: string };
 type MainTopic = { title: string; description: string; subtopics: Subtopic[] };
+type CrashCourseSchema = { topic: string; summary: string; overview: string; main_topics: MainTopic[]; conclusion: string };
 
-type CrashCourseSchema = {
-  topic: string;
-  summary: string;
-  overview: string;
-  main_topics: MainTopic[];
-  conclusion: string;
-};
+// ==================== API & VALIDATION =======================
+async function fetchCrashCourse(prompt: string): Promise<CrashCourseSchema> {
+  const userData = getUserData();
 
-const checkForResponse = (data: any): boolean => {
-  return !!(
-    data &&
-    data.candidates &&
-    data.candidates[0] &&
-    data.candidates[0].content &&
-    data.candidates[0].content.parts &&
-    data.candidates[0].content.parts[0] &&
-    data.candidates[0].content.parts[0].text
-  );
-};
+  // Call backend API to generate crash course
+  const resp = await fetch('/api/crash-course', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt, userId: userData?.id })
+  });
 
-class CrashCourse {
-  static validateSchema(obj: any): boolean {
-    if (
-      typeof obj !== 'object' ||
-      typeof obj.topic !== 'string' ||
-      typeof obj.summary !== 'string' ||
-      typeof obj.overview !== 'string' ||
-      !Array.isArray(obj.main_topics) ||
-      typeof obj.conclusion !== 'string'
-    ) return false;
+  if (!resp.ok) throw new Error('Failed to fetch crash course');
+  const data = await resp.json();
 
-    for (const topic of obj.main_topics) {
-      if (
-        typeof topic !== 'object' ||
-        typeof topic.title !== 'string' ||
-        typeof topic.description !== 'string' ||
-        !Array.isArray(topic.subtopics) ||
-        topic.subtopics.length !== 3
-      ) return false;
-
-      for (const sub of topic.subtopics) {
-        if (
-          typeof sub !== 'object' ||
-          typeof sub.title !== 'string' ||
-          typeof sub.details !== 'string'
-        ) return false;
-      }
-    }
-    return true;
-  }
-
-  static async getValidJsonResponse(prompt: string): Promise<CrashCourseSchema> {
-    const userData = getUserData();
-
-    let response: Response;
-    try {
-      response = await fetch('/api/crash-course', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, userId: userData?.id })
-      });
-    } catch (networkError: any) {
-      throw new Error('Network error while generating crash course');
-    }
-
-    if (!response.ok) throw new Error('Failed to generate crash course');
-
-    let data: any;
-    try {
-      data = await response.json();
-    } catch (parseError) {
-      throw new Error('Failed to parse crash course response');
-    }
-
-    if (checkForResponse(data)) {
-      const jsonText = data.candidates[0].content.parts[0].text;
-      let parsedData: any;
-      try {
-        parsedData = JSON.parse(jsonText);
-      } catch (parseError) {
-        console.error('Failed to parse JSON response:', jsonText);
-        throw new Error('Failed to parse API response as JSON');
-      }
-
-      if (!CrashCourse.validateSchema(parsedData)) {
-        console.error('Schema validation failed for:', parsedData);
-        throw new Error('Response does not match expected schema');
-      }
-
-      return parsedData as CrashCourseSchema;
-    }
-
-    throw new Error('Invalid response format from API');
-  }
-
-  static createPrompt(topic: string): string {
-    return `\n      Generate a comprehensive crash course on: ${topic}\n\n      Guidelines:\n      - Provide a concise summary (≤50 words) that captures the essence of the topic.\n      - Include an overview (≤80 words) explaining what will be covered.\n      - Create multiple main topics, each with a description (≤60 words).\n      - For each main topic, include exactly 3 subtopics:\n        * Each subtopic title should be ≤10 words\n        * Each subtopic details should be ≤70 words\n      - End with a conclusion (≤40 words) that ties everything together.\n      \n      Make the content educational, clear, and easy to understand for someone learning this topic for the first time.\n    `;
+  try {
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    return JSON.parse(text);
+  } catch {
+    throw new Error('Invalid API response');
   }
 }
 
-function getEl(id: string): HTMLElement | null {
+// ==================== PROMPT BUILDER =======================
+function makePrompt(topic: string): string {
+  return `Generate a concise crash course on "${topic}" with a summary, overview, several main topics (each with 3 subtopics), and a short conclusion. Keep it clear, educational, and structured.`;
+}
+
+// ==================== RENDER HELPERS =======================
+function getEl(id: string) {
   return document.getElementById(id);
 }
 
-function renderCrashCourse(data: CrashCourseSchema | any): void {
-  if (!data || typeof data !== 'object') {
-    console.error('Invalid crash course data:', data);
-    return;
-  }
-
+function renderCrashCourse(data: CrashCourseSchema) {
   const topicTitle = getEl('crash-topic-title');
   const summary = getEl('crash-summary');
   const overview = getEl('crash-overview');
   const mainTopics = getEl('crash-main-topics');
   const conclusion = getEl('crash-conclusion');
-
-  if (!topicTitle || !summary || !overview || !mainTopics || !conclusion) {
-    console.error('One or more crash course output elements not found in DOM');
-    return;
-  }
+  if (!topicTitle || !summary || !overview || !mainTopics || !conclusion) return;
 
   topicTitle.innerHTML = `<span class="crash-shine">${data.topic}</span>`;
-  summary.textContent = data.summary || '';
-  overview.innerHTML = `<strong>Overview:</strong> ${data.overview || ''}`;
-
+  summary.textContent = data.summary;
+  overview.innerHTML = `<strong>Overview:</strong> ${data.overview}`;
   mainTopics.innerHTML = '';
-  if (Array.isArray(data.main_topics)) {
-    data.main_topics.forEach((topic: MainTopic) => {
-      const topicDiv = document.createElement('div');
-      topicDiv.className = 'crash-topic';
 
-      const titleDiv = document.createElement('div');
-      titleDiv.className = 'crash-topic-title';
-      titleDiv.textContent = topic.title;
+  data.main_topics.forEach(topic => {
+    const block = document.createElement('div');
+    block.className = 'crash-topic';
+    block.innerHTML = `
+      <div class="crash-topic-title">${topic.title}</div>
+      <div class="crash-topic-desc">${topic.description}</div>
+      <ul class="crash-subtopics">
+        ${topic.subtopics.map(s => `<li><strong>${s.title}:</strong> ${s.details}</li>`).join('')}
+      </ul>`;
+    mainTopics.appendChild(block);
+  });
 
-      const descDiv = document.createElement('div');
-      descDiv.className = 'crash-topic-desc';
-      descDiv.textContent = topic.description;
-
-      topicDiv.appendChild(titleDiv);
-      topicDiv.appendChild(descDiv);
-
-      if (Array.isArray(topic.subtopics)) {
-        const subtopicsList = document.createElement('ul');
-        subtopicsList.className = 'crash-subtopics';
-        topic.subtopics.forEach(sub => {
-          const li = document.createElement('li');
-          li.className = 'crash-subtopic';
-          li.innerHTML = `<span class="crash-subtopic-title">${sub.title}:</span> <span class="crash-subtopic-details">${sub.details}</span>`;
-          subtopicsList.appendChild(li);
-        });
-        topicDiv.appendChild(subtopicsList);
-      }
-
-      mainTopics.appendChild(topicDiv);
-    });
-  }
-
-  conclusion.innerHTML = `<strong>Conclusion:</strong> ${data.conclusion || ''}`;
+  conclusion.innerHTML = `<strong>Conclusion:</strong> ${data.conclusion}`;
 }
 
-export function initCrashCourse(isLoggedIn: boolean): void {
-  const crashCourseContainer = document.querySelector('.crash-course-container');
-  if (!crashCourseContainer) return;
+// ==================== INITIALIZATION =======================
+export function initCrashCourse(isLoggedIn: boolean) {
+  const container = document.querySelector('.crash-course-container');
+  if (!container) return;
 
-  const lockedMessage = getEl('locked-message');
-  const crashForm = getEl('crash-course-form');
-
-  if (isLoggedIn) {
-    if (crashForm) (crashForm as HTMLElement).style.display = 'block';
-    if (lockedMessage) (lockedMessage as HTMLElement).style.display = 'none';
-  } else {
-    if (lockedMessage) (lockedMessage as HTMLElement).style.display = 'block';
-    if (crashForm) (crashForm as HTMLElement).style.display = 'none';
+  const locked = getEl('locked-message');
+  const form = getEl('crash-course-form');
+  if (locked && form) {
+    locked.style.display = isLoggedIn ? 'none' : 'block';
+    form.style.display = isLoggedIn ? 'block' : 'none';
   }
 
-  const generateBtn = getEl('generateBtn');
-  if (generateBtn) {
-    generateBtn.addEventListener('click', async () => {
-      const topicInput = getEl('topicInput') as HTMLInputElement | null;
-      const output = getEl('output') as HTMLElement | null;
-      const loading = getEl('crash-loading') as HTMLElement | null;
+  const btn = getEl('generateBtn');
+  if (!btn) return;
 
-      if (!topicInput || !output || !loading) {
-        console.error('Required crash course elements not found in DOM');
-        return;
-      }
+  btn.addEventListener('click', async () => {
+    
+    // Get input elements
+    const topicInput = getEl('topicInput') as HTMLInputElement;
+    const loading = getEl('crash-loading');
+    const output = getEl('output');
+    if (!topicInput || !loading || !output) return;
+    
+    // Validate input using HTML5 validation and check for empty value
+    if (!topicInput.value.trim()) {
+      topicInput.setCustomValidity('Please enter a topic.');
+      topicInput.reportValidity();
+      return;
+    } else {
+      topicInput.setCustomValidity('');
+    }
+    if (!topicInput.checkValidity()) {
+      topicInput.reportValidity();
+      return;
+    }
+    const topic = topicInput.value.trim();
 
-      const topic = topicInput.value.trim();
+    // Show loading state
+    const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+    const lottie = loading?.querySelector('#crash-lottie') as HTMLImageElement | null;
+    if (lottie) {
+      const newSrc = theme === 'dark'
+      ? '../assets/loading_dark.json'
+      : '../assets/loading_light.json';
+      lottie.setAttribute('src', newSrc);
+      try { (lottie as any).load(newSrc); } catch {}
+    }
+    loading.style.display = 'flex';
+    output.style.display = 'none';
 
-      if (!topic) {
-        const topicTitle = getEl('crash-topic-title');
-        if (topicTitle) {
-          topicTitle.textContent = 'Please enter a topic';
-          topicTitle.classList.add('error-message');
-        }
-        const s = getEl('crash-summary');
-        const o = getEl('crash-overview');
-        const m = getEl('crash-main-topics');
-        const c = getEl('crash-conclusion');
-        if (s) s.textContent = '';
-        if (o) o.textContent = '';
-        if (m) m.innerHTML = '';
-        if (c) c.textContent = '';
-        output.style.display = 'block';
-        loading.style.display = 'none';
-        return;
-      }
+    // Scroll down slightly to show the animation
+    loading.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      const topicTitle = getEl('crash-topic-title');
-      if (topicTitle) topicTitle.classList.remove('error-message');
-
-      output.style.display = 'none';
-
-      const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-      const lottie = loading ? loading.querySelector('#crash-lottie') as HTMLImageElement | null : null;
-      if (lottie) {
-        const newSrc = theme === 'dark' ? '../assets/loading_dark.json' : '../assets/loading_light.json';
-        lottie.setAttribute('src', newSrc);
-        try { (lottie as any).load(newSrc); } catch (e) { /* ignore */ }
-      }
-
-      loading.style.display = 'flex';
-
-      try {
-        const prompt = CrashCourse.createPrompt(topic);
-        const data = await CrashCourse.getValidJsonResponse(prompt);
-        if (!data) throw new Error('No valid response from Gemini.');
-
-        loading.style.display = 'none';
-        output.style.display = 'block';
-
-        renderCrashCourse(data);
-      } catch (err: any) {
-        loading.style.display = 'none';
-        output.style.display = 'block';
-        const topicTitle = getEl('crash-topic-title');
-        if (topicTitle) {
-          topicTitle.textContent = `Error: ${err?.message || 'Failed to generate crash course.'}`;
-          topicTitle.classList.add('error-message');
-        }
-        const s = getEl('crash-summary');
-        const o = getEl('crash-overview');
-        const m = getEl('crash-main-topics');
-        const c = getEl('crash-conclusion');
-        if (s) s.textContent = '';
-        if (o) o.textContent = '';
-        if (m) m.innerHTML = '';
-        if (c) c.textContent = '';
-      }
-    });
-  }
+    try {
+      const data = await fetchCrashCourse(makePrompt(topic));
+      renderCrashCourse(data);
+      output.style.display = 'block';
+    } catch (err: any) {
+      alert(err.message || 'Error generating crash course.');
+    } finally {
+      loading.style.display = 'none';
+    }
+  });
 }

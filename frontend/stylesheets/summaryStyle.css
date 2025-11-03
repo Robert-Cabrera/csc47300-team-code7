@@ -1,8 +1,6 @@
-
 @import "./style.css";
 
-
-/* Summary Page *------------------------------------------------------------------------------------------*/
+/* =======================   SUMMARY PAGE — LOADING CONTAINER   ======================= */
 
 .loading-container {
   display: flex;
@@ -13,15 +11,93 @@
   margin-top: 5rem;
 }
 
-/* Summary container */
+
+/* =======================   SUMMARY CONTAINER LAYOUT   ======================= */
+
 .summary-container {
-  width: 80%;
-  margin: 3rem auto;
-  padding: 2rem;
+  height: auto;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#summar-ui {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#summary-ui-wrapper {
+  width: 70%;
   background: var(--clr_container_bg);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px var(--clr_nav_shadow);
-  transition: background-color 0.3s, box-shadow 0.3s;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5em 10em;
+  box-shadow: 0 8px 24px var(--clr_nav_shadow);
+  margin: 0 auto;
+}
+
+/* ================================ HERO SECTION ================================ */
+.summary-hero {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  background: linear-gradient(135deg, var(--clr_primary) 0%, var(--clr_accent) 100%);
+  border-radius: 16px 16px 0 0;
+  color: white;
+  box-shadow: 0 8px 24px var(--clr_nav_shadow);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  width: 100%;
+}
+
+.summary-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.summary-hero h1 {
+  font-size: 2.8em;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  color: var(--clr_title_with_bg);
+}
+
+.summary-hero p {
+  font-size: 1.2em;
+  margin: 0;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+  color: var(--clr_title_with_bg);
+}
+
+/* ================================ FORM SECTION ================================ */
+.summary-form-section {
+  background: var(--clr_container_bg);
+  padding: 2.5rem 2rem;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 8px 24px var(--clr_nav_shadow);
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .summary-title {
@@ -31,7 +107,9 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Upload box with animation */
+
+/* =======================   UPLOAD BOX + HOVER EFFECTS   ======================= */
+
 .upload-box {
   display: flex;
   flex-direction: column;
@@ -45,6 +123,9 @@
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: center;
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .upload-box:hover {
@@ -59,32 +140,36 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Button */
+
+/* =======================   BUTTON: SUMMARIZE   ======================= */
+
 #summarizeBtn {
   display: block;
   margin: 1.5rem auto 0;
   padding: 0.7rem 1.2rem;
-  background: #133670;
+  background: linear-gradient(135deg, var(--clr_primary) 0%, var(--clr_accent) 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
   transition: ease 0.2s, transform 0.2s ease;
+  align-self: center;
 }
 
-
-
 #summarizeBtn:hover {
-  background: #3b74ce;
   transform: translateY(-2px);
 }
 
-/* Output */
+
+/* =======================   OUTPUT CONTAINER   ======================= */
+
 #summary-output {
   margin: 2rem auto 0;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 90%;
   padding: 1.5rem;
   border-radius: 10px;
   background: var(--clr_output_bg);
@@ -93,7 +178,42 @@
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Locked message for Summary */
+#summary-output lottie-player {
+  display: block;
+  margin: 0 auto 1rem;
+  width: 160px;
+  height: 160px;
+}
+
+#summary-output {
+  min-height: 120px;
+}
+
+/* Error box overlay - lottie centered on top of message */
+.error-box {
+  position: relative;
+  padding-top: 80px; /* space for the lottie */
+  text-align: center;
+}
+
+.error-box .error-lottie {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 120px;
+  height: 120px;
+}
+
+.error-box .error-text {
+  margin: 0;
+  color: var(--clr_error);
+  font-size: 1.1rem;
+}
+
+
+/* =======================   LOCKED MESSAGE (SUMMARY PAGE)   ======================= */
+
 #summary-locked {
   text-align: center;
   font-size: 1.1rem;
@@ -107,7 +227,8 @@
 }
 
 
-/* PDF Info Box */
+/* =======================   PDF INFO DISPLAY BOX   ======================= */
+
 .pdf-info-box {
   flex-direction: column;
   align-items: center;
@@ -115,9 +236,7 @@
   padding: 1.5rem;
 }
 
-.pdf-info-text {
-  text-align: center;
-}
+.pdf-info-text { text-align: center; }
 
 .pdf-file-name {
   font-weight: 600;
@@ -136,9 +255,7 @@
   margin-top: 0.5rem;
 }
 
-.pdf-status.error {
-  color: var(--clr_error);
-}
+.pdf-status.error { color: var(--clr_error); }
 
 .remove-pdf-btn {
   padding: 0.6rem 1.2rem;
@@ -152,11 +269,11 @@
   transition: background-color 0.2s ease;
 }
 
-.remove-pdf-btn:hover {
-  background: #c82333;
-}
+.remove-pdf-btn:hover { background: #c82333; }
 
-/* Error State */
+
+/* =======================   ERROR STATE STYLING   ======================= */
+
 .pdf-error-icon {
   font-size: 3rem;
   color: #dc3545;
@@ -173,11 +290,11 @@
   margin-top: 0.5rem;
 }
 
-/* Summary Page *------------------------------------------------------------------------------------------*/
+
+/* =======================   SUMMARY OUTPUT SECTION   ======================= */
 
 .summary-output {
-  max-width: 100%;
-  width: 90%;
+  width: 100%;
   margin: 2rem auto;
   padding: 1.5rem;
 }
@@ -189,6 +306,9 @@
   margin-bottom: 1.5rem;
 }
 
+
+/* =======================   SECTION CARDS (EXECUTIVE, FINDINGS, ETC.)   ======================= */
+
 .summary-section {
   margin-bottom: 2rem;
   padding: 0rem 0.8rem;
@@ -196,13 +316,8 @@
   border-radius: 8px;
 }
 
-.summary-section.executive-summary {
-  border-left: 4px solid var(--clr_primary);
-}
-
-.summary-section.key-findings {
-  border-left: 4px solid var(--clr_accent);
-}
+.summary-section.executive-summary { border-left: 4px solid var(--clr_primary); }
+.summary-section.key-findings { border-left: 4px solid var(--clr_accent); }
 
 .section-title {
   font-size: 1.3rem;
@@ -211,15 +326,16 @@
   margin-bottom: 0.8rem;
 }
 
-.key-findings .section-title {
-  color: var(--clr_accent);
-}
+.key-findings .section-title { color: var(--clr_accent); }
 
 .section-content {
   font-size: 1.05rem;
   color: var(--clr_text);
   line-height: 1.6;
 }
+
+
+/* =======================   FINDINGS LIST   ======================= */
 
 .findings-list {
   margin-left: 1.2rem;
@@ -242,6 +358,9 @@
   color: var(--clr_accent);
   font-weight: bold;
 }
+
+
+/* =======================   SECTIONS CONTAINER & PAGE SUMMARY CARDS   ======================= */
 
 .sections-container {
   display: flex;
@@ -273,6 +392,9 @@
   margin-bottom: 0.4rem;
   color: var(--clr_text);
 }
+
+
+/* =======================   DOWNLOAD BUTTON   ======================= */
 
 .download-section {
   text-align: center;

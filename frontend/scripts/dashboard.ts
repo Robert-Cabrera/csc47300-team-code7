@@ -1,24 +1,22 @@
-/*
-  dashboard.ts
+/* 
+  ? File: 
+      dashboard.ts
+
+  ? Main Contributors: 
+      David
   
-  Handles dashboard page functionality including user greeting and history display.
-  
-  Structure:
-  1. Constants and Global State
-  2. Initialization Functions
-  3. Data Fetching Functions
-  4. Main Load Functions
-  5. Helper Functions
-  6. Template/Rendering Functions
-  7. Event Handlers
+  ? Functionalities:
+    - Manage user dashboard including greeting, stats, and content history
+    - Fetch and render user summaries and crash courses from backend
+    - Display interactive elements like loading overlays, empty states, and modals
+    - Support pagination ("load more") and deletion of items
+    - Handle view navigation and synchronization with localStorage
 */
 
+// ==================== IMPORTS =======================
 import { getUserData } from './auth.js';
 
-// ============================================================================
-// TYPES
-// ============================================================================
-
+// ==================== UTILITY TYPE DEFINITIONS =======================
 interface UserData {
   id: string;
   name: string;
@@ -52,18 +50,13 @@ interface FetchBatchResult<T> {
   hasMore: boolean;
 }
 
-// ============================================================================
-// CONSTANTS AND GLOBAL STATE
-// ============================================================================
+// ==================== CONSTANTS AND GLOBAL STATE =======================
+const ITEMS_PER_PAGE = 4; // number of records to load per batch
+let currentUserData: { id: string } | null = null; // active user reference
 
-const ITEMS_PER_PAGE = 4; // Number of items to fetch per batch
-let currentUserData: { id: string } | null = null;
-
-// ============================================================================
-// INITIALIZATION FUNCTIONS
-// ============================================================================
-
+// ==================== INITIALIZATION FUNCTIONS =======================
 export function initDashboard(isLoggedIn: boolean): void {
+  // Initialize dashboard if user is logged in
   const dashboardContainer = document.querySelector<HTMLDivElement>(".dashboard-container");
   if (!dashboardContainer) return;
 
@@ -71,20 +64,24 @@ export function initDashboard(isLoggedIn: boolean): void {
     const userData = getUserData() as UserData | null;
     const dashboardHeader = document.querySelector<HTMLHeadingElement>('.dashboard-header h2');
     
+    // Greet user by name if available
     if (dashboardHeader && userData) {
       dashboardHeader.textContent = `Welcome back, ${userData.name}!`;
     }
 
+    // Begin loading user data and dashboard content
     initializeUserData(userData);
   }
 }
 
 async function initializeUserData(userData: UserData | null): Promise<void> {
+  // Load user dashboard data including stats and content lists
   if (!userData?.id) return;
 
   try {
     currentUserData = { id: userData.id };
 
+    // Fetch stats first then load both sections
     updateStats();
 
     await loadMoreObjects('summaries', 0);
@@ -94,15 +91,13 @@ async function initializeUserData(userData: UserData | null): Promise<void> {
   }
 }
 
-// ============================================================================
-// DATA FETCHING FUNCTIONS
-// ============================================================================
-
+// ==================== DATA FETCHING FUNCTIONS =======================
 async function fetchObjectsBatch<T>(
   type: 'summaries' | 'crash-courses',
   startIndex: number,
   limit: number
 ): Promise<FetchBatchResult<T>> {
+  // Retrieve paginated items from backend for given user
   if (!currentUserData?.id) {
     throw new Error('User ID not available');
   }
@@ -118,11 +113,9 @@ async function fetchObjectsBatch<T>(
   return await response.json();
 }
 
-// ============================================================================
-// MAIN LOAD FUNCTIONS
-// ============================================================================
-
+// ==================== MAIN LOAD FUNCTIONS =======================
 async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: number): Promise<void> {
+  // Dynamically load dashboard content sections (summaries or crash courses)
   const typeConfig = {
     summaries: {
       containerClass: '.summaries-list-container',
@@ -155,9 +148,11 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
     loadMoreBtn.style.display = 'none';
   }
 
+  // Show temporary loading overlay
   showLoadingAnimation(container, type);
 
   try {
+    // Fetch a batch of data from server
     const { items, hasMore } = await fetchObjectsBatch<any>(
       type,
       startIndex,
@@ -165,20 +160,24 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
     );
     removeLoadingAnimation(container, type);
 
+    // Handle empty state when no items exist
     if (items.length === 0 && isFirstLoad) {
       showEmptyState(container, loadMoreBtn, type);
       return;
     }
 
+    // Append new items into the dashboard list
     const historyList = getOrCreateHistoryList(container);
     items.forEach(obj => {
       historyList.appendChild(createItemFn(obj));
     });
 
+    // Enable horizontal scroll when overflowing
     if (historyList.scrollWidth > historyList.clientWidth) {
       historyList.style.overflowX = 'auto';
     }
 
+    // Handle pagination / "Load more" visibility
     updateLoadMoreButton(container, loadMoreBtn, hasMore, () =>
       loadMoreObjects(type, startIndex + ITEMS_PER_PAGE)
     );
@@ -188,12 +187,9 @@ async function loadMoreObjects(type: 'summaries' | 'crash-courses', startIndex: 
   }
 }
 
-// ============================================================================
-// HELPER FUNCTIONS
-// ============================================================================
-
+// ==================== HELPER FUNCTIONS =======================
 async function updateStats(): Promise<void> {
-  
+  // Fetch and update summary/crash course counters in dashboard header
   let userData = getUserData() as UserData | null;
   const statsResponse = await fetch(`/api/user/${userData.id}/stats`);
     if (!statsResponse.ok) {
@@ -211,6 +207,7 @@ async function updateStats(): Promise<void> {
 }
 
 function getOrCreateHistoryList(container: HTMLElement): HTMLDivElement {
+  // Reuse or build the inner list container dynamically
   let historyList = container.querySelector<HTMLDivElement>('.history-list');
   if (!historyList) {
     historyList = document.createElement('div');
@@ -226,6 +223,7 @@ function updateLoadMoreButton(
   hasMore: boolean,
   onClickHandler: () => void
 ): void {
+  // Control the visibility and callback of "Load More" button
   if (!loadMoreBtn) return;
 
   const existingBtn = container.querySelector('.load-more-btn');
@@ -240,18 +238,15 @@ function updateLoadMoreButton(
   }
 }
 
-// ============================================================================
-// ITEM CREATION FUNCTIONS
-// ============================================================================
-
+// ==================== ITEM CREATION FUNCTIONS =======================
 function createSummaryItem(summary: Summary): HTMLElement {
+  // Build a summary history card from template
   const template = document.getElementById('history-item-template') as HTMLTemplateElement | null;
   if (!template) {
     console.error('History item template not found');
     return document.createElement('div');
   }
 
-  // cloneNode returns DocumentFragment; narrow it explicitly
   const fragment = template.content.cloneNode(true) as DocumentFragment;
   const item = fragment.querySelector<HTMLElement>('.history-item');
   if (!item) {
@@ -259,6 +254,7 @@ function createSummaryItem(summary: Summary): HTMLElement {
     return document.createElement('div');
   }
 
+  // Format date and prepare short preview
   const date = new Date(summary.createdAt).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -270,38 +266,32 @@ function createSummaryItem(summary: Summary): HTMLElement {
     const firstSentence = summary.executive_summary.split(/[.!?]/)[0].trim();
     preview = firstSentence ? `${firstSentence}.` : preview;
   }
-
   if (preview.length > 200) preview = preview.substring(0, 200) + '...';
 
+  // Populate text fields
   const titleEl = item.querySelector<HTMLElement>('[data-title]');
   const dateEl = item.querySelector<HTMLElement>('[data-date]');
   const previewEl = item.querySelector<HTMLElement>('[data-preview]');
 
   if (titleEl) titleEl.textContent = summary.fileName || 'PDF Summary';
-  else console.warn('[data-title] not found in history-item template');
-
   if (dateEl) dateEl.textContent = date;
-  else console.warn('[data-date] not found in history-item template');
-
   if (previewEl) previewEl.textContent = preview;
-  else console.warn('[data-preview] not found in history-item template');
 
+  // Register click handlers for viewing and deleting
   item.addEventListener('click', () => viewSummary(summary));
-  // Add delete icon event
   const deleteIcon = item.querySelector('.delete-icon');
   if (deleteIcon) {
     deleteIcon.addEventListener('click', async (e) => {
       e.stopPropagation();
       const ok = await showConfirm('Delete summary', 'Are you sure you want to delete this summary?');
-      if (ok) {
-        await deleteSummary(summary.id);
-      }
+      if (ok) await deleteSummary(summary.id);
     });
   }
   return item;
 }
 
 function createCrashCourseItem(course: CrashCourse): HTMLElement {
+  // Build a crash course history card from template
   const template = document.getElementById('history-item-template') as HTMLTemplateElement | null;
   if (!template) {
     console.error('History item template not found');
@@ -315,12 +305,12 @@ function createCrashCourseItem(course: CrashCourse): HTMLElement {
     return document.createElement('div');
   }
 
+  // Format date and short preview content
   const date = new Date(course.createdAt).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
   });
-
   const preview = course.summary || course.overview || 'No preview available';
 
   const titleEl = item.querySelector<HTMLElement>('[data-title]');
@@ -328,36 +318,28 @@ function createCrashCourseItem(course: CrashCourse): HTMLElement {
   const previewEl = item.querySelector<HTMLElement>('[data-preview]');
 
   if (titleEl) titleEl.textContent = course.topic || 'Crash Course';
-  else console.warn('[data-title] not found in history-item template');
-
   if (dateEl) dateEl.textContent = date;
-  else console.warn('[data-date] not found in history-item template');
-
   if (previewEl) previewEl.textContent = preview;
-  else console.warn('[data-preview] not found in history-item template');
 
+  // Attach click and delete listeners
   item.addEventListener('click', () => viewCrashCourse(course));
-  // Add delete icon event
   const deleteIcon = item.querySelector('.delete-icon');
   if (deleteIcon) {
     deleteIcon.addEventListener('click', async (e) => {
       e.stopPropagation();
       const ok = await showConfirm('Delete crash course', 'Are you sure you want to delete this crash course?');
-      if (ok) {
-        await deleteCrashCourse(course.id);
-      }
+      if (ok) await deleteCrashCourse(course.id);
     });
   }
   return item;
 }
 
-// Add delete functions outside of item creation
-// --- DELETE FUNCTIONS ---
+// ==================== DELETE FUNCTIONS =======================
 async function deleteSummary(summaryId?: string) {
+  // Delete summary record from server and refresh dashboard
   if (!currentUserData?.id || !summaryId) return;
   try {
-  // summary routes are mounted under /api/summary on the server
-  const res = await fetch(`/api/summary/user/${currentUserData.id}/${summaryId}`, { method: 'DELETE' });
+    const res = await fetch(`/api/summary/user/${currentUserData.id}/${summaryId}`, { method: 'DELETE' });
     if (!res.ok) throw new Error('Failed to delete summary');
     await updateStats();
     await loadMoreObjects('summaries', 0);
@@ -368,10 +350,10 @@ async function deleteSummary(summaryId?: string) {
 }
 
 async function deleteCrashCourse(courseId?: string) {
+  // Delete crash course record from server and refresh dashboard
   if (!currentUserData?.id || !courseId) return;
   try {
-  // crash course routes are mounted under /api/crash-course on the server
-  const res = await fetch(`/api/crash-course/user/${currentUserData.id}/${courseId}`, { method: 'DELETE' });
+    const res = await fetch(`/api/crash-course/user/${currentUserData.id}/${courseId}`, { method: 'DELETE' });
     if (!res.ok) throw new Error('Failed to delete crash course');
     await loadMoreObjects('crash-courses', 0);
     await updateStats();
@@ -381,8 +363,9 @@ async function deleteCrashCourse(courseId?: string) {
   }
 }
 
-// --- CONFIRMATION MODAL ---
+// ==================== MODALS =======================
 function showConfirm(title: string, message: string): Promise<boolean> {
+  // Display confirmation dialog with Cancel/Delete options
   const overlay = document.getElementById('modalOverlay') as HTMLElement | null;
   if (!overlay) return Promise.resolve(window.confirm(message));
 
@@ -421,8 +404,8 @@ function showConfirm(title: string, message: string): Promise<boolean> {
   });
 }
 
-// --- INFO MODAL (OK only) ---
 function showInfo(message: string, title = 'Notice'): Promise<void> {
+  // Display informational modal (single "OK" button)
   const overlay = document.getElementById('modalOverlay') as HTMLElement | null;
   if (!overlay) {
     window.alert(message);
@@ -465,11 +448,9 @@ function showInfo(message: string, title = 'Notice'): Promise<void> {
   });
 }
 
-// ============================================================================
-// TEMPLATE/RENDERING FUNCTIONS
-// ============================================================================
-
+// ==================== TEMPLATE AND RENDERING FUNCTIONS =======================
 function showLoadingAnimation(container: HTMLElement, type: string): void {
+  // Display loading overlay using template
   const template = document.getElementById('loading-template') as HTMLTemplateElement | null;
   if (!template) {
     console.error('Loading template not found');
@@ -488,11 +469,13 @@ function showLoadingAnimation(container: HTMLElement, type: string): void {
 }
 
 function removeLoadingAnimation(container: HTMLElement, type: string): void {
+  // Remove loading overlay when finished
   const loadingElement = document.getElementById(`loading-${type}`);
   loadingElement?.remove();
 }
 
 function showEmptyState(container: HTMLElement, loadMoreBtn: HTMLElement | null, type: string): void {
+  // Display an empty-state message when no records exist
   const template = document.getElementById('empty-state-template') as HTMLTemplateElement | null;
   if (!template) {
     console.error('Empty state template not found');
@@ -515,11 +498,9 @@ function showEmptyState(container: HTMLElement, loadMoreBtn: HTMLElement | null,
   if (loadMoreBtn) loadMoreBtn.style.display = 'none';
 }
 
-// ============================================================================
-// EVENT HANDLERS
-// ============================================================================
-
+// ==================== EVENT HANDLERS =======================
 function viewSummary(summary: Summary): void {
+  // Open a saved summary in a new tab and cache locally
   if (!summary.id) {
     summary.id = summary.createdAt ? String(summary.createdAt) : String(Date.now());
   }
@@ -540,6 +521,7 @@ function viewSummary(summary: Summary): void {
 }
 
 function viewCrashCourse(course: CrashCourse): void {
+  // Open a saved crash course in a new tab and cache locally
   if (!course.id) {
     course.id = course.createdAt ? String(course.createdAt) : String(Date.now());
   }

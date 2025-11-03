@@ -1,8 +1,8 @@
-
 @import "./style.css";
 
-/* Login/Signup Page *------------------------------------------------------------------------------------------*/
+/* ================================ LOGIN / SIGNUP PAGE STYLES ================================ */
 
+/* --- Section Layout --- */
 .ls-section {
   text-align: center;
   padding: 120px 20px 100px;
@@ -11,25 +11,27 @@
 }
 
 .ls-section h1 {
-    font-size: 3.2em;
-    color: var(--clr_primary);
-    margin-bottom: 15px;
+  font-size: 3.2em;
+  color: var(--clr_primary);
+  margin-bottom: 15px;
 }
 
 .ls-section p {
-    font-size: 1.3em;
-    color: var(--clr_text_muted);
-    margin-bottom: 30px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+  font-size: 1.3em;
+  color: var(--clr_text_muted);
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ls-actions {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
-/* Button */
+/* ================================ BUTTONS ================================ */
+
+/* --- Sign Up Button --- */
 .SignUpBtn {
   display: block;
   margin: 1.5rem auto 0;
@@ -49,6 +51,7 @@
   transform: translateY(-2px);
 }
 
+/* --- Login Button --- */
 .LoginBtn {
   display: block;
   margin: 1.5rem auto 0;
@@ -68,23 +71,24 @@
   transform: translateY(-2px);
 }
 
+/* ================================ CONTAINER ================================ */
 
 .login-signup-container {
   text-align: center;
   padding: 120px 20px 100px;
-  background-color: var(--clr_container_bg); /* Main container background */
+  background-color: var(--clr_container_bg);
   border-bottom: 1px solid var(--clr_output_border);
 }
 
-/* ===== AUTH COLLAPSIBLE (NOT POPUP) ===== */
+/* ================================ AUTH COLLAPSIBLE SECTION ================================ */
+/* The collapsible form expands inline instead of appearing as a popup */
 
-/* Optional: keep if you like the inline layout of buttons */
+/* --- Inline Trigger Anchor --- */
 .auth-anchor {
   display: inline-block;
 }
 
-/* Collapsible panel lives in normal flow, expanding below the button */
-/* Constrain and center the collapsible panels */
+/* --- Collapsible Panel Container --- */
 .auth-collapse {
   overflow: hidden;
   max-height: 0;
@@ -102,15 +106,13 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px var(--clr_nav_shadow);
 
-  /* New additions for width control */
   width: 100%;
-  max-width: 400px;       /* limits how wide it grows */
-  margin: 0 auto;         /* centers horizontally */
-
+  max-width: 400px; /* limits horizontal size */
+  margin: 0 auto;
   padding: 0 16px;
 }
 
-/* When open, expand vertically and keep centered */
+/* --- Collapsible Active State --- */
 .auth-collapse.open {
   max-height: 900px;
   opacity: 1;
@@ -119,8 +121,9 @@
   margin-top: 10px;
 }
 
+/* ================================ FORM CONTENT ================================ */
 
-/* Header + content styles (kept from your previous block) */
+/* --- Headings --- */
 .auth-collapse h3 {
   margin: 0 0 10px;
   font-size: 1.2rem;
@@ -128,8 +131,13 @@
   text-align: center;
 }
 
-.auth-form { display: grid; gap: 10px; }
+/* --- Form Grid Layout --- */
+.auth-form {
+  display: grid;
+  gap: 10px;
+}
 
+/* --- Field Labels --- */
 .auth-field label {
   display: block;
   font-size: 0.9rem;
@@ -137,6 +145,7 @@
   margin-bottom: 4px;
 }
 
+/* --- Input Fields --- */
 .auth-field input {
   width: 80%;
   padding: 10px 12px;
@@ -154,6 +163,7 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--clr_primary) 20%, transparent);
 }
 
+/* ================================ ACTION BUTTONS ================================ */
 .auth-actions {
   display: flex;
   gap: 8px;
@@ -161,6 +171,7 @@
   margin-top: 6px;
 }
 
+/* --- Primary Button --- */
 .auth-actions .btn-primary {
   background: var(--clr_primary);
   color: #fff;
@@ -171,11 +182,13 @@
   cursor: pointer;
   transition: transform 0.15s ease, background 0.2s ease;
 }
+
 .auth-actions .btn-primary:hover {
   background: var(--clr_accent);
   transform: translateY(-1px);
 }
 
+/* --- Ghost Button --- */
 .auth-actions .btn-ghost {
   background: transparent;
   color: var(--clr_text_base);
@@ -186,10 +199,20 @@
   cursor: pointer;
 }
 
-.auth-error { color: var(--clr_error); font-size: 0.9rem; margin-top: 2px; }
-.auth-helper { margin-top: 6px; font-size: 0.85rem; color: var(--clr_text_muted); }
+/* ================================ SUPPORT TEXT ================================ */
+.auth-error {
+  color: var(--clr_error);
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
 
-/* Respect users who prefer less motion */
+.auth-helper {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--clr_text_muted);
+}
+
+/* ================================ ACCESSIBILITY: REDUCED MOTION ================================ */
 @media (prefers-reduced-motion: reduce) {
   .auth-collapse,
   .auth-collapse.open {

@@ -4,7 +4,7 @@ const { readUsers, generateUserId, insertUserSorted } = require('../utils/userMa
 
 // Constants
 const ITEMS_PER_PAGE = 4;
-const WAITING_RANGE_MS = 800;
+const WAITING_RANGE_MS = 400;
 
 // Helper function to simulate network/processing delay
 function simulateDelay() {
