@@ -2,12 +2,1301 @@
   "users": [
     {
       "id": "user_001",
-      "username": "Alice",
+      "username": "alice123",
+      "name": "Alice",
       "email": "alice@notesmith.com",
       "password": "password123",
       "createdAt": "2023-10-01T10:00:00Z",
       "profilePicture": "",
       "crashCourses": [
+        {
+          "id": "cc_1762139199261",
+          "createdAt": "2025-11-03T03:06:39.261Z",
+          "topic": "Mechatronics in Spain",
+          "summary": "An introduction to the field of mechatronics, focusing on its development, applications, and educational landscape within Spain.",
+          "overview": "This crash course explores the interdisciplinary field of mechatronics, highlighting its key principles and its growing significance in Spain's industrial and technological sectors. We will cover foundational concepts, current applications, and the educational pathways available for aspiring mechatronics engineers in the country.",
+          "main_topics": [
+            {
+              "title": "Foundations of Mechatronics",
+              "description": "Understand the core principles that define mechatronics, integrating mechanical engineering, electronics, computer science, and control engineering.",
+              "subtopics": [
+                {
+                  "title": "Interdisciplinary Nature",
+                  "details": "Exploring how mechanical, electrical, computer, and control systems converge to create intelligent products and processes."
+                },
+                {
+                  "title": "Key Components",
+                  "details": "Overview of sensors, actuators, microcontrollers, and software essential for mechatronic systems."
+                },
+                {
+                  "title": "System Design Approach",
+                  "details": "Learning the methodologies for designing and analyzing mechatronic systems, emphasizing holistic integration."
+                }
+              ]
+            },
+            {
+              "title": "Mechatronics in Spanish Industry",
+              "description": "Discover the practical applications of mechatronics across various Spanish industries, driving innovation and efficiency.",
+              "subtopics": [
+                {
+                  "title": "Automotive Sector",
+                  "details": "Examining the role of mechatronics in modern vehicle design, manufacturing, and autonomous driving systems in Spain."
+                },
+                {
+                  "title": "Robotics and Automation",
+                  "details": "Highlighting the increasing use of industrial robots and automated solutions in Spanish factories and logistics."
+                },
+                {
+                  "title": "Aerospace and Defense",
+                  "details": "Understanding mechatronic applications in aircraft systems, drones, and advanced defense technologies developed in Spain."
+                }
+              ]
+            },
+            {
+              "title": "Education and Research in Spain",
+              "description": "An overview of the academic landscape, research institutions, and career opportunities for mechatronics professionals in Spain.",
+              "subtopics": [
+                {
+                  "title": "University Programs",
+                  "details": "Exploring bachelor's, master's, and doctoral degrees in Mechatronics offered by leading Spanish universities."
+                },
+                {
+                  "title": "Research Hubs",
+                  "details": "Identifying key research centers and initiatives pushing the boundaries of mechatronics innovation in Spain."
+                },
+                {
+                  "title": "Career Prospects",
+                  "details": "Discussing job roles, industry demands, and future trends for mechatronics engineers within the Spanish job market."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mechatronics is a vital and expanding field in Spain, offering exciting opportunities for innovation and career growth across numerous industrial sectors."
+        },
+        {
+          "id": "cc_1762133425510",
+          "createdAt": "2025-11-03T01:30:25.510Z",
+          "topic": "Fast Mechatronics",
+          "summary": "Learn the fundamentals of fast mechatronics, focusing on rapid prototyping, efficient design, and high-speed system integration for modern engineering applications.",
+          "overview": "This crash course provides a comprehensive introduction to the principles and practices of fast mechatronics. We'll explore accelerated design cycles, real-time control systems, and the integration of mechanical, electrical, and software components for high-performance applications, enabling quicker development and deployment of advanced mechatronic solutions.",
+          "main_topics": [
+            {
+              "title": "Accelerated Design & Prototyping",
+              "description": "Focuses on speeding up the design and creation process for mechatronic systems, utilizing modern tools and methodologies to reduce development time and costs.",
+              "subtopics": [
+                {
+                  "title": "Agile Development in Mechatronics",
+                  "details": "Implementing agile methodologies for iterative design, rapid feedback, and flexible project management in mechatronic development cycles."
+                },
+                {
+                  "title": "Rapid Prototyping Technologies",
+                  "details": "Utilizing 3D printing, CNC machining, and modular components for quick physical realization of mechatronic designs and functional prototypes."
+                },
+                {
+                  "title": "Simulation-Driven Design",
+                  "details": "Employing advanced simulation tools for virtual testing and validation, significantly reducing the need for physical prototypes early on."
+                }
+              ]
+            },
+            {
+              "title": "High-Speed Control Systems",
+              "description": "Explores the design and implementation of control algorithms and hardware capable of operating and reacting at high frequencies for dynamic systems.",
+              "subtopics": [
+                {
+                  "title": "Real-Time Operating Systems (RTOS)",
+                  "details": "Understanding RTOS principles for deterministic task scheduling and efficient resource management in time-critical mechatronic applications."
+                },
+                {
+                  "title": "Advanced Control Algorithms",
+                  "details": "Implementing PID, fuzzy logic, and model predictive control for precise and rapid response in dynamic mechatronic systems."
+                },
+                {
+                  "title": "Sensor Fusion for Speed",
+                  "details": "Integrating multiple high-frequency sensors and processing their data rapidly for accurate state estimation and control."
+                }
+              ]
+            },
+            {
+              "title": "System Integration & Optimization",
+              "description": "Covers the efficient merging of mechanical, electrical, and software elements, optimizing performance for speed and reliability in integrated mechatronic systems.",
+              "subtopics": [
+                {
+                  "title": "High-Bandwidth Communication",
+                  "details": "Selecting and implementing fast communication protocols (e.g., EtherCAT, CAN FD) for seamless inter-component data exchange."
+                },
+                {
+                  "title": "Power Electronics for Speed",
+                  "details": "Designing efficient power delivery and motor control circuits that can handle high speeds and rapid dynamic changes."
+                },
+                {
+                  "title": "Performance Bottleneck Analysis",
+                  "details": "Identifying and addressing performance limitations across hardware, software, and mechanical subsystems to maximize overall system speed."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mastering fast mechatronics empowers engineers to innovate rapidly, creating highly responsive and efficient systems for the next generation of technology."
+        },
+        {
+          "id": "cc_1762133384651",
+          "createdAt": "2025-11-03T01:29:44.651Z",
+          "topic": "Introduction to Quantum Computing",
+          "summary": "A brief overview of quantum computing, its fundamental principles, potential applications, and the challenges it faces. Learn about qubits, superposition, entanglement, and quantum algorithms.",
+          "overview": "This crash course introduces the fascinating world of quantum computing. We'll explore the core concepts that differentiate it from classical computing, such as qubits, superposition, and entanglement. You'll also get a glimpse into the revolutionary potential applications and the hurdles on the path to widespread adoption.",
+          "main_topics": [
+            {
+              "title": "What is Quantum Computing?",
+              "description": "Understanding the basic principles that power quantum computers, moving beyond classical bits to explore the unique properties of quantum mechanics leveraged for computation.",
+              "subtopics": [
+                {
+                  "title": "Classical Bits vs. Qubits",
+                  "details": "Classical computers use bits (0 or 1). Quantum computers use qubits, which can be 0, 1, or both simultaneously due to superposition."
+                },
+                {
+                  "title": "Superposition",
+                  "details": "A qubit can exist in multiple states at once. This allows quantum computers to explore many possibilities concurrently, offering immense processing power."
+                },
+                {
+                  "title": "Entanglement",
+                  "details": "Two or more qubits can become linked, sharing the same fate. Measuring one instantly influences the state of the others, regardless of distance."
+                }
+              ]
+            },
+            {
+              "title": "Quantum Algorithms",
+              "description": "Discover how quantum mechanics enables new types of algorithms that can solve certain problems exponentially faster than classical algorithms.",
+              "subtopics": [
+                {
+                  "title": "Shor's Algorithm",
+                  "details": "A quantum algorithm for factoring large numbers efficiently. It has significant implications for cryptography, potentially breaking current encryption methods."
+                },
+                {
+                  "title": "Grover's Algorithm",
+                  "details": "An algorithm for searching unsorted databases. It offers a quadratic speedup over classical search algorithms, though not exponential."
+                },
+                {
+                  "title": "Quantum Simulation",
+                  "details": "Using quantum computers to model complex quantum systems, which is invaluable for drug discovery, materials science, and fundamental physics research."
+                }
+              ]
+            },
+            {
+              "title": "Applications and Challenges",
+              "description": "Exploring the transformative potential of quantum computing across various fields and the significant engineering and scientific challenges that need to be overcome.",
+              "subtopics": [
+                {
+                  "title": "Potential Applications",
+                  "details": "Fields like medicine, finance, AI, and materials science stand to benefit greatly. Think drug design, portfolio optimization, and creating new materials."
+                },
+                {
+                  "title": "Hardware Challenges",
+                  "details": "Building stable, scalable quantum computers is difficult. Qubits are fragile and susceptible to noise (decoherence), requiring extreme conditions."
+                },
+                {
+                  "title": "Software and Error Correction",
+                  "details": "Developing quantum software and robust error correction techniques are crucial for reliable quantum computation and overcoming inherent noise."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Quantum computing is an evolving frontier promising revolutionary advancements. While challenges remain, understanding its core principles is key to anticipating its impact on science and technology."
+        },
+        {
+          "id": "cc_1762133350394",
+          "createdAt": "2025-11-03T01:29:10.394Z",
+          "topic": "Introduction to Python Programming",
+          "summary": "Learn the fundamentals of Python, a versatile and popular programming language. This crash course covers basic syntax, data types, control flow, functions, and an introduction to object-oriented concepts.",
+          "overview": "This crash course provides a rapid introduction to Python programming. We'll explore core concepts essential for beginners, from writing your first script to understanding fundamental programming structures. Perfect for those new to coding or looking to quickly grasp Python's essentials.",
+          "main_topics": [
+            {
+              "title": "Python Basics and Setup",
+              "description": "Get started with Python. Understand its installation, basic syntax, and how to write and run your first simple programs. Covers variables and fundamental data types.",
+              "subtopics": [
+                {
+                  "title": "Installation and Environment",
+                  "details": "Guide on downloading and installing Python. Setting up an IDE or text editor for Python development. Running a basic 'Hello, World!' script."
+                },
+                {
+                  "title": "Variables and Data Types",
+                  "details": "Understanding how to declare variables. Exploring fundamental types like integers, floats, strings, and booleans. Basic type conversion concepts."
+                },
+                {
+                  "title": "Basic Syntax and Operators",
+                  "details": "Rules for writing Python code. Arithmetic, comparison, and logical operators. Understanding indentation's role in Python code structure."
+                }
+              ]
+            },
+            {
+              "title": "Control Flow and Data Structures",
+              "description": "Learn how to control the execution of your programs using conditional statements and loops. Explore Python's built-in data structures like lists and dictionaries.",
+              "subtopics": [
+                {
+                  "title": "Conditional Statements",
+                  "details": "Using 'if', 'elif', and 'else' for decision-making. Nested conditionals and logical operations to create complex conditions."
+                },
+                {
+                  "title": "Loops (For and While)",
+                  "details": "Iterating over sequences with 'for' loops. Executing code repeatedly with 'while' loops. 'break' and 'continue' statements."
+                },
+                {
+                  "title": "Lists and Dictionaries",
+                  "details": "Creating and manipulating lists (ordered, mutable sequences). Working with dictionaries (key-value pairs, unordered). Basic methods for both."
+                }
+              ]
+            },
+            {
+              "title": "Functions and Modules",
+              "description": "Discover how to write reusable blocks of code using functions. Learn to organize your code by importing and using modules.",
+              "subtopics": [
+                {
+                  "title": "Defining and Calling Functions",
+                  "details": "Creating your own functions with 'def'. Passing arguments and returning values. Understanding function scope."
+                },
+                {
+                  "title": "Built-in Functions",
+                  "details": "Exploring commonly used Python built-in functions like 'print()', 'len()', 'type()', and 'input()'."
+                },
+                {
+                  "title": "Introduction to Modules",
+                  "details": "What modules are and why they are useful. Importing modules like 'math' or 'random'. Using functions from imported modules."
+                }
+              ]
+            }
+          ],
+          "conclusion": "You've gained foundational Python skills! Continue practicing by building small projects and exploring libraries to unlock Python's full potential."
+        },
+        {
+          "id": "cc_1762133350362",
+          "createdAt": "2025-11-03T01:29:10.362Z",
+          "topic": "Introduction to Python Programming",
+          "summary": "A beginner-friendly crash course covering fundamental Python concepts, syntax, data types, control flow, functions, and basic object-oriented programming principles. Learn to write and run simple Python programs.",
+          "overview": "This crash course provides a rapid introduction to Python, a versatile and popular programming language. We will explore core concepts, essential syntax, and practical examples to get you started with coding. Perfect for absolute beginners or those transitioning from other languages.",
+          "main_topics": [
+            {
+              "title": "Python Basics & Setup",
+              "description": "Understand what Python is, its applications, and how to set up your development environment. Learn about variables, basic data types, and simple input/output operations.",
+              "subtopics": [
+                {
+                  "title": "What is Python?",
+                  "details": "Discover Python's history, features, and why it's a great choice for beginners. Explore its use in web development, data science, and automation."
+                },
+                {
+                  "title": "Installation & Environment",
+                  "details": "Guide to installing Python on different operating systems and setting up an Integrated Development Environment (IDE) like VS Code or PyCharm."
+                },
+                {
+                  "title": "Variables & Data Types",
+                  "details": "Learn about assigning values to variables and explore fundamental data types: integers, floats, strings, and booleans. Understand type casting."
+                }
+              ]
+            },
+            {
+              "title": "Control Flow & Operations",
+              "description": "Master how to control the execution path of your programs using conditional statements (if, elif, else) and loops (for, while). Explore common operators.",
+              "subtopics": [
+                {
+                  "title": "Conditional Statements",
+                  "details": "Understand how to make decisions in your code using if, elif, and else statements based on specific conditions."
+                },
+                {
+                  "title": "Loops",
+                  "details": "Learn to repeat blocks of code efficiently using for loops (iterating over sequences) and while loops (repeating as long as a condition is true)."
+                },
+                {
+                  "title": "Operators",
+                  "details": "Explore arithmetic, comparison, logical, and assignment operators used to perform operations on variables and values."
+                }
+              ]
+            },
+            {
+              "title": "Data Structures & Functions",
+              "description": "Dive into common Python data structures like lists, tuples, dictionaries, and sets. Learn to define and use functions to organize and reuse code.",
+              "subtopics": [
+                {
+                  "title": "Lists and Tuples",
+                  "details": "Understand mutable lists and immutable tuples for storing ordered collections of items. Learn common operations like appending, indexing, and slicing."
+                },
+                {
+                  "title": "Dictionaries and Sets",
+                  "details": "Explore key-value pairs in dictionaries and unordered collections of unique items in sets. Learn how to add, access, and remove elements."
+                },
+                {
+                  "title": "Defining Functions",
+                  "details": "Learn to create reusable blocks of code using functions, including parameters, return values, and scope."
+                }
+              ]
+            },
+            {
+              "title": "Introduction to OOP",
+              "description": "Get a basic understanding of Object-Oriented Programming (OOP) concepts in Python, including classes, objects, attributes, and methods.",
+              "subtopics": [
+                {
+                  "title": "Classes and Objects",
+                  "details": "Learn the fundamental concepts of OOP: defining classes as blueprints and creating objects (instances) from them."
+                },
+                {
+                  "title": "Attributes and Methods",
+                  "details": "Understand how to define data (attributes) and behavior (methods) within a class."
+                },
+                {
+                  "title": "Inheritance Basics",
+                  "details": "A brief introduction to inheritance, allowing classes to inherit properties and methods from parent classes."
+                }
+              ]
+            }
+          ],
+          "conclusion": "You've now covered the essentials of Python programming! Continue practicing, building small projects, and exploring libraries to further enhance your coding skills."
+        },
+        {
+          "id": "cc_1762133168274",
+          "createdAt": "2025-11-03T01:26:08.274Z",
+          "topic": "AI for Mechatronics",
+          "summary": "Explore how Artificial Intelligence is revolutionizing mechatronics, enhancing automation, control, and intelligent decision-making in electromechanical systems. This course bridges AI concepts with practical mechatronic applications.",
+          "overview": "This crash course introduces the integration of Artificial Intelligence (AI) into mechatronics. We'll cover fundamental AI concepts relevant to mechatronics, explore machine learning for system optimization and control, and discuss real-world applications and future trends in intelligent mechatronic systems.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of AI in Mechatronics",
+              "description": "Understand the core AI principles and their relevance to mechatronic systems. Learn about different AI paradigms and how they can enhance system capabilities, from perception to decision-making.",
+              "subtopics": [
+                {
+                  "title": "AI Concepts Overview",
+                  "details": "Introduction to AI, machine learning, deep learning, and their basic definitions. Understanding intelligent agents and their role in mechatronics."
+                },
+                {
+                  "title": "AI for Perception",
+                  "details": "How AI techniques like computer vision and sensor fusion enable mechatronic systems to perceive their environment and interpret data effectively."
+                },
+                {
+                  "title": "AI for Decision Making",
+                  "details": "Exploring algorithms for intelligent decision-making, planning, and problem-solving in dynamic mechatronic environments."
+                }
+              ]
+            },
+            {
+              "title": "Machine Learning for System Optimization",
+              "description": "Leverage machine learning to improve the performance, efficiency, and adaptability of mechatronic systems. Focus on learning from data to optimize control parameters and predict system behavior.",
+              "subtopics": [
+                {
+                  "title": "Supervised Learning",
+                  "details": "Using labeled data for tasks like system modeling, fault detection, and predictive maintenance in mechatronic devices."
+                },
+                {
+                  "title": "Unsupervised Learning",
+                  "details": "Discovering patterns in unlabeled data for anomaly detection, clustering sensor readings, and understanding system states."
+                },
+                {
+                  "title": "Reinforcement Learning",
+                  "details": "Enabling systems to learn optimal control policies through trial and error, essential for adaptive and autonomous mechatronic applications."
+                }
+              ]
+            },
+            {
+              "title": "Applications and Future Trends",
+              "description": "Examine practical implementations of AI in mechatronics across various industries. Discuss emerging trends and the future potential of intelligent mechatronic systems.",
+              "subtopics": [
+                {
+                  "title": "Robotics and Automation",
+                  "details": "AI-powered robots for manufacturing, logistics, healthcare, and exploration. Intelligent control and navigation systems."
+                },
+                {
+                  "title": "Smart Systems",
+                  "details": "Integration of AI in autonomous vehicles, smart manufacturing (Industry 4.0), and human-robot collaboration."
+                },
+                {
+                  "title": "Emerging AI-Mechatronics Frontiers",
+                  "details": "Exploring advancements in AI hardware, edge computing for mechatronics, and explainable AI (XAI) in mechatronic systems."
+                }
+              ]
+            }
+          ],
+          "conclusion": "AI is transforming mechatronics, leading to smarter, more autonomous, and efficient systems. Embracing these technologies is key to innovation in electromechanical design and application."
+        },
+        {
+          "id": "cc_1762133156500",
+          "createdAt": "2025-11-03T01:25:56.500Z",
+          "topic": "Machine Learning for Mechatronics",
+          "summary": "Explore the fundamentals of machine learning and its practical applications in mechatronics, focusing on predictive maintenance, control systems, and sensor fusion for enhanced robotic and automated systems.",
+          "overview": "This crash course introduces machine learning concepts tailored for mechatronics engineers. We will cover core algorithms, data handling techniques, and real-world examples of ML implementation in robotic systems, industrial automation, and smart devices to improve performance and efficiency.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of Machine Learning",
+              "description": "Understand the basic principles of ML, including supervised, unsupervised, and reinforcement learning, and how they apply to mechatronic systems. Learn about common algorithms and their suitability for different tasks.",
+              "subtopics": [
+                {
+                  "title": "Types of ML",
+                  "details": "Explore supervised learning (regression, classification), unsupervised learning (clustering, dimensionality reduction), and reinforcement learning paradigms relevant to mechatronics."
+                },
+                {
+                  "title": "Key Algorithms",
+                  "details": "Overview of essential algorithms like Linear Regression, Support Vector Machines (SVM), K-Means Clustering, and Decision Trees, with an emphasis on their mechatronic use cases."
+                },
+                {
+                  "title": "Model Evaluation",
+                  "details": "Learn how to assess the performance of ML models using metrics like accuracy, precision, recall, and mean squared error, crucial for reliable mechatronic applications."
+                }
+              ]
+            },
+            {
+              "title": "Data Handling and Feature Engineering",
+              "description": "Discover the importance of data preprocessing, feature selection, and feature extraction techniques essential for building effective ML models in mechatronics. Address challenges like noisy sensor data.",
+              "subtopics": [
+                {
+                  "title": "Data Preprocessing",
+                  "details": "Techniques for cleaning, scaling, and normalizing sensor data to prepare it for ML algorithms. Handling missing values and outliers is critical."
+                },
+                {
+                  "title": "Feature Selection",
+                  "details": "Methods for identifying the most relevant input features from sensor streams to improve model accuracy and reduce computational cost in real-time systems."
+                },
+                {
+                  "title": "Feature Extraction",
+                  "details": "Creating new, informative features from raw sensor data (e.g., time-domain, frequency-domain features) that better represent the system's state."
+                }
+              ]
+            },
+            {
+              "title": "Applications in Mechatronics",
+              "description": "Investigate practical applications of machine learning in mechatronics, including predictive maintenance, advanced control systems, robotic navigation, and sensor fusion for enhanced system intelligence.",
+              "subtopics": [
+                {
+                  "title": "Predictive Maintenance",
+                  "details": "Using ML to forecast equipment failures by analyzing sensor data, enabling proactive maintenance and reducing downtime in industrial mechatronic systems."
+                },
+                {
+                  "title": "Advanced Control Systems",
+                  "details": "Implementing ML-based controllers (e.g., adaptive control, fuzzy logic) for improved performance, robustness, and energy efficiency in robots and vehicles."
+                },
+                {
+                  "title": "Sensor Fusion & Perception",
+                  "details": "Combining data from multiple sensors using ML for a more accurate understanding of the environment, crucial for autonomous navigation and human-robot interaction."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Machine learning offers powerful tools to revolutionize mechatronics, enabling smarter, more efficient, and adaptable systems. Continuous learning and experimentation are key to unlocking its full potential."
+        },
+        {
+          "id": "cc_1762133026044",
+          "createdAt": "2025-11-03T01:23:46.044Z",
+          "topic": "Overshooting PID",
+          "summary": "Learn about PID controller overshoot: what it is, why it happens, and how to mitigate it for smoother system response. Essential for control system tuning.",
+          "overview": "This crash course delves into the phenomenon of overshoot in Proportional-Integral-Derivative (PID) controllers. We'll explore its causes, effects on system performance, and practical strategies to minimize or eliminate it, ensuring a stable and efficient control loop.",
+          "main_topics": [
+            {
+              "title": "Understanding PID Control",
+              "description": "A foundational look at how PID controllers work, covering the roles of Proportional, Integral, and Derivative terms in regulating system output and achieving desired setpoints.",
+              "subtopics": [
+                {
+                  "title": "Proportional (P) Action",
+                  "details": "Reacts to the current error. Higher P gain means faster response but can increase overshoot."
+                },
+                {
+                  "title": "Integral (I) Action",
+                  "details": "Addresses past errors. Eliminates steady-state error but can worsen overshoot and oscillations."
+                },
+                {
+                  "title": "Derivative (D) Action",
+                  "details": "Predicts future error based on rate of change. Damping effect reduces overshoot and oscillations."
+                }
+              ]
+            },
+            {
+              "title": "What is Overshoot?",
+              "description": "Defining overshoot in the context of PID control, illustrating how the system output exceeds the setpoint before settling, and the implications for system stability and performance.",
+              "subtopics": [
+                {
+                  "title": "Definition and Visualization",
+                  "details": "The peak response that goes beyond the desired setpoint. Often seen as a 'hump' in step response graphs."
+                },
+                {
+                  "title": "Causes of Overshoot",
+                  "details": "Primarily caused by aggressive tuning (high P or I gains), system inertia, or sudden setpoint changes."
+                },
+                {
+                  "title": "Consequences of Overshoot",
+                  "details": "Can lead to instability, wear on mechanical components, and inaccurate process control, affecting safety and efficiency."
+                }
+              ]
+            },
+            {
+              "title": "Mitigation Strategies",
+              "description": "Practical techniques to reduce or eliminate overshoot, including advanced PID tuning methods, filter implementation, and system parameter adjustments.",
+              "subtopics": [
+                {
+                  "title": "Tuning Methods",
+                  "details": "Methods like Ziegler-Nichols or trial-and-error to find optimal P, I, and D gains. Often involves reducing P and I gains."
+                },
+                {
+                  "title": "Implementing Damping",
+                  "details": "Proper use of the Derivative term or adding a low-pass filter to the derivative calculation can significantly reduce overshoot."
+                },
+                {
+                  "title": "Advanced Techniques",
+                  "details": "Anti-windup strategies for the integral term and setpoint weighting can further refine response and minimize overshoot."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mastering PID overshoot control is key to achieving precise and stable system performance. By understanding its causes and applying appropriate tuning and strategies, you can ensure your control systems operate smoothly and efficiently."
+        },
+        {
+          "id": "cc_1762133008852",
+          "createdAt": "2025-11-03T01:23:28.852Z",
+          "topic": "Mechatronics PID Control",
+          "summary": "An introduction to Proportional-Integral-Derivative (PID) controllers, a fundamental feedback mechanism widely used in mechatronic systems to achieve precise and stable control of various parameters like speed, position, and temperature.",
+          "overview": "This crash course will demystify PID control, covering its core principles, how each component (P, I, D) contributes to system performance, methods for tuning PID parameters, and practical applications in mechatronics. You'll learn to analyze system responses and implement effective control strategies.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of Feedback Control",
+              "description": "Understand the basic concept of feedback control systems and why they are essential in mechatronics for achieving desired system behavior and overcoming disturbances. Explore closed-loop vs. open-loop systems.",
+              "subtopics": [
+                {
+                  "title": "What is Feedback?",
+                  "details": "Learn how feedback measures the system's output and compares it to the desired setpoint to generate an error signal."
+                },
+                {
+                  "title": "System Components",
+                  "details": "Identify key elements like sensors, actuators, controllers, and the plant (the system being controlled) within a feedback loop."
+                },
+                {
+                  "title": "Error Signal",
+                  "details": "Understand the definition and importance of the error signal (Setpoint - Measured Output) as the input to the controller."
+                }
+              ]
+            },
+            {
+              "title": "The PID Controller Components",
+              "description": "Delve into the individual roles of the Proportional (P), Integral (I), and Derivative (D) terms in influencing the controller's output and shaping the system's response.",
+              "subtopics": [
+                {
+                  "title": "Proportional (P) Control",
+                  "details": "How the P-term reacts to the current error, providing a control output proportional to the error's magnitude. Good for reducing steady-state error."
+                },
+                {
+                  "title": "Integral (I) Control",
+                  "details": "How the I-term addresses past errors by accumulating them over time, effectively eliminating steady-state error but potentially increasing overshoot."
+                },
+                {
+                  "title": "Derivative (D) Control",
+                  "details": "How the D-term anticipates future errors by considering the rate of change of the error, helping to dampen oscillations and improve stability."
+                }
+              ]
+            },
+            {
+              "title": "PID Tuning and Implementation",
+              "description": "Explore practical methods for determining the optimal PID gains (Kp, Ki, Kd) to achieve desired system performance, such as the Ziegler-Nichols method and manual tuning.",
+              "subtopics": [
+                {
+                  "title": "Tuning Objectives",
+                  "details": "Understand goals like minimizing rise time, overshoot, settling time, and steady-state error for optimal performance."
+                },
+                {
+                  "title": "Tuning Methods",
+                  "details": "Learn about common techniques like Ziegler-Nichols, manual tuning, and auto-tuning, and their pros and cons."
+                },
+                {
+                  "title": "Practical Considerations",
+                  "details": "Discuss real-world challenges like noise, actuator saturation, and non-linearities that affect PID performance."
+                }
+              ]
+            },
+            {
+              "title": "Applications in Mechatronics",
+              "description": "See how PID controllers are applied across various mechatronic systems to regulate speed, position, temperature, and other critical parameters for automated operation.",
+              "subtopics": [
+                {
+                  "title": "Robotic Arms",
+                  "details": "Controlling joint angles and end-effector position for precise movements in industrial robots and automated systems."
+                },
+                {
+                  "title": "Automotive Systems",
+                  "details": "Applications like cruise control, anti-lock braking systems (ABS), and engine idle speed regulation."
+                },
+                {
+                  "title": "Process Control",
+                  "details": "Maintaining temperature, pressure, or flow rates in manufacturing processes and environmental control systems."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mastering PID control is key to building robust and efficient mechatronic systems. By understanding its components and tuning techniques, you can significantly improve performance and achieve precise automation."
+        },
+        {
+          "id": "cc_1761636779785",
+          "createdAt": "2025-10-28T07:32:59.785Z",
+          "topic": "Reinforcement Learning for Robotics",
+          "summary": "Explore Reinforcement Learning (RL) applied to robotics, enabling robots to learn complex tasks through trial and error. This course covers fundamental concepts, algorithms, and practical applications for intelligent robot behavior.",
+          "overview": "This crash course introduces Reinforcement Learning specifically for robotic applications. We will delve into core RL principles, explore key algorithms like Q-learning and policy gradients, and discuss how these techniques empower robots to autonomously acquire skills for manipulation, navigation, and interaction in real-world environments.",
+          "main_topics": [
+            {
+              "title": "Foundations of Reinforcement Learning",
+              "description": "Understand the core concepts of RL, including agents, environments, states, actions, and rewards. Learn about the Markov Decision Process (MDP) framework, crucial for formalizing RL problems in robotics.",
+              "subtopics": [
+                {
+                  "title": "RL Components",
+                  "details": "Define agent, environment, state, action, and reward. Understand the objective: maximizing cumulative reward through sequential decision-making."
+                },
+                {
+                  "title": "Markov Decision Processes (MDPs)",
+                  "details": "Learn about states, actions, transition probabilities, and reward functions that define an MDP, the mathematical basis for RL."
+                },
+                {
+                  "title": "Exploration vs. Exploitation",
+                  "details": "Understand the trade-off between trying new actions (exploration) and using known good actions (exploitation) to find optimal policies."
+                }
+              ]
+            },
+            {
+              "title": "Key RL Algorithms for Robotics",
+              "description": "Explore essential RL algorithms tailored for robotic control. We'll cover value-based methods like Q-learning and policy-based methods such as Policy Gradients and Actor-Critic.",
+              "subtopics": [
+                {
+                  "title": "Value-Based Methods (Q-Learning)",
+                  "details": "Understand how Q-learning estimates the value of state-action pairs to learn an optimal policy, often used in discrete action spaces."
+                },
+                {
+                  "title": "Policy Gradient Methods",
+                  "details": "Learn how policy gradients directly optimize the robot's policy (action selection strategy) for continuous control tasks."
+                },
+                {
+                  "title": "Actor-Critic Methods",
+                  "details": "Combine value and policy-based approaches. The actor learns the policy, and the critic evaluates it, leading to more stable learning."
+                }
+              ]
+            },
+            {
+              "title": "Robotics Applications and Challenges",
+              "description": "Discover how RL is applied in robotics for tasks like manipulation and navigation. Discuss practical challenges such as sample efficiency, sim-to-real transfer, and safety.",
+              "subtopics": [
+                {
+                  "title": "Robotic Manipulation",
+                  "details": "Learn how RL enables robots to grasp, assemble, and manipulate objects with dexterity, adapting to varied object properties."
+                },
+                {
+                  "title": "Robot Navigation",
+                  "details": "Explore RL for autonomous robot navigation in complex, dynamic environments, learning efficient and safe path planning."
+                },
+                {
+                  "title": "Sim-to-Real Transfer",
+                  "details": "Address the challenge of transferring policies learned in simulation to real robots, minimizing the reality gap."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Reinforcement learning offers a powerful paradigm for teaching robots to learn and adapt. By mastering these concepts, you can unlock new possibilities for intelligent and autonomous robotic systems."
+        },
+        {
+          "id": "cc_1761627035186",
+          "createdAt": "2025-10-28T04:50:35.186Z",
+          "topic": "Machine Learning for Robotics",
+          "summary": "Explore how machine learning empowers robots with intelligence. This course covers core ML concepts, their application in robot perception, control, and decision-making, and future trends.",
+          "overview": "This crash course introduces the fundamental concepts of machine learning and their pivotal role in advancing robotics. We'll delve into supervised, unsupervised, and reinforcement learning, and how they are applied to enhance robot capabilities like navigation, object recognition, and human interaction. The focus is on practical applications and future potential.",
+          "main_topics": [
+            {
+              "title": "Foundations of Machine Learning",
+              "description": "Understand the basic principles of machine learning, including types of learning, data preprocessing, and common algorithms. This section sets the stage for applying ML to robotic systems.",
+              "subtopics": [
+                {
+                  "title": "Supervised Learning Basics",
+                  "details": "Learn about learning from labeled data. Covers classification and regression, essential for tasks like object identification and predicting robot movements based on past examples."
+                },
+                {
+                  "title": "Unsupervised Learning Concepts",
+                  "details": "Explore learning from unlabeled data. Focuses on clustering and dimensionality reduction, useful for robot self-organization and discovering patterns in sensor data."
+                },
+                {
+                  "title": "Reinforcement Learning Fundamentals",
+                  "details": "Understand how agents learn through trial and error. Key for robot control, enabling robots to learn optimal actions in dynamic environments via rewards and penalties."
+                }
+              ]
+            },
+            {
+              "title": "ML Applications in Robot Perception",
+              "description": "Discover how ML enhances a robot's ability to perceive and understand its environment. This covers vision, sensor fusion, and scene interpretation for intelligent navigation and interaction.",
+              "subtopics": [
+                {
+                  "title": "Computer Vision for Robots",
+                  "details": "Utilize ML for image recognition, object detection, and tracking. Crucial for robots to 'see' and identify objects, people, and navigate complex spaces."
+                },
+                {
+                  "title": "Sensor Data Interpretation",
+                  "details": "Learn to process and interpret data from various sensors (LIDAR, IMU, cameras) using ML. Enables robust environment mapping and state estimation for robots."
+                },
+                {
+                  "title": "Simultaneous Localization and Mapping (SLAM)",
+                  "details": "Explore ML-driven SLAM techniques. Robots build maps of unknown environments while simultaneously tracking their own location within these maps."
+                }
+              ]
+            },
+            {
+              "title": "ML for Robot Control and Decision Making",
+              "description": "Examine how ML algorithms enable robots to make intelligent decisions and execute precise actions. This includes motion planning, manipulation, and human-robot collaboration.",
+              "subtopics": [
+                {
+                  "title": "Learning Motion Policies",
+                  "details": "Apply RL to learn efficient and adaptive movement strategies. Robots can learn to walk, grasp, and navigate complex terrains dynamically."
+                },
+                {
+                  "title": "Intelligent Grasping and Manipulation",
+                  "details": "Use ML to teach robots how to grasp diverse objects effectively. Covers learning grasp points and trajectories from visual and tactile feedback."
+                },
+                {
+                  "title": "Human-Robot Interaction (HRI)",
+                  "details": "Employ ML for robots to understand and respond to human commands and intentions. Facilitates smoother, more intuitive collaboration between humans and robots."
+                }
+              ]
+            },
+            {
+              "title": "Future Trends and Challenges",
+              "description": "Look ahead at the evolving landscape of ML in robotics, including advanced learning techniques, ethical considerations, and the challenges in deploying intelligent robotic systems.",
+              "subtopics": [
+                {
+                  "title": "Deep Learning Architectures",
+                  "details": "Discuss advanced deep learning models like CNNs and RNNs tailored for robotic tasks, improving perception and control capabilities significantly."
+                },
+                {
+                  "title": "Ethical Considerations",
+                  "details": "Address the ethical implications of autonomous robots powered by ML, including safety, accountability, and societal impact."
+                },
+                {
+                  "title": "Real-world Deployment Challenges",
+                  "details": "Identify practical hurdles in deploying ML-powered robots, such as data scarcity, computational constraints, and ensuring robustness in unpredictable environments."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Machine learning is revolutionizing robotics, enabling more adaptable, intelligent, and autonomous systems. Continued research promises even more sophisticated robots capable of complex tasks and seamless human interaction."
+        },
+        {
+          "id": "cc_1761626716525",
+          "createdAt": "2025-10-28T04:45:16.525Z",
+          "topic": "Lightning Ripple",
+          "summary": "Explore the fundamentals of the Lightning Ripple protocol, a novel approach to decentralized finance that leverages blockchain technology for secure and efficient transactions. Understand its core components and potential impact.",
+          "overview": "This crash course introduces Lightning Ripple, explaining its purpose in decentralized finance. We will cover its architecture, transaction mechanisms, security features, and potential applications. Gain a foundational understanding of how this protocol aims to revolutionize financial interactions on the blockchain.",
+          "main_topics": [
+            {
+              "title": "Introduction to Lightning Ripple",
+              "description": "Understand the core concepts behind Lightning Ripple, its genesis, and the problems it aims to solve within the current decentralized financial landscape. Learn why it's an important development.",
+              "subtopics": [
+                {
+                  "title": "What is Lightning Ripple?",
+                  "details": "An explanation of Lightning Ripple as a protocol for fast, low-cost, and scalable blockchain transactions, focusing on its decentralized nature."
+                },
+                {
+                  "title": "Problem Statement",
+                  "details": "Discussing the limitations of existing blockchain transaction systems, such as scalability issues and high fees, that Lightning Ripple seeks to address."
+                },
+                {
+                  "title": "Key Objectives",
+                  "details": "Outlining the primary goals of Lightning Ripple, including enhanced speed, reduced costs, and increased transaction throughput for decentralized applications."
+                }
+              ]
+            },
+            {
+              "title": "Core Architecture and Mechanics",
+              "description": "Delve into the technical underpinnings of Lightning Ripple, including its network structure, consensus mechanisms, and how transactions are processed efficiently and securely.",
+              "subtopics": [
+                {
+                  "title": "Network Structure",
+                  "details": "Exploring the peer-to-peer network design and how nodes interact to facilitate transactions and maintain the ledger."
+                },
+                {
+                  "title": "Transaction Flow",
+                  "details": "A step-by-step breakdown of how transactions are initiated, validated, and confirmed on the Lightning Ripple network."
+                },
+                {
+                  "title": "Consensus Mechanism",
+                  "details": "Explaining the specific consensus algorithm used by Lightning Ripple to ensure the integrity and security of the network."
+                }
+              ]
+            },
+            {
+              "title": "Security and Scalability",
+              "description": "Examine the security measures implemented in Lightning Ripple to protect users' assets and data, alongside its innovative solutions for achieving high transaction scalability.",
+              "subtopics": [
+                {
+                  "title": "Security Features",
+                  "details": "Detailing cryptographic techniques, smart contract security, and other measures that safeguard the Lightning Ripple network."
+                },
+                {
+                  "title": "Scalability Solutions",
+                  "details": "Highlighting the technologies and strategies Lightning Ripple employs to handle a large volume of transactions efficiently."
+                },
+                {
+                  "title": "Potential Threats",
+                  "details": "Discussing common security vulnerabilities in blockchain and how Lightning Ripple mitigates these risks."
+                }
+              ]
+            },
+            {
+              "title": "Applications and Future",
+              "description": "Discover the practical use cases for Lightning Ripple across various industries and explore its potential impact on the future of decentralized finance and digital economies.",
+              "subtopics": [
+                {
+                  "title": "Use Cases",
+                  "details": "Illustrating real-world applications, from micropayments to decentralized exchanges and beyond."
+                },
+                {
+                  "title": "Integration Potential",
+                  "details": "Examining how Lightning Ripple can be integrated with existing blockchain projects and financial systems."
+                },
+                {
+                  "title": "Roadmap and Vision",
+                  "details": "Understanding the future development plans and long-term vision for the Lightning Ripple protocol."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Lightning Ripple offers a promising path towards more efficient, secure, and scalable decentralized financial systems. Its innovative approach could redefine digital transactions."
+        },
+        {
+          "id": "cc_1761626475385",
+          "createdAt": "2025-10-28T04:41:15.385Z",
+          "topic": "Book Robotics",
+          "summary": "Explore the fascinating world of Book Robotics, where literature meets artificial intelligence. Learn how AI can analyze, summarize, and even generate creative content inspired by books, revolutionizing how we interact with stories.",
+          "overview": "This crash course introduces Book Robotics, an emerging field blending Natural Language Processing (NLP) and literary analysis. We'll explore how AI understands narrative structure, character development, and thematic elements. Discover applications in content generation, interactive storytelling, and advanced literary research, making complex literary concepts accessible through technology.",
+          "main_topics": [
+            {
+              "title": "Foundations of Book Robotics",
+              "description": "Understand the core AI technologies powering Book Robotics. We'll cover essential NLP concepts like text processing, sentiment analysis, and topic modeling, laying the groundwork for understanding how machines interpret written content.",
+              "subtopics": [
+                {
+                  "title": "Natural Language Processing (NLP) Basics",
+                  "details": "Learn about tokenization, stemming, lemmatization, and part-of-speech tagging – fundamental steps for AI to process and understand human language in texts."
+                },
+                {
+                  "title": "Sentiment Analysis and Emotion Detection",
+                  "details": "Explore how AI identifies the emotional tone and sentiment within literary works, revealing underlying feelings and authorial intent."
+                },
+                {
+                  "title": "Topic Modeling and Thematic Extraction",
+                  "details": "Discover techniques for uncovering the main themes and subjects discussed in a book, allowing for a high-level understanding of its content."
+                }
+              ]
+            },
+            {
+              "title": "AI in Literary Analysis",
+              "description": "Delve into how AI tools are used to analyze literary works. This section covers character analysis, plot summarization, and stylistic comparisons, offering new perspectives on classic and contemporary literature.",
+              "subtopics": [
+                {
+                  "title": "Character and Relationship Mapping",
+                  "details": "Understand how AI can identify key characters, their roles, and the dynamics of their relationships throughout a narrative."
+                },
+                {
+                  "title": "Automated Plot Summarization",
+                  "details": "Learn how AI algorithms can condense complex plots into concise summaries, highlighting critical events and narrative progression."
+                },
+                {
+                  "title": "Stylometric Analysis",
+                  "details": "Explore how AI analyzes writing style, authorship attribution, and literary influences by examining unique linguistic patterns."
+                }
+              ]
+            },
+            {
+              "title": "Creative Applications and Future Trends",
+              "description": "Examine the creative potential of Book Robotics, including AI-assisted writing, interactive narratives, and personalized reading experiences. We'll also touch upon the future trajectory of this exciting interdisciplinary field.",
+              "subtopics": [
+                {
+                  "title": "AI-Generated Content and Storytelling",
+                  "details": "Discover how AI can generate new stories, poems, or dialogues inspired by existing literary styles or themes."
+                },
+                {
+                  "title": "Interactive Narratives and Games",
+                  "details": "See how AI can create dynamic, responsive story worlds where reader choices influence the narrative's direction."
+                },
+                {
+                  "title": "The Future of Literary AI",
+                  "details": "Discuss potential advancements, ethical considerations, and the evolving role of AI in literature and creative arts."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Book Robotics bridges the gap between human creativity and artificial intelligence, offering powerful new ways to analyze, understand, and create literature. Embrace the future of storytelling and literary exploration."
+        },
+        {
+          "id": "cc_1761626375897",
+          "createdAt": "2025-10-28T04:39:35.897Z",
+          "topic": "Rocket Science",
+          "summary": "An introduction to the fundamental principles of rocket science, covering propulsion, orbital mechanics, and spacecraft design for space exploration.",
+          "overview": "This crash course demystifies rocket science. We’ll explore the physics behind rocket propulsion, understand the complex mathematics of orbital mechanics, and delve into the engineering challenges of spacecraft design. Learn about the forces that launch rockets and keep them in space, and the considerations for building vehicles capable of reaching beyond Earth.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of Rocket Propulsion",
+              "description": "Explore the core principles that make rockets move. This section covers Newton's laws, the concept of thrust, and the different types of rocket engines used to achieve liftoff and maneuver in space.",
+              "subtopics": [
+                {
+                  "title": "Newton's Laws of Motion",
+                  "details": "Understand how Newton's Third Law (action-reaction) is the cornerstone of rocket propulsion, explaining how expelling mass generates forward thrust."
+                },
+                {
+                  "title": "Thrust Generation",
+                  "details": "Learn about the generation of thrust through the expulsion of high-velocity exhaust gases, discussing factors like propellant type and nozzle design."
+                },
+                {
+                  "title": "Rocket Engine Types",
+                  "details": "A brief overview of chemical rockets (solid and liquid fuel) and the concept of more advanced propulsion systems like ion engines."
+                }
+              ]
+            },
+            {
+              "title": "Orbital Mechanics",
+              "description": "Discover the physics governing celestial motion. This topic explains how objects stay in orbit, the factors influencing trajectories, and the energy required for space travel.",
+              "subtopics": [
+                {
+                  "title": "Gravity and Orbits",
+                  "details": "Grasp how gravitational forces dictate the paths of satellites and spacecraft, explaining elliptical orbits and orbital velocity."
+                },
+                {
+                  "title": "Orbital Maneuvers",
+                  "details": "Learn about changing orbits, including Hohmann transfers and gravity assists, which are crucial for space missions."
+                },
+                {
+                  "title": "Escape Velocity",
+                  "details": "Understand the minimum speed needed to break free from a celestial body's gravitational pull, enabling journeys to other planets."
+                }
+              ]
+            },
+            {
+              "title": "Spacecraft Design and Engineering",
+              "description": "Examine the essential components and challenges in building spacecraft. This section covers structural integrity, life support, payload integration, and the harsh environment of space.",
+              "subtopics": [
+                {
+                  "title": "Structural Design",
+                  "details": "Focus on lightweight yet strong materials and designs needed to withstand launch forces and the vacuum of space."
+                },
+                {
+                  "title": "Life Support Systems",
+                  "details": "Essential for crewed missions, this covers maintaining a habitable environment with air, water, and temperature control."
+                },
+                {
+                  "title": "Payload Integration",
+                  "details": "Learn how scientific instruments, communication systems, and other vital components are integrated into the spacecraft structure."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Rocket science is a fascinating blend of physics and engineering. Mastering these basics unlocks the understanding of how we explore the cosmos and push the boundaries of human knowledge."
+        },
+        {
+          "id": "cc_1761626207912",
+          "createdAt": "2025-10-28T04:36:47.912Z",
+          "topic": "Robotic Power Control",
+          "summary": "Robotic power control focuses on managing and distributing electrical energy efficiently and safely within robotic systems. It encompasses battery management, power conversion, and fault protection to ensure optimal performance and longevity of robots.",
+          "overview": "This crash course introduces the fundamental concepts of robotic power control. We will explore power sources, energy storage solutions like batteries, power management techniques for efficiency, voltage regulation, and safety measures. Understanding these elements is crucial for designing and operating reliable robotic systems.",
+          "main_topics": [
+            {
+              "title": "Power Sources and Energy Storage",
+              "description": "Examines the various ways robots obtain and store electrical energy. This includes understanding different types of batteries, their characteristics, and how to select the right power source for a given robotic application.",
+              "subtopics": [
+                {
+                  "title": "Battery Technologies",
+                  "details": "Covers common battery types like Li-ion, LiPo, and NiMH, detailing their voltage, capacity, discharge rates, and lifespan considerations for robotics."
+                },
+                {
+                  "title": "Supercapacitors",
+                  "details": "Explores supercapacitors as an alternative or supplementary energy storage method, focusing on their high power density and rapid charge/discharge capabilities."
+                },
+                {
+                  "title": "Wired Power Systems",
+                  "details": "Discusses the use of direct electrical connections for continuous power, including considerations for cable management and power delivery limitations."
+                }
+              ]
+            },
+            {
+              "title": "Power Management and Distribution",
+              "description": "Details the strategies and components used to efficiently manage and distribute power throughout a robot. This ensures that each component receives the correct voltage and current it needs to operate.",
+              "subtopics": [
+                {
+                  "title": "Voltage Regulators",
+                  "details": "Explains linear and switching regulators (buck, boost, buck-boost) for converting and stabilizing voltage levels required by different robot subsystems."
+                },
+                {
+                  "title": "Power Distribution Networks",
+                  "details": "Covers the design of efficient power buses, wiring harnesses, and connectors to minimize losses and ensure reliable power delivery across the robot."
+                },
+                {
+                  "title": "Energy Efficiency Techniques",
+                  "details": "Discusses methods like sleep modes, low-power components, and intelligent power scheduling to maximize battery life and operational duration."
+                }
+              ]
+            },
+            {
+              "title": "Safety and Fault Protection",
+              "description": "Focuses on the critical aspects of ensuring the safe operation of robotic power systems. This includes preventing overcurrent, overvoltage, and short circuits to protect both the robot and its environment.",
+              "subtopics": [
+                {
+                  "title": "Fuses and Circuit Breakers",
+                  "details": "Details the selection and implementation of overcurrent protection devices to safeguard components from damage during fault conditions."
+                },
+                {
+                  "title": "Reverse Polarity Protection",
+                  "details": "Explains techniques to prevent damage if power supply connections are accidentally reversed, ensuring robustness of the system."
+                },
+                {
+                  "title": "Thermal Management",
+                  "details": "Covers monitoring and control of temperature in power components to prevent overheating and ensure operational safety and longevity."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Mastering robotic power control is essential for building robust, efficient, and safe robots. By understanding these core principles, you can design systems that perform optimally and reliably in diverse applications."
+        },
+        {
+          "id": "cc_1761587631338",
+          "createdAt": "2025-10-27T17:53:51.339Z",
+          "topic": "Antenna Fundamentals",
+          "summary": "Explore the essential principles of antennas, from basic concepts to practical applications. Understand how antennas transmit and receive electromagnetic waves, covering different types and their characteristics for effective wireless communication.",
+          "overview": "This crash course introduces the fundamental concepts of antennas. We'll delve into how antennas work, explore various antenna types and their designs, discuss key performance parameters, and touch upon their crucial role in modern wireless communication systems like Wi-Fi, cellular networks, and broadcasting.",
+          "main_topics": [
+            {
+              "title": "What is an Antenna?",
+              "description": "Understand the basic function of an antenna as a transducer converting electrical signals into electromagnetic waves and vice versa. Learn about the fundamental principles governing antenna operation and their interaction with radio waves.",
+              "subtopics": [
+                {
+                  "title": "Electromagnetic Waves",
+                  "details": "Covers the nature of electromagnetic waves, including their properties like frequency, wavelength, and polarization. Explains how these waves propagate through space, forming the basis of wireless communication."
+                },
+                {
+                  "title": "Transducer Function",
+                  "details": "Explains how an antenna acts as a bridge between guided electrical signals in a circuit and free-space electromagnetic waves. Details the reciprocal nature of antennas for transmitting and receiving."
+                },
+                {
+                  "title": "Resonance",
+                  "details": "Discusses the concept of electrical resonance in antennas. Explains how antennas are typically designed to be resonant at specific frequencies for maximum efficiency and signal transfer."
+                }
+              ]
+            },
+            {
+              "title": "Types of Antennas",
+              "description": "Discover a variety of common antenna types used in different applications. Learn about their structural differences, operating principles, and suitability for specific frequency ranges and communication scenarios.",
+              "subtopics": [
+                {
+                  "title": "Wire Antennas",
+                  "details": "Focuses on simple wire antennas like dipoles and monopoles. Covers their basic construction, radiation patterns, and common uses in amateur radio and simple communication systems."
+                },
+                {
+                  "title": "Aperture Antennas",
+                  "details": "Explores antennas like horns and reflectors. Details how they use an opening or surface to direct radio waves, offering high gain and directivity for applications like radar and satellite communication."
+                },
+                {
+                  "title": "Microstrip Antennas",
+                  "details": "Introduces planar antennas fabricated on printed circuit boards. Discusses their compact size, low profile, and widespread use in mobile devices, GPS, and Wi-Fi applications."
+                }
+              ]
+            },
+            {
+              "title": "Antenna Performance Metrics",
+              "description": "Learn about the key parameters used to evaluate antenna performance. Understanding these metrics is crucial for selecting the right antenna for a given application and ensuring optimal communication quality.",
+              "subtopics": [
+                {
+                  "title": "Radiation Pattern",
+                  "details": "Explains the directional characteristics of an antenna's signal transmission or reception. Covers concepts like main lobe, side lobes, and nulls, visualized through radiation patterns."
+                },
+                {
+                  "title": "Gain and Directivity",
+                  "details": "Defines gain as the antenna's ability to focus power in a specific direction compared to an isotropic radiator. Differentiates it from directivity, which is solely based on the radiation pattern."
+                },
+                {
+                  "title": "Bandwidth",
+                  "details": "Describes the range of frequencies over which an antenna operates effectively. Explains how bandwidth affects the antenna's ability to handle different signals and maintain performance."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Antennas are fundamental to all wireless communication. By understanding their principles, types, and performance, you can better appreciate the technology connecting our world and select appropriate antennas for diverse applications."
+        },
+        {
+          "id": "cc_1761345464986",
+          "createdAt": "2025-10-24T22:37:44.986Z",
+          "topic": "Power Automate",
+          "summary": "Power Automate is a cloud-based service for automating repetitive tasks and business processes across multiple applications and services. It enables users to create workflows without extensive coding knowledge, boosting productivity and efficiency.",
+          "overview": "This crash course introduces Power Automate, covering its core concepts, common use cases, and how to build your first automated workflows. We'll explore triggers, actions, connectors, and best practices for creating efficient automations that save time and reduce manual effort. Learn to streamline your daily tasks and business processes effectively.",
+          "main_topics": [
+            {
+              "title": "Understanding Power Automate Fundamentals",
+              "description": "Dive into the foundational elements of Power Automate. Learn what it is, why it's important for businesses, and the basic components that make automation possible. This section sets the stage for building your own flows.",
+              "subtopics": [
+                {
+                  "title": "What is Power Automate?",
+                  "details": "Explore Power Automate's purpose as a Microsoft service for automating digital workflows. Understand its role in modern business for efficiency and task management across applications."
+                },
+                {
+                  "title": "Key Concepts: Triggers and Actions",
+                  "details": "Learn about triggers that start a flow (e.g., new email) and actions that perform tasks (e.g., save attachment). These are the building blocks of every automated process."
+                },
+                {
+                  "title": "Connectors Explained",
+                  "details": "Discover how connectors link Power Automate to various applications and services like Office 365, SharePoint, Twitter, and more. Understand the vast integration possibilities."
+                }
+              ]
+            },
+            {
+              "title": "Building Your First Automated Flows",
+              "description": "Get hands-on experience creating simple, effective automated workflows. This section guides you through the process of designing, building, and testing your first Power Automate flows for common tasks.",
+              "subtopics": [
+                {
+                  "title": "Creating a Simple Flow",
+                  "details": "Step-by-step guide to building a basic flow, from selecting a trigger to adding actions. We'll use practical examples like email notifications."
+                },
+                {
+                  "title": "Using Templates",
+                  "details": "Leverage pre-built templates to quickly create sophisticated flows for common scenarios. Learn how to adapt and customize templates to your specific needs."
+                },
+                {
+                  "title": "Testing and Monitoring Flows",
+                  "details": "Understand how to test your flows to ensure they work correctly and how to monitor their performance and troubleshoot any issues that arise."
+                }
+              ]
+            },
+            {
+              "title": "Advanced Features and Best Practices",
+              "description": "Explore more complex aspects of Power Automate, including conditional logic, variables, and error handling. Learn best practices for creating robust, scalable, and maintainable automated solutions.",
+              "subtopics": [
+                {
+                  "title": "Conditions and Loops",
+                  "details": "Implement decision-making in your flows using conditions (if/then logic) and repeat actions using loops for more dynamic and powerful automations."
+                },
+                {
+                  "title": "Variables and Expressions",
+                  "details": "Learn to use variables to store and manipulate data within your flows and utilize expressions for advanced data operations and logic."
+                },
+                {
+                  "title": "Error Handling Strategies",
+                  "details": "Implement effective error handling to manage failures gracefully, ensuring your flows are resilient and reliable in production environments."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Power Automate empowers you to automate tasks and streamline processes efficiently. Start building your own flows today to save time, reduce errors, and boost your productivity across your digital tools."
+        },
+        {
+          "id": "cc_1761328623086",
+          "createdAt": "2025-10-24T17:57:03.086Z",
+          "topic": "Machine Vision",
+          "summary": "Machine vision, or computer vision, enables computers to 'see' and interpret visual information from the world, powering applications from autonomous driving to medical imaging.",
+          "overview": "This crash course introduces machine vision, exploring how computers process and understand images. We'll cover fundamental concepts like image acquisition and processing, delve into feature detection and object recognition, and touch upon advanced applications and future trends in this rapidly evolving field.",
+          "main_topics": [
+            {
+              "title": "Fundamentals of Image Acquisition and Processing",
+              "description": "Understand how images are captured by machines and the initial steps to prepare them for analysis. This section covers digital image representation and basic manipulation techniques essential for further processing.",
+              "subtopics": [
+                {
+                  "title": "Image Acquisition",
+                  "details": "Learn about cameras, sensors, and how light is converted into digital data, forming the basis of any machine vision system."
+                },
+                {
+                  "title": "Image Representation",
+                  "details": "Explore how images are stored as pixels, understanding concepts like resolution, color spaces (RGB, Grayscale), and bit depth."
+                },
+                {
+                  "title": "Basic Image Preprocessing",
+                  "details": "Discover techniques like noise reduction, contrast enhancement, and geometric transformations to improve image quality for analysis."
+                }
+              ]
+            },
+            {
+              "title": "Feature Detection and Object Recognition",
+              "description": "Dive into the core techniques used to identify and locate specific objects or patterns within an image. This involves extracting meaningful information and classifying it.",
+              "subtopics": [
+                {
+                  "title": "Edge and Corner Detection",
+                  "details": "Understand algorithms like Canny or Harris to find important boundaries and points of interest in an image."
+                },
+                {
+                  "title": "Template Matching",
+                  "details": "Learn how to find occurrences of a known pattern or object within a larger image by comparing pixel values."
+                },
+                {
+                  "title": "Object Classification",
+                  "details": "Explore methods, including machine learning, to assign a label or category to detected objects based on their features."
+                }
+              ]
+            },
+            {
+              "title": "Advanced Concepts and Applications",
+              "description": "Explore sophisticated techniques and real-world uses of machine vision. This section highlights how machine vision is transforming industries and pushing technological boundaries.",
+              "subtopics": [
+                {
+                  "title": "Deep Learning in Vision",
+                  "details": "Discover how neural networks, especially Convolutional Neural Networks (CNNs), revolutionize image recognition and analysis tasks."
+                },
+                {
+                  "title": "3D Vision and Stereo",
+                  "details": "Learn how systems perceive depth and reconstruct 3D environments using multiple cameras or depth sensors."
+                },
+                {
+                  "title": "Real-World Applications",
+                  "details": "See examples in autonomous vehicles, medical diagnostics, manufacturing quality control, augmented reality, and security systems."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Machine vision bridges the gap between the digital and physical worlds, enabling intelligent systems to perceive, interpret, and act upon visual data, driving innovation across countless fields."
+        },
+        {
+          "id": "cc_1761327294182",
+          "createdAt": "2025-10-24T17:34:54.182Z",
+          "topic": "Computer Organization",
+          "summary": "Explore the fundamental structure and operation of computer systems. Learn how hardware components interact to execute instructions and manage data, providing a foundational understanding of modern computing.",
+          "overview": "This crash course demystifies computer organization by breaking down its core concepts. We will delve into the CPU, memory hierarchy, input/output systems, and the instruction cycle. Gain insight into how these elements work in concert to bring software to life, from basic logic gates to system architecture.",
+          "main_topics": [
+            {
+              "title": "Core Components of a Computer",
+              "description": "Understand the essential building blocks of any computer system. This section introduces the Central Processing Unit (CPU), memory, storage devices, and input/output (I/O) interfaces, explaining their individual roles and how they connect.",
+              "subtopics": [
+                {
+                  "title": "The CPU: The Brain",
+                  "details": "Focuses on the Arithmetic Logic Unit (ALU), Control Unit, and registers. Explains how the CPU fetches, decodes, and executes instructions, managing the overall flow of data and operations within the system."
+                },
+                {
+                  "title": "Memory Hierarchy",
+                  "details": "Covers registers, cache memory (L1, L2, L3), RAM, and secondary storage. Explains the trade-offs between speed, cost, and capacity, and how this hierarchy optimizes data access for the CPU."
+                },
+                {
+                  "title": "Input/Output (I/O) Devices",
+                  "details": "Examines peripherals like keyboards, displays, and storage drives. Discusses methods of data transfer and communication between the CPU and these external devices, including buses and controllers."
+                }
+              ]
+            },
+            {
+              "title": "Data Representation and Operations",
+              "description": "Learn how computers represent information digitally and perform calculations. This section covers number systems, logic gates, and basic arithmetic operations essential for computer processing.",
+              "subtopics": [
+                {
+                  "title": "Number Systems",
+                  "details": "Explores binary, octal, decimal, and hexadecimal representations. Understands how these systems are used to encode numbers, characters, and instructions within a computer system."
+                },
+                {
+                  "title": "Logic Gates",
+                  "details": "Introduces fundamental logic gates (AND, OR, NOT, XOR) and their truth tables. Explains how these gates form the basis of all digital circuits and computations."
+                },
+                {
+                  "title": "Arithmetic Circuits",
+                  "details": "Covers how adders, subtractors, and multipliers are built using logic gates. Demonstrates the hardware implementation of basic arithmetic operations essential for the ALU."
+                }
+              ]
+            },
+            {
+              "title": "Instruction Set Architecture (ISA) and Execution",
+              "description": "Examines the language of the computer – the instructions the CPU understands. This topic covers instruction formats, addressing modes, and the step-by-step process of instruction execution.",
+              "subtopics": [
+                {
+                  "title": "Instruction Formats",
+                  "details": "Details the structure of machine instructions, including opcodes and operands. Understands how instructions are encoded in binary to direct the CPU's actions."
+                },
+                {
+                  "title": "Addressing Modes",
+                  "details": "Explains various ways instructions can specify the location of data (operands). Covers immediate, direct, indirect, register, and indexed addressing."
+                },
+                {
+                  "title": "The Fetch-Decode-Execute Cycle",
+                  "details": "Walks through the fundamental operation cycle of the CPU. Describes how instructions are retrieved from memory, interpreted, and then carried out."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Understanding computer organization is key to appreciating how hardware and software interact. This knowledge empowers you to better grasp system performance, design, and the evolution of computing technology."
+        },
         {
           "id": "cc_1760842962681",
           "createdAt": "2025-10-19T03:02:42.681Z",
@@ -1361,6 +2650,430 @@
       ],
       "summaries": [
         {
+          "id": "sum_1762145634125",
+          "createdAt": "2025-11-03T04:53:54.125Z",
+          "fileName": "poems-27pages.pdf",
+          "document_title": "Reflections and Disappearances",
+          "executive_summary": "This document appears to be a series of diary entries or personal reflections, primarily chronicling the narrator's complex relationships and internal struggles. The first part details a burgeoning romance with Daisy, overshadowed by the narrator's involvement in an \"offbeat organization\" and the disappearance of a coworker named Clare, which draws the attention of a detective. The second part shifts to the perspective of a writer reflecting on her past, her successful children's book series featuring a character named Preston, and her own present-day anxieties and possible descent into delusion. Both parts explore themes of identity, reality versus perception, and the unsettling nature of hidden lives.",
+          "key_findings": [
+            "The narrative explores the blurred lines between reality and imagination, particularly through the lens of relationships and creative work.",
+            "The concept of \"offbeat organizations\" and hidden lives significantly impacts the narrator's relationships and personal safety.",
+            "A pervasive sense of unease and potential delusion pervades both narrative threads, questioning the stability of the narrators' perceptions."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1-5",
+              "summary_points": [
+                "The narrator describes meeting and becoming interested in Daisy, a florist, while ostensibly purchasing flowers for a memorial for the missing Clare.",
+                "Daisy visits the narrator's apartment, where she reacts negatively to a sculpture, and the narrator subtly tries to connect with her interest in plants.",
+                "A detective interrogates the narrator about Clare's disappearance, probing into the narrator's involvement with an \"offbeat organization,\" which the narrator deflects."
+              ]
+            },
+            {
+              "page_range": "6-10",
+              "summary_points": [
+                "Daisy visits the narrator's office, reacting coolly to his artwork, causing the narrator to reconsider revealing his more personal art until after their vacation.",
+                "During a tropical vacation, the narrator takes Daisy on a nighttime excursion to see night-blooming cereus flowers, a moment that seems to unsettle her.",
+                "Upon returning, the narrator works on a painting titled \"Sanctum Obscurum\" intended to evoke Daisy's memory of their trip and convey hidden messages."
+              ]
+            },
+            {
+              "page_range": "11-15",
+              "summary_points": [
+                "Daisy's reaction to the \"Sanctum Obscurum\" painting is dismissive, revealing her lack of understanding and a growing suspicion about the narrator's life.",
+                "The narrator fears Daisy will reveal secrets about him and his \"offbeat organization\" to Detective Briceberg.",
+                "An emergency meeting is held with the \"organization,\" where members express horror at the extent of Daisy's knowledge and agree to handle the situation."
+              ]
+            },
+            {
+              "page_range": "16-20",
+              "summary_points": [
+                "The narrator reflects on the past, the creation of her children's book character Preston, and her father's influence.",
+                "The writer recounts attending a funeral for the person who inspired Preston, experiencing a sense of temporal dislocation and mistaken identity.",
+                "After the funeral, the writer has a one-night encounter with a man named Hank De Vere, leading to further unsettling experiences in a hotel room."
+              ]
+            },
+            {
+              "page_range": "21-25",
+              "summary_points": [
+                "The writer describes increasingly strange and disorienting events over the past year, including a distorted reflection in a mirror and odd occurrences with children.",
+                "At a Halloween reading at a library, the writer experiences a disconnect from her own work and witnesses unusual behavior among the children, including a fainting spell.",
+                "The writer questions the reality of her experiences, attributing them to her own fragile mental state, excessive drinking, and the influence of her past work."
+              ]
+            },
+            {
+              "page_range": "26-27",
+              "summary_points": [
+                "Returning home, the writer experiences further distortions of reality, perceiving the moon and the landscape outside her window as altered.",
+                "The writer notes the strange taste of her drink and sees unsettling shadows overlapping her reflection in the window, questioning if they are senility or manifestations from her stories.",
+                "The narrative concludes with the writer hearing familiar, unsettling giggling and seeing shadows that she believes are taking over, expressing a fear that she can no longer see."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sum_1761345616350",
+          "createdAt": "2025-10-24T22:40:16.351Z",
+          "fileName": "jmrsp.2022.57.64.pdf",
+          "document_title": "Analysis of Mechatronics Degree Evaluation Models",
+          "executive_summary": "This paper addresses the challenge of evaluating the \"mechatronizability\" of products, a key factor for designers in determining the complexity and intelligence level of multifunctional mechatronic systems. It reviews existing metric models proposed by Leonida (2017) and Tabourot and Balland (2017) for quantifying mechatronics degree. The study applies these models to a hydraulic pump to critically analyze their effectiveness and aims to contribute towards proposing an optimal metric for product mechatronizability, particularly beneficial for Small and Medium Enterprises transitioning to mechatronic activities.",
+          "key_findings": [
+            "Existing mechatronics evaluation models, such as those proposed by Leonida and Tabourot, focus on quantifying aspects like functional integration, dematerialization, and complexity.",
+            "The application of these models to a hydraulic pump revealed varying degrees of mechatronics, with the functional complexity indicator consistently showing low values, correlating with products having fewer interconnections.",
+            "There is a need for refined metric models to support SMEs in evaluating and designing mechatronic products, enabling better decision-making regarding product intelligence and complexity from the early design stages."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "This page contains the copyright information, journal details, and the title of the original research paper.",
+                "It includes the authors' names (Jean Bosco Samon and Brice Landry Tekam Guessom) and their affiliation (Department of Mechanical Engineering, University of Ngaoundere, Cameroon).",
+                "The abstract provides an overview of the paper's focus on evaluating mechatronic systems using metrics like functional integration, complexity, and dematerialization, applied to a hydraulic pump."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "The introduction defines mechatronics as a revolution in industry, highlighting its synergistic integration of mechanics, electronics, automation, and computer science.",
+                "It discusses the growth of mechatronics, including its connection to the Internet of Things and research perspectives on ontology development, education, and reliability.",
+                "The page emphasizes the necessity of mechatronics for the 'factory of the future' and explores the challenges faced by SMEs in adopting mechatronic processes compared to larger companies."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "This page delves into the definition of mechatronics, distinguishing between physical integration (combining multi-domain components) and functional integration (adding sensing, communication, and processing to mechanical functions).",
+                "It states the paper's aim to propose metrics for evaluating technological solutions in mechatronic products to help companies define functional integration levels.",
+                "The section introduces the problem of evaluating the degree of mechatronics at the design stage and outlines the paper's approach using metrics, reviewing models by Tabourot and Leonida for critical synthesis."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "This page introduces the 'Materials and Methods' section, defining a metric as a quantitative evaluation tool combining criteria or indicators.",
+                "It details Leonida's (2017) proposed metrics: Functional Integration Indicator (IntegMax), Functional Dematerialization Indicator (DemMax), and Functional Complexity Indicator (ComplexiMax), including their formulas and interpretations.",
+                "Formulas and interpretations are provided for IntegMax (measuring component collaboration), DemMax (measuring integration of E, I, A domains), and ComplexiMax (measuring interpenetration between domains in functions)."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "This page continues the explanation of metrics proposed by Tabourot and Balland (2017), presenting their versions of the Functional Integration Indicator (IntegMax) and Functional Dematerialization Indicator (DemMax).",
+                "The Tabourot and Balland DemMax indicator is described as a sum of four sub-indicators (DemMaxEIA, DemMaxinfo, DemMaxdiag, DemMaxinterv) with associated weights.",
+                "It notes that the Functional Complexity Indicator proposed by Leonida (2017) is the same as that proposed by Tabourot and Balland (2017)."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "This page details the 'Results and Discussion' section, specifically the application of the metrics to a hydraulic pump (Fig. 1).",
+                "It outlines the process (Fig. 2) and defines the functions (F1, F2) and environment (Fig. 3) of the hydraulic pump.",
+                "The functional flow chart (Fig. 4) and incidence matrix (Table 1) between modules and functions are presented, along with the application of Tabourot and Balland's metrics, yielding an IntegMax of 0.50 and a low DemMax of 0.38."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "This page presents the application of metrics proposed by Leonida (2017) to the hydraulic pump, including the Functional Integration Indicator (IntegMax = 0.50), Functional Dematerialization Indicator (DemMax = 0.5), and Functional Complexity Indicator (ComplexiMax = 0.02).",
+                "Supporting tables (Table 2: Component scores, Table 3: EIA function definition, Table 4: Factor scores) are included to justify the calculations.",
+                "Table 5 provides a comparative summary of the metric models proposed by Tabourot and Balland (2017) and Leonida (2017), highlighting differences in their formulas for IntegMax and DemMax."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "The 'Synthesis' section compares the metrics proposed by Tabourot and Balland versus Leonida, noting differences in what their IntegMax indicators focus on (components vs. functional modules) and how DemMax considers certain functions.",
+                "The 'Conclusion' reiterates that the models apply after product functions are established and suggests their use for comparing products across generations or manufacturers by measuring mechatronizability.",
+                "The final sections include acknowledgments, author contributions, ethics statements, and a list of references cited in the paper."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sum_1761329243629",
+          "createdAt": "2025-10-24T18:07:23.629Z",
+          "fileName": "ro214.pdf",
+          "document_title": "Recent development of mechanisms and control strategies for robot-assisted lower limb rehabilitation",
+          "executive_summary": "This document provides a comprehensive overview of recent advancements in robot-assisted lower limb rehabilitation. It details various mechanisms and control strategies employed in these systems, highlighting their evolution and effectiveness. The paper explores different types of rehabilitation robots, their design principles, and the control algorithms used to mimic natural human movement and provide therapeutic assistance. It aims to consolidate the current state-of-the-art and identify future research directions in this rapidly developing field. The analysis covers a range of robotic devices designed to aid patients with lower limb impairments.",
+          "key_findings": [
+            "Robot-assisted lower limb rehabilitation has seen significant advancements in both mechanical design and control strategies.",
+            "Various robotic systems exist, employing different mechanisms (e.g., exoskeletons, parallel robots) and control approaches (e.g., impedance control, adaptive control) to cater to diverse rehabilitation needs.",
+            "The field is evolving towards more adaptable, user-friendly, and personalized rehabilitation robots that can provide targeted therapy and monitor patient progress effectively."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "This page serves as the repository copy information for the article 'Recent development of mechanisms and control strategies for robot-assisted lower limb rehabilitation'.",
+                "It includes author details, publication information (journal, volume, pages, year), and licensing details (Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License).",
+                "Contact information for the author and repository is also provided."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "This page contains the title of the paper: 'Recent development of mechanisms and control strategies for robot-assisted lower limb rehabilitation'.",
+                "It lists the authors: W. Meng, Q. Liu, Z. Zhou, B. Sheng, and S. Xie.",
+                "Contact information for the corresponding author, Q.S. Ai, is provided, including email and affiliation details."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "This page introduces the general background and necessity of robot-assisted lower limb rehabilitation.",
+                "It highlights the increasing prevalence of lower limb disabilities and the limitations of traditional rehabilitation methods.",
+                "The abstract emphasizes the review of mechanisms and control strategies in existing lower limb rehabilitation robots."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "This section likely continues the introduction, possibly discussing the goals and scope of the review.",
+                "It might elaborate on the specific types of lower limb rehabilitation robots being considered.",
+                "The importance of effective control strategies for achieving therapeutic goals is probably underscored."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "This page probably begins the detailed discussion of various rehabilitation robot mechanisms.",
+                "It might categorize robots based on their mechanical structure (e.g., exoskeleton, end-effector).",
+                "Initial examples of specific robotic systems and their designs could be presented."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "This page continues the exploration of different robot mechanisms for lower limb rehabilitation.",
+                "It likely provides more specific examples and details about the construction and actuation of these robots.",
+                "Key features and design considerations for each type of mechanism are probably discussed."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "This page likely focuses on specific robotic systems, possibly detailing their features and applications.",
+                "It may introduce robots like BLEEX, LOPE, and others, discussing their degrees of freedom and functionalities.",
+                "The underlying mechanical principles of these advanced systems are probably explained."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "This page appears to detail further robotic rehabilitation systems such as AAFO, KAFO, and HAL.",
+                "It discusses their mechanisms, control aspects, and suitability for different types of lower limb impairments.",
+                "The integration of sensors and actuators in these systems is likely highlighted."
+              ]
+            },
+            {
+              "page_range": "9",
+              "summary_points": [
+                "This page continues the description of various rehabilitation robots, potentially covering systems like BLEEX, ALEX, and others.",
+                "It delves into their specific design choices and how these relate to rehabilitation outcomes.",
+                "The degrees of freedom and control methodologies for these robots are likely presented."
+              ]
+            },
+            {
+              "page_range": "10",
+              "summary_points": [
+                "This page likely summarizes the discussed mechanisms and might transition into control strategies.",
+                "It could present a comparative analysis of different robotic systems.",
+                "Key challenges or limitations in current mechanisms might be addressed."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sum_1761328714521",
+          "createdAt": "2025-10-24T17:58:34.521Z",
+          "fileName": "MECHATRONICS_question-bank.pdf",
+          "document_title": "MECHATRONICS QUESTION BANK",
+          "executive_summary": "This document is a question bank for the subject of Mechatronics, covering five units: Introduction to Mechatronics, Actuation Systems, System Models and Controllers, Programming Logic Controllers, and Design of Mechatronics Systems. It provides a comprehensive list of both 2-mark and 8-mark questions for each unit, designed to test students' understanding of fundamental concepts, components, system modeling, control strategies, and design principles within mechatronics. The questions range from basic definitions and classifications to in-depth explanations of working principles, comparisons of systems, and design considerations, serving as a valuable resource for learning and assessment.",
+          "key_findings": [
+            "The question bank covers a broad spectrum of mechatronics topics, from basic definitions to complex system design.",
+            "It emphasizes understanding of core components like sensors, actuators, and controllers, as well as their integration.",
+            "The structure includes both short-answer and in-depth analytical questions, suitable for comprehensive evaluation."
+          ],
+          "section_summaries": [
+            {
+              "page_range": "1",
+              "summary_points": [
+                "Introduces Unit 1: Introduction to Mechatronics, focusing on 2-mark questions.",
+                "Covers definitions of mechatronics, systems, and applications.",
+                "Includes questions on control systems, sensors, transducers, and measurement characteristics."
+              ]
+            },
+            {
+              "page_range": "2",
+              "summary_points": [
+                "Continues with 2-mark questions for Unit 1: Introduction to Mechatronics.",
+                "Details types of sensors like potentiometers, strain gauges, and tachogenerators.",
+                "Lists instruments for measuring linear and angular velocity and types of bimetallic sensors."
+              ]
+            },
+            {
+              "page_range": "3",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 1: Introduction to Mechatronics.",
+                "Requires detailed explanations of closed-loop systems, RTDs, sensors in robots, and comparative analysis of control systems.",
+                "Includes short notes on various transducers and working principles of sensors and controllers."
+              ]
+            },
+            {
+              "page_range": "4",
+              "summary_points": [
+                "Begins Unit 2: Actuation Systems with 2-mark questions.",
+                "Covers components and purposes of hydraulic and pneumatic systems, including filters and compressors.",
+                "Discusses different types of compressors and control valves."
+              ]
+            },
+            {
+              "page_range": "5",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 2: Actuation Systems.",
+                "Explains actuators, gear trains, belt drives, and bearings.",
+                "Includes questions on solenoid selection, relay principles, and features of JFETs and synchronous motors."
+              ]
+            },
+            {
+              "page_range": "6",
+              "summary_points": [
+                "Features 8-mark questions for Unit 2: Actuation Systems.",
+                "Requires schematic diagrams for measuring and counting parts.",
+                "Includes explanations of mechanisms, actuators, motor configurations, and belt drive power calculations."
+              ]
+            },
+            {
+              "page_range": "7",
+              "summary_points": [
+                "Focuses on 8-mark questions for Unit 2: Actuation Systems.",
+                "Asks for detailed discussions on specific actuation systems like DC motors and stepper motors.",
+                "Involves calculations for hydraulic cylinder requirements."
+              ]
+            },
+            {
+              "page_range": "8",
+              "summary_points": [
+                "Starts Unit 3: System Models and Controllers with 2-mark questions.",
+                "Defines terms like damper, electromechanical systems, thermal capacitance, and transfer function.",
+                "Covers purposes of control systems, steady-state error, and types of controllers (proportional, integral, derivative)."
+              ]
+            },
+            {
+              "page_range": "9",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 3: System Models and Controllers.",
+                "Discusses adaptive controllers, self-tuning, gray codes, logic gates, truth tables, and encoding/decoding.",
+                "Includes definitions of microcomputers and microcontrollers, and memory mapping."
+              ]
+            },
+            {
+              "page_range": "10",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 3: System Models and Controllers.",
+                "Requires derivation of mathematical equations for systems like ground disturbances and electric motors.",
+                "Asks for comparisons of controller performances (proportional vs. integral) and electrical analogues of thermal systems."
+              ]
+            },
+            {
+              "page_range": "11",
+              "summary_points": [
+                "Continues 8-mark questions for Unit 3: System Models and Controllers.",
+                "Focuses on characteristics of PID controllers and proportional plus integral controllers.",
+                "Explains adaptive control, digital logic controllers, and interfacing circuits (parallel vs. serial)."
+              ]
+            },
+            {
+              "page_range": "12",
+              "summary_points": [
+                "Introduces Unit 4: Programming Logic Controllers (PLCs) with 2-mark questions.",
+                "Defines PLC and its main component parts (CPU, I/O, programming device, memory).",
+                "Explains the function of programming devices and types of PLC buses."
+              ]
+            },
+            {
+              "page_range": "13",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 4: Programming Logic Controllers.",
+                "Discusses the roles of ALU and control unit, defines RAM, and explains program scan.",
+                "Covers retentive timers, counters, cascaded counters, and master control."
+              ]
+            },
+            {
+              "page_range": "14",
+              "summary_points": [
+                "Features 2-mark questions for Unit 4: Programming Logic Controllers.",
+                "Explains jump control, data manipulation in shift registers, and PLC programming methods (structured text, ladder diagrams, etc.).",
+                "Lists types of memory and CPU tasks."
+              ]
+            },
+            {
+              "page_range": "15",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 4: Programming Logic Controllers.",
+                "Requires sketching and explaining PLC architecture.",
+                "Includes questions on handling analog inputs and drawing ladder diagrams for various control scenarios."
+              ]
+            },
+            {
+              "page_range": "16",
+              "summary_points": [
+                "Begins Unit 5: Design of Mechatronics Systems with 2-mark questions.",
+                "Outlines the stages in designing a mechatronic system, from need identification to detailed design.",
+                "Covers problem definition, conceptualization, and comparisons between traditional and mechatronic design approaches."
+              ]
+            },
+            {
+              "page_range": "17",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Discusses improvements in temperature control using mechatronics, and requirements before starting a timer.",
+                "Explains how delay can be varied in simple programs and lists advantages of PLC systems for timing."
+              ]
+            },
+            {
+              "page_range": "18",
+              "summary_points": [
+                "Features 2-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Defines windscreen wipers, stepper motor configurations, and basic steps for running a stepper motor.",
+                "Explains the function of a decoder and lists various movements of robots."
+              ]
+            },
+            {
+              "page_range": "19",
+              "summary_points": [
+                "Continues 2-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Names barriers used in automatic car parking systems and lists sensors in engine management systems.",
+                "Defines engine management and explains the uses and categories of sensors in this context."
+              ]
+            },
+            {
+              "page_range": "20",
+              "summary_points": [
+                "Presents 8-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Requires detailed explanation of the stages in designing a mechatronics system.",
+                "Asks for detailed comparisons between traditional and mechatronic design with examples."
+              ]
+            },
+            {
+              "page_range": "21",
+              "summary_points": [
+                "Features 8-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Requires discussion of design solutions for pick and place robots and automatic washing machines.",
+                "Includes design considerations for automatic car park systems and engine management systems."
+              ]
+            },
+            {
+              "page_range": "22",
+              "summary_points": [
+                "Continues 8-mark questions for Unit 5: Design of Mechatronics Systems.",
+                "Asks for design of mechatronics systems for bottling systems (segregating by height and defects).",
+                "Includes design of automatic windscreen wipers, cameras, and room heating systems."
+              ]
+            }
+          ]
+        },
+        {
           "id": "sum_1760843158572",
           "createdAt": "2025-10-19T03:05:58.572Z",
           "fileName": "jFF322.pdf",
@@ -2186,12 +3899,107 @@
     },
     {
       "id": "user_002",
-      "username": "TestUser",
-      "email": "test@notesmith.com",
-      "password": "test123",
-      "createdAt": "2025-10-16T17:55:23.649Z",
+      "username": "shadowRode",
+      "name": "Shadow",
+      "email": "shadow@email.com",
+      "password": "password123",
+      "createdAt": "2025-10-31T08:38:06.929Z",
       "profilePicture": "",
       "crashCourses": [],
+      "summaries": []
+    },
+    {
+      "id": "user_003",
+      "username": "robertC",
+      "name": "Robert",
+      "email": "robertc@hotmail.com",
+      "password": "password123",
+      "createdAt": "2025-11-03T03:21:45.682Z",
+      "profilePicture": "",
+      "crashCourses": [
+        {
+          "id": "cc_1762140128857",
+          "createdAt": "2025-11-03T03:22:08.857Z",
+          "topic": "Elden Ring",
+          "summary": "A comprehensive guide to Elden Ring, covering its vast world, combat mechanics, character progression, and lore. Master the Lands Between with this essential crash course.",
+          "overview": "This crash course will introduce you to the fundamentals of Elden Ring. We'll explore world navigation, combat strategies, essential items, character building, and the deep lore that makes the game so captivating. Prepare to face the challenges of the Lands Between.",
+          "main_topics": [
+            {
+              "title": "Exploring the Lands Between",
+              "description": "Navigate the vast and dangerous open world of Elden Ring. Learn about key locations, essential traversal tools like Torrent, and how to discover hidden secrets and valuable resources scattered throughout the map.",
+              "subtopics": [
+                {
+                  "title": "World Map and Navigation",
+                  "details": "Understand the map system, discover map fragments, and utilize Sites of Grace for fast travel. Learn to orient yourself and plan your exploration routes effectively."
+                },
+                {
+                  "title": "Torrent and Spiritsprings",
+                  "details": "Master the use of your spectral steed, Torrent, for quick travel and combat. Utilize Spiritsprings to reach new heights and access otherwise unreachable areas of the map."
+                },
+                {
+                  "title": "Points of Interest",
+                  "details": "Identify and approach various landmarks like dungeons, catacombs, Evergaols, and ruins. Each offers unique challenges, rewards, and lore insights."
+                }
+              ]
+            },
+            {
+              "title": "Combat Fundamentals",
+              "description": "Master the challenging yet rewarding combat system of Elden Ring. Learn about weapon types, attack patterns, defensive maneuvers, and the crucial mechanics that will help you survive.",
+              "subtopics": [
+                {
+                  "title": "Melee and Ranged Attacks",
+                  "details": "Understand light/heavy attacks, charged attacks, and weapon skills (Ashes of War). Learn to manage stamina and choose appropriate weapons for different enemy types."
+                },
+                {
+                  "title": "Defense and Evasion",
+                  "details": "Master dodging, blocking with shields, and parrying. Learn enemy attack timings to effectively evade damage and create openings for counter-attacks."
+                },
+                {
+                  "title": "Status Effects and Spells",
+                  "details": "Understand various status effects (like bleed, frost, poison) and how to inflict or resist them. Learn the basics of casting Sorceries and Incantations."
+                }
+              ]
+            },
+            {
+              "title": "Character Progression and Builds",
+              "description": "Develop your Tarnished into a powerful warrior. Learn how to allocate stats, choose effective equipment, and synergize your build to overcome any obstacle.",
+              "subtopics": [
+                {
+                  "title": "Stats and Attributes",
+                  "details": "Understand the Vigor, Mind, Endurance, Strength, Dexterity, Intelligence, Faith, and Arcane stats and their impact on your character's performance."
+                },
+                {
+                  "title": "Weapons, Armor, and Ashes of War",
+                  "details": "Explore weapon scaling, upgrade materials, armor loadouts, and the strategic use of Ashes of War to customize your combat style."
+                },
+                {
+                  "title": "Build Archetypes",
+                  "details": "Get introduced to common build archetypes like Strength, Dexterity, Intelligence, Faith, and hybrid builds, and how to effectively pursue them."
+                }
+              ]
+            },
+            {
+              "title": "Lore and Storytelling",
+              "description": "Delve into the rich and fragmented lore of Elden Ring. Understand the key characters, factions, and the overarching narrative of the Shattering and the hunt for the Elden Ring.",
+              "subtopics": [
+                {
+                  "title": "The Shattering and the Demigods",
+                  "details": "Learn about the great war that fractured the Elden Ring and the subsequent rise of the demigod rulers of the Lands Between."
+                },
+                {
+                  "title": "Key Characters and Factions",
+                  "details": "Discover the motivations and roles of figures like Queen Marika, Radagon, Ranni, and the various factions vying for power."
+                },
+                {
+                  "title": "The Tarnished's Journey",
+                  "details": "Understand your role as a Tarnished, guided by Grace, seeking to restore order or forge a new path in the fractured world."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Armed with this knowledge, you are better prepared to face the trials of Elden Ring. May your journey through the Lands Between be filled with discovery, triumph, and a touch of madness."
+        }
+      ],
       "summaries": []
     }
   ]

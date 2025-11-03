@@ -1,0 +1,247 @@
+@import "./style.css";
+@import "./crashCourseStyle.css";
+
+/* =======================   SHARED CRASH + SUMMARY STYLES   ======================= */
+
+/* --- Global Layout Padding --- */
+:root {
+  --padding-main: 32px 0 0 0;
+}
+
+/* --- Titles (Crash + Summary Shared) --- */
+.crash-title,
+.summary-title {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: var(--clr_primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* --- Descriptions --- */
+.crash-topic-desc,
+.summary-exec {
+  margin-bottom: 0.5rem;
+  color: var(--clr_text_base);
+}
+
+/* --- Subtopics / Key Findings --- */
+.crash-subtopic-list,
+.summary-key-findings {
+  margin-left: 1.2rem;
+  margin-bottom: 0.5rem;
+  list-style: disc;
+}
+
+.crash-subtopic-item,
+.summary-key-item {
+  margin-bottom: 0.4rem;
+}
+
+/* --- Conclusion Sections --- */
+.crash-conclusion,
+.summary-sections {
+  margin-top: 2rem;
+  font-size: 1.08rem;
+  color: var(--clr_text_base);
+}
+
+.crash-conclusion strong,
+.summary-sections strong {
+  font-weight: 600;
+  color: var(--clr_primary);
+}
+
+
+/* =======================   MAIN LAYOUTS (CONTAINER STRUCTURE)   ======================= */
+
+.crash-container,
+.summary-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 80vh;
+  margin-top: 1em;
+  gap: 0;
+}
+
+
+/* =======================   SIDEBARS (Crash + Summary)   ======================= */
+
+.crash-sidebar,
+.summary-sidebar {
+  position: relative;
+  width: 20%;
+  min-height: 90vh;
+  height: 90vh;
+  border-radius: 0 12px 12px 0;
+  background: var(--clr_container_bg);
+  border-right: 1px solid var(--clr_output_border);
+  padding: 2em 1em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: width 0.2s;
+  z-index: 2;
+}
+
+/* --- Collapsed State --- */
+.crash-sidebar.collapsed,
+.summary-sidebar.collapsed {
+  width: 48px;
+  min-width: 48px;
+  overflow: hidden;
+}
+
+.crash-sidebar.collapsed .crash-list,
+.summary-sidebar.collapsed .summary-list {
+  display: none;
+}
+
+/* --- Collapse Button --- */
+.crash-sidebar-collapse-btn,
+.summary-sidebar-collapse-btn {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--clr_accent);
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 3;
+  padding: 0;
+}
+
+/* --- Sidebar Header --- */
+.crash-sidebar-header,
+.summary-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px 6px 12px;
+  box-sizing: border-box;
+}
+
+/* --- Sidebar Title --- */
+.crash-sidebar-title,
+.summary-sidebar-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--clr_text_base);
+  user-select: none;
+  transition: opacity 0.2s;
+}
+
+/* --- Collapsed Title Fade --- */
+.crash-sidebar.collapsed .crash-sidebar-title,
+.summary-sidebar.collapsed .summary-sidebar-title {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* =======================   LISTS (Crash + Summary Items)   ======================= */
+
+.crash-list,
+.summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  padding-top: 1em;
+  overflow-y: auto;
+  max-height: calc(100vh - 72px);
+}
+
+/* --- Hide Scrollbars --- */
+.crash-list,
+.summary-list {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
+}
+
+.crash-list::-webkit-scrollbar,
+.summary-list::-webkit-scrollbar {
+  display: none; /* Chrome / Safari / Opera */
+}
+
+/* --- List Items --- */
+.crash-list-item,
+.summary-list-item {
+  padding: 7px 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--clr_text_base);
+  background: none;
+  transition: background 0.15s, color 0.15s, transform 0.12s;
+}
+
+/* --- Active State --- */
+.crash-list-item.active,
+.summary-list-item.active {
+  display: inline-block;
+  background: var(--clr_locked_border);
+  color: var(--clr_text_on_accent);
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* --- Hover State --- */
+.crash-list-item:hover,
+.summary-list-item:hover {
+  background: var(--clr_hover_bg);
+}
+
+
+/* =======================   MAIN VIEW AREA   ======================= */
+
+.crash-main,
+.summary-main {
+  flex: 1;
+  padding: var(--padding-main);
+}
+
+/* --- Inner Content Wrappers --- */
+.crash-content,
+.summary-content {
+  display: block;
+  padding: 1.5em 2em;
+}
+
+
+/* =======================   SIDEBAR LOADING SPINNER   ======================= */
+
+.crash-sidebar-loading,
+.summary-sidebar-loading {
+  margin-top: 2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* --- Spinner Icon --- */
+.crash-sidebar-loading .spinner,
+.summary-sidebar-loading .spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.06);
+  border-top-color: var(--clr_accent);
+  animation: spin 0.9s linear infinite;
+}
+
+/* --- Rotation Animation --- */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - NoteSmith</title>
-    <script type="module" src="../scripts/script.js"></script>
+    <script type="module" src="../dist/script.js"></script>
     <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
 
@@ -32,11 +32,11 @@
             <a href="./crash_course.html">Crash Course</a>
             <a href="./practice_tests.html">Practice Test</a>
             <a href="./summary.html">Summary</a>
-            <button id="theme-toggle" class="theme-toggle">Theme</button>
         </div>
-
+        
         <div class="nav-right">
             <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+            <button id="theme-toggle" class="theme-toggle">Theme</button>
         </div>
     </div>
 
@@ -98,20 +98,56 @@
             <div class="tool-cards">
                 <a href="./crash_course.html" class="card tool-card">
                     <h4>Crash Course</h4>
-                    <p>this just goes to the crash course tab</p>
+                    <p>Get a fast, AI-powered overview of any topic</p>
                 </a>
                 <a href="./summary.html" class="card tool-card">
                     <h4>Summary Generator</h4>
-                    <p>and guess what this box does</p>
+                    <p>Summarize your notes in seconds with AI</p>
                 </a>
                 <a href="./practice_tests.html" class="card tool-card">
-                    <h4>Placeholder for test when it comes</h4>
-                    <p>yup, you know where this takes you</p>
+                    <h4>Practice Tests</h4>
+                    <p>Test your knowledge with AI-generated quizzes</p>
                 </a>
             </div>
         </section>
 
     </div>
+
+    <footer class="info-hub" aria-labelledby="info-hub-title">
+        <div class="info-hub-inner">
+            <h2 id="info-hub-title">Need to know</h2>
+            <div class="info-columns">
+                <div class="info-col">
+                    <h3>FAQs</h3>
+                    <details>
+                        <summary>Is NoteSmith free?</summary>
+                        <p>Yes, you can get started for free. Additional features may require an upgrade later.</p>
+                    </details>
+                    <details>
+                        <summary>Do I need to upload PDFs?</summary>
+                        <p>No. You can upload your notes or start from any topic to generate a crash course.</p>
+                    </details>
+                    <details>
+                        <summary>Will my data be private?</summary>
+                        <p>Your content is processed for your account only. See Important Info for policy links.</p>
+                    </details>
+                </div>
+                <div class="info-col">
+                    <h3>Contact</h3>
+                    <p>Questions or feedback? We'd love to help.</p>
+                    <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
+                </div>
+                <div class="info-col">
+                    <h3>Important Info</h3>
+                    <ul class="info-list">
+                        <li><a class="info-link" href="#">Terms of Use</a></li>
+                        <li><a class="info-link" href="#">Privacy Policy</a></li>
+                        <li><a class="info-link" href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- HTML Templates for Dashboard -->
     <template id="loading-template">
@@ -132,6 +168,7 @@
 
     <template id="history-item-template">
         <div class="history-item">
+            <span class="material-symbols-outlined delete-icon" title="Delete">delete</span>
             <div class="history-item-header">
                 <div class="history-item-title" data-title></div>
                 <div class="history-item-date" data-date></div>
@@ -139,6 +176,18 @@
             <div class="history-item-preview" data-preview></div>
         </div>
     </template>
+
+    <!-- Confirmation modal (hidden until needed) -->
+    <div id="modalOverlay" class="modal-overlay" aria-hidden="true">
+        <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <h3 id="modalTitle" data-modal-title>Confirm</h3>
+            <p data-modal-message>Are you sure?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn cancel-btn">Cancel</button>
+                <button type="button" class="btn confirm-btn primary">Delete</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

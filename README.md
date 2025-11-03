@@ -1,3 +1,29 @@
+# Features to be implemented for Midterm
+### Feature 1: AI-Powered Crash Course Generator
+
+**Description:**
+This feature allows a logged-in user to generate a structured, summary-style "crash course" on any topic using an AI model (referred to via CrashCourse methods).
+
+**Code Link:**
+[View Implementation](./frontend/scripts/crashCourse.ts)
+
+
+### Feature 2: Practice Test Generator & Grader
+
+This feature enables logged-in users to generate a multiple-choice practice test based on a specified course and topic, and then submit it for instant grading.
+
+**Code Link:**
+[View Implementation](./frontend/scripts/practiceTest.js)
+
+### Feature 3: AI-Powered PDF Document Summarization
+
+**Description:**
+This feature allows logged-in users to upload a PDF file and generate a structured, comprehensive summary using an AI model. It is designed to handle large documents by dynamically adjusting the summarization strategy.
+
+**Code Link:**
+[View Implementation](./frontend/scripts/summary.ts)
+
+
 # File Structure
 
 ```
@@ -14,11 +40,17 @@ csc47300-team-code7/
     ├── routes/                # Express route handlers (API endpoints)
     ├── utils/                 # Utility functions (will be helpful when adding database)
     ├── data_objects/          # JSON objects files
-    └── server.js              # Express server entry point
+    └── server.ts              # Express server entry point
 ```
 
 
 #  Notes and Updates
+
+ ## TS Migration - Oct 28 2025
+ Started migrating the JS (both front and back end) to TS. To run the website use the following command from the source directory:
+ ```
+npm install && npm run build:frontend && npm run build:backend && npm start
+```
 
  ## Directory Refactoring - Oct 17 2025:
  Separated the files into `frontend/` and `backend/` for better organization, ensuring the biggest directory is the root directory as requested in the last email

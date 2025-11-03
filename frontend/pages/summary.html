@@ -1,121 +1,162 @@
-<!--
-    summary.html
-
-    This file contains the HTML structure for the crash course page of NoteSmith.
-    It includes a navigation bar and a container for crash course content.
-
-    Features (so far):
-    - Lets you upload a PDF and outputs a dummy template response. (we need to hook up to backend) plus nice LottieFiles animation
-    - Locked behind a login (dummy check for now) but very cool animation through LottieFiles. hehe
-    
--->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoteSmith - Summary</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script type="module" src="../scripts/script.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <link rel="stylesheet" href="../stylesheets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoteSmith - Summary</title>
+
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <!-- Main Script -->
+  <script type="module" src="../dist/script.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../stylesheets/summaryStyle.css">
 </head>
 
 <body>
-    <div class="navigation-bar">
-        <div class="nav-left">
-            <a href="../index.html">
-                <img src="../assets/NoteSmith_logo.png" alt="Logo" class="logo">
-            </a>
-        </div>
-
-        <div class="nav-center">
-            <a href="./crash_course.html">Crash Course</a>
-            <a href="./practice_tests.html">Practice Test</a>
-            <a class="active" href="./summary.html">Summary</a>
-            <button id="theme-toggle" class = "theme-toggle">Theme</button>
-        </div>
-
-        <div class="nav-right">
-            <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
-        </div>
+  <!-- ======================= NAVIGATION BAR ======================= -->
+  <div class="navigation-bar">
+    <div class="nav-left">
+      <a href="../index.html">
+        <img src="../assets/NoteSmith_logo.png" alt="Logo" class="logo">
+      </a>
     </div>
 
-    <div class="summary-container">
-        <!-- Locked message -->
-        <div id="summary-locked" style="display:none;">
-            <lottie-player src="../assets/lock_icon.json" background="transparent" speed="1"
-                style="width:150px; height:150px; margin:auto;" loop autoplay>
-            </lottie-player>
-            <p>You must be logged in to access Summary.</p>
-        </div>
-
-        <!-- Summary UI -->
-        <div id="summary-ui" style="display:none;">
-            <h2 class="summary-title">AI PDF Summary</h2>
-
-            <label for="pdfUpload" class="upload-box">
-                <lottie-player src="../assets/upload_icon.json" background="transparent" speed="1"
-                    style="width:120px; height:120px;" loop autoplay>
-                </lottie-player>
-                <p>Click to upload your PDF</p>
-                <p id='size-limit' style="font-size:0.9rem;color:var(--clr_text_muted);margin-top:0.5rem;">Max file size: 30MB</p>
-                <input type="file" id="pdfUpload" accept="application/pdf" hidden>
-            </label>
-
-            <!-- PDF Info Container -->
-            <div id="pdf-info-container" class="upload-box pdf-info-box" style="display:none;">
-                <lottie-player id="pdf-lottie" src="../assets/pdf.json" background="transparent" speed="1" 
-                    style="width:80px;height:80px;" loop autoplay></lottie-player>
-                <div class="pdf-info-text">
-                    <div id="pdf-file-name" class="pdf-file-name"></div>
-                    <div id="pdf-page-count" class="pdf-page-count"></div>
-                    <div id="pdf-status" class="pdf-status"></div>
-                </div>
-                <button id="removePdfBtn" class="remove-pdf-btn">Remove PDF</button>
-            </div>
-
-            <button id="summarizeBtn">Summarize PDF</button>
-            
-            <!-- Loading State -->
-            <div id="summary-loading" class="loading-container" style="display:none;">
-                <lottie-player id="summary-lottie" src="../assets/loading_light.json" background="transparent" speed="1"
-                    style="width:120px;height:120px;margin-bottom:1rem;" loop autoplay></lottie-player>
-                <span class="loading-text">Analyzing PDF and generating summary...</span>
-            </div>
-
-            <!-- Output Container -->
-            <div id="summary-output" class="summary-output" style="display:none;">
-                <h3 id="summary-doc-title" class="summary-title-main"></h3>
-                
-                <div class="summary-section executive-summary">
-                    <h4 class="section-title">Executive Summary</h4>
-                    <p id="summary-executive" class="section-content"></p>
-                </div>
-
-                <div class="summary-section key-findings">
-                    <h4 class="section-title">Key Findings</h4>
-                    <ul id="summary-key-findings" class="findings-list"></ul>
-                </div>
-
-                <div class="summary-section page-summaries">
-                    <h4 id="summary-sections-title" class="section-title">Content Summary</h4>
-                    <div id="summary-sections" class="sections-container"></div>
-                </div>
-
-                <div class="download-section">
-                    <button id="downloadSummaryBtn" class="download-btn">Download Summary</button>
-                </div>
-            </div>
-        </div>
+    <div class="nav-center">
+      <a href="./crash_course.html">Crash Course</a>
+      <a href="./practice_tests.html">Practice Test</a>
+      <a class="active" href="./summary.html">Summary</a>
     </div>
-</body>
 
+    <div class="nav-right">
+      <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+      <button id="theme-toggle" class="theme-toggle">Theme</button>
+    </div>
+  </div>
 
-<body>
+  <!-- ======================= SUMMARY CONTAINER ======================= -->
+  <div class="summary-container">
+    <!-- Locked message -->
+    <div id="summary-locked" style="display:none;">
+      <lottie-player src="../assets/lock_icon.json" background="transparent" speed="1"
+        style="width:150px; height:150px; margin:auto;" loop autoplay>
+      </lottie-player>
+      <p>You must be logged in to access Summary.</p>
+    </div>
 
+    <!-- Summary UI -->
+    <div id="summary-ui" style="display:none;">
+      <div id="summary-ui-wrapper">
+        <div class="summary-hero">
+          <h1>AI PDF Summary</h1>
+          <p>Upload your PDF and get an instant, comprehensive summary powered by AI.</p>
+        </div>
+
+        <div class="summary-form-section">
+          <label for="pdfUpload" class="upload-box">
+            <lottie-player src="../assets/upload_icon.json" background="transparent" speed="1"
+              style="width:120px; height:120px;" loop autoplay></lottie-player>
+            <p>Click to upload your PDF</p>
+            <p id="size-limit" style="font-size:0.9rem;color:var(--clr_text_muted);margin-top:0.5rem;">Max file size:
+              30MB</p>
+            <input type="file" id="pdfUpload" accept="application/pdf" hidden>
+          </label>
+
+          <!-- PDF Info Container -->
+          <div id="pdf-info-container" class="upload-box pdf-info-box" style="display:none;">
+            <lottie-player id="pdf-lottie" src="../assets/pdf.json" background="transparent" speed="1"
+              style="width:80px;height:80px;" loop autoplay></lottie-player>
+            <div class="pdf-info-text">
+              <div id="pdf-file-name" class="pdf-file-name"></div>
+              <div id="pdf-page-count" class="pdf-page-count"></div>
+              <div id="pdf-status" class="pdf-status"></div>
+            </div>
+            <button id="removePdfBtn" class="remove-pdf-btn" type="button">Remove PDF</button>
+          </div>
+
+          <!-- Summarize Button -->
+          <div style="display:flex;gap:0.5rem;align-items:center;justify-content:center;width:100%;">
+            <button id="summarizeBtn" type="submit">Summarize PDF</button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="summary-loading" class="loading-container" style="display:none;">
+          <lottie-player id="summary-lottie" src="../assets/loading_light.json" background="transparent" speed="1"
+            style="width:120px;height:120px;margin-bottom:1rem;" loop autoplay></lottie-player>
+          <span class="loading-text">Analyzing PDF and generating summary...</span>
+        </div>
+
+        <!-- Output Container -->
+        <div id="summary-output" class="summary-output" style="display:none;">
+          <h3 id="summary-doc-title" class="summary-title-main"></h3>
+
+          <div class="summary-section executive-summary">
+            <h4 class="section-title">Executive Summary</h4>
+            <p id="summary-executive" class="section-content"></p>
+          </div>
+
+          <div class="summary-section key-findings">
+            <h4 class="section-title">Key Findings</h4>
+            <ul id="summary-key-findings" class="findings-list"></ul>
+          </div>
+
+          <div class="summary-section page-summaries">
+            <h4 id="summary-sections-title" class="section-title">Content Summary</h4>
+            <div id="summary-sections" class="sections-container"></div>
+          </div>
+
+          <div class="download-section">
+            <button id="downloadSummaryBtn" class="download-btn">Download Summary</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ======================= END OF SUMMARY CONTAINER ======================= -->
+
+  <!-- ======================= FOOTER SECTION ======================= -->
+  <footer class="info-hub" aria-labelledby="info-hub-title">
+    <div class="info-hub-inner">
+      <h2 id="info-hub-title">Need to know</h2>
+      <div class="info-columns">
+        <div class="info-col">
+          <h3>FAQs</h3>
+          <details>
+            <summary>Is NoteSmith free?</summary>
+            <p>Yes, you can get started for free. Additional features may require an upgrade later.</p>
+          </details>
+          <details>
+            <summary>Do I need to upload PDFs?</summary>
+            <p>No. You can upload your notes or start from any topic to generate a crash course.</p>
+          </details>
+          <details>
+            <summary>Will my data be private?</summary>
+            <p>Your content is processed for your account only. See Important Info for policy links.</p>
+          </details>
+        </div>
+
+        <div class="info-col">
+          <h3>Contact</h3>
+          <p>Questions or feedback? We'd love to help.</p>
+          <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
+        </div>
+
+        <div class="info-col">
+          <h3>Important Info</h3>
+          <ul class="info-list">
+            <li><a class="info-link" href="#">Terms of Use</a></li>
+            <li><a class="info-link" href="#">Privacy Policy</a></li>
+            <li><a class="info-link" href="#">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 
 </html>

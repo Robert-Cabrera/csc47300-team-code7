@@ -1,22 +1,17 @@
-<!--
-    practice_test.html
-
-    This file contains the HTML structure for the practice test page of NoteSmith.
-    It includes a navigation bar and a container for practice test content.
-
-    (NOT DONE YET) 
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NoteSmith – Practice Test</title>
+
   <link rel="stylesheet" href="../stylesheets/style.css" />
+
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <script type="module" src="../scripts/script.js"></script>
+  <script type="module" src="../dist/script.js"></script>
+
 </head>
+
 <body>
   <!-- Navigation -->
   <div class="navigation-bar">
@@ -28,47 +23,110 @@
 
     <div class="nav-center">
       <a href="./crash_course.html">Crash Course</a>
-      <a class="active" aria-current="page" href="./practice_test.html">Practice Test</a>
+      <a class="active" aria-current="page" href="./practice_tests.html">Practice Test</a>
       <a href="./summary.html">Summary</a>
-      <button id="theme-toggle" class="theme-toggle" type="button">Theme</button>
     </div>
-
+    
     <div class="nav-right">
       <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+      <button id="theme-toggle" class="theme-toggle" type="button">Theme</button>
     </div>
   </div>
 
   <!-- Main Container -->
   <div class="practice-test-container">
-    <!-- Locked Message -->
+    <!-- Loading overlay -->
+    <div id="pt-loading" class="practice_test_loading-overlay" aria-hidden="true">
+      <div class="loading-animation-container">
+        <div class="loading-spinner" role="progressbar" aria-label="Generating test"></div>
+        <p>Generating your practice test…</p>
+      </div>
+    </div>
+
+
     <div id="test-locked" style="display:none;">
       <lottie-player src="../assets/lock_icon.json" background="transparent" speed="1"
-          style="width:150px; height:150px; margin:auto;" loop autoplay>
-      </lottie-player>
+        style="width:150px; height:150px; margin:auto;" loop autoplay></lottie-player>
       <p>You must be logged in to access Practice Tests.</p>
     </div>
 
-    <!-- Practice Test Form -->
-    <div id="test-form" style="display:none;">
-      <header class="dashboard-header">
-        <h2>Practice Test</h2>
-        <p>Fill in your course and topic to generate a practice test.</p>
+
+    <div id="test-form">
+      <header class="practice-test-dashboard-header">
+        <h2>Practice Test AI Generator</h2>
+        <p>Fill in your course and topic to generate a personalized practice test powered by AI. Select your desired difficulty level! </p>
       </header>
 
-      <form class="practice-test-form">
+      <form id="practiceTestForm" class="practice-test-form">
         <div class="form-group">
-          <label for="courseInput">Course</label>
+          <label for="practiceTestCourseInput">Course</label>
           <input type="text" id="practiceTestCourseInput" name="course" placeholder="e.g., Computer Organization" required />
         </div>
 
         <div class="form-group">
-          <label for="topicInput">Topic</label>
+          <label for="practiceTestTopicInput">Topic</label>
           <input type="text" id="practiceTestTopicInput" name="topic" placeholder="e.g., Memory Hierarchy" required />
+        </div>
+
+        <div class="form-group">
+          <label for="practiceTestDifficulty">Difficulty</label>
+            <select id="practiceTestDifficulty" name="difficulty" class="difficulty-select" required>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          <div class="difficulty-bar-wrapper">
+            <div class="difficulty-bar-background">
+                <div class="difficulty-bar-fill easy" id="difficultyBarFill"></div>
+            </div>
+        </div>
         </div>
 
         <button type="submit" id="submitBtn" class="submit-btn">Generate Test</button>
       </form>
+
+      <!-- Error box (hidden until needed) -->
+      <div id="pt-error" class="pt-error" style="display:none;"></div>
+
+      <!-- Rendered test appears here -->
+      <div id="pt-output" class="pt-output" style="display:none;"></div>
     </div>
   </div>
+
+  <footer class="info-hub" aria-labelledby="info-hub-title">
+      <div class="info-hub-inner">
+          <h2 id="info-hub-title">Need to know</h2>
+          <div class="info-columns">
+              <div class="info-col">
+                  <h3>FAQs</h3>
+                  <details>
+                      <summary>Is NoteSmith free?</summary>
+                      <p>Yes, you can get started for free. Additional features may require an upgrade later.</p>
+                  </details>
+                  <details>
+                      <summary>Do I need to upload PDFs?</summary>
+                      <p>No. You can upload your notes or start from any topic to generate a crash course.</p>
+                  </details>
+                  <details>
+                      <summary>Will my data be private?</summary>
+                      <p>Your content is processed for your account only. See Important Info for policy links.</p>
+                  </details>
+              </div>
+              <div class="info-col">
+                  <h3>Contact</h3>
+                  <p>Questions or feedback? We'd love to help.</p>
+                  <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
+              </div>
+              <div class="info-col">
+                  <h3>Important Info</h3>
+                  <ul class="info-list">
+                      <li><a class="info-link" href="#">Terms of Use</a></li>
+                      <li><a class="info-link" href="#">Privacy Policy</a></li>
+                      <li><a class="info-link" href="#">Accessibility</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </footer>
 </body>
 </html>

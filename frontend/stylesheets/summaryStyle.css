@@ -1,0 +1,422 @@
+@import "./style.css";
+
+/* =======================   SUMMARY PAGE — LOADING CONTAINER   ======================= */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 5rem;
+}
+
+
+/* =======================   SUMMARY CONTAINER LAYOUT   ======================= */
+
+.summary-container {
+  height: auto;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#summar-ui {
+  width: 100%;
+  margin: 0 auto;
+}
+
+#summary-ui-wrapper {
+  width: 70%;
+  background: var(--clr_container_bg);
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5em 10em;
+  box-shadow: 0 8px 24px var(--clr_nav_shadow);
+  margin: 0 auto;
+}
+
+/* ================================ HERO SECTION ================================ */
+.summary-hero {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  background: linear-gradient(135deg, var(--clr_primary) 0%, var(--clr_accent) 100%);
+  border-radius: 16px 16px 0 0;
+  color: white;
+  box-shadow: 0 8px 24px var(--clr_nav_shadow);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  width: 100%;
+}
+
+.summary-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.summary-hero h1 {
+  font-size: 2.8em;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  color: var(--clr_title_with_bg);
+}
+
+.summary-hero p {
+  font-size: 1.2em;
+  margin: 0;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+  color: var(--clr_title_with_bg);
+}
+
+/* ================================ FORM SECTION ================================ */
+.summary-form-section {
+  background: var(--clr_container_bg);
+  padding: 2.5rem 2rem;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 8px 24px var(--clr_nav_shadow);
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-title {
+  text-align: center;
+  color: var(--clr_primary);
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* =======================   UPLOAD BOX + HOVER EFFECTS   ======================= */
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px dashed var(--clr_locked_border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--clr_locked_bg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.upload-box:hover {
+  border-color: var(--clr_primary);
+  background: var(--clr_hover_bg);
+}
+
+.upload-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--clr_text_muted);
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* =======================   BUTTON: SUMMARIZE   ======================= */
+
+#summarizeBtn {
+  display: block;
+  margin: 1.5rem auto 0;
+  padding: 0.7rem 1.2rem;
+  background: linear-gradient(135deg, var(--clr_primary) 0%, var(--clr_accent) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  transition: ease 0.2s, transform 0.2s ease;
+  align-self: center;
+}
+
+#summarizeBtn:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =======================   OUTPUT CONTAINER   ======================= */
+
+#summary-output {
+  margin: 2rem auto 0;
+  width: 100%;
+  max-width: 90%;
+  padding: 1.5rem;
+  border-radius: 10px;
+  background: var(--clr_output_bg);
+  border: 1px solid var(--clr_output_border);
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+#summary-output lottie-player {
+  display: block;
+  margin: 0 auto 1rem;
+  width: 160px;
+  height: 160px;
+}
+
+#summary-output {
+  min-height: 120px;
+}
+
+/* Error box overlay - lottie centered on top of message */
+.error-box {
+  position: relative;
+  padding-top: 80px; /* space for the lottie */
+  text-align: center;
+}
+
+.error-box .error-lottie {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 120px;
+  height: 120px;
+}
+
+.error-box .error-text {
+  margin: 0;
+  color: var(--clr_error);
+  font-size: 1.1rem;
+}
+
+
+/* =======================   LOCKED MESSAGE (SUMMARY PAGE)   ======================= */
+
+#summary-locked {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--clr_text_muted);
+  padding: 2rem;
+  border: 2px dashed var(--clr_locked_border);
+  border-radius: 8px;
+  background: var(--clr_locked_bg);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+
+/* =======================   PDF INFO DISPLAY BOX   ======================= */
+
+.pdf-info-box {
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.pdf-info-text { text-align: center; }
+
+.pdf-file-name {
+  font-weight: 600;
+  color: var(--clr_primary);
+  margin-bottom: 0.3rem;
+}
+
+.pdf-page-count {
+  color: var(--clr_text_muted);
+  font-size: 0.95rem;
+}
+
+.pdf-status {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.pdf-status.error { color: var(--clr_error); }
+
+.remove-pdf-btn {
+  padding: 0.6rem 1.2rem;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.2s ease;
+}
+
+.remove-pdf-btn:hover { background: #c82333; }
+
+
+/* =======================   ERROR STATE STYLING   ======================= */
+
+.pdf-error-icon {
+  font-size: 3rem;
+  color: #dc3545;
+}
+
+.pdf-error-title {
+  font-weight: 600;
+  color: #dc3545;
+  font-size: 1.2rem;
+}
+
+.pdf-error-message {
+  color: var(--clr_text_muted);
+  margin-top: 0.5rem;
+}
+
+
+/* =======================   SUMMARY OUTPUT SECTION   ======================= */
+
+.summary-output {
+  width: 100%;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.summary-title-main {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--clr_primary);
+  margin-bottom: 1.5rem;
+}
+
+
+/* =======================   SECTION CARDS (EXECUTIVE, FINDINGS, ETC.)   ======================= */
+
+.summary-section {
+  margin-bottom: 2rem;
+  padding: 0rem 0.8rem;
+  background: var(--clr_card_bg);
+  border-radius: 8px;
+}
+
+.summary-section.executive-summary { border-left: 4px solid var(--clr_primary); }
+.summary-section.key-findings { border-left: 4px solid var(--clr_accent); }
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 650;
+  color: var(--clr_primary);
+  margin-bottom: 0.8rem;
+}
+
+.key-findings .section-title { color: var(--clr_accent); }
+
+.section-content {
+  font-size: 1.05rem;
+  color: var(--clr_text);
+  line-height: 1.6;
+}
+
+
+/* =======================   FINDINGS LIST   ======================= */
+
+.findings-list {
+  margin-left: 1.2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.findings-list li {
+  margin-bottom: 0.6rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--clr_text);
+  font-size: 1.05rem;
+}
+
+.findings-list li::before {
+  content: attr(data-index) ".";
+  position: absolute;
+  left: 0;
+  color: var(--clr_accent);
+  font-weight: bold;
+}
+
+
+/* =======================   SECTIONS CONTAINER & PAGE SUMMARY CARDS   ======================= */
+
+.sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.page-summary-card {
+  padding: 0rem 0.8rem;
+  background: var(--clr_card_bg);
+  border-radius: 8px;
+  border-left: 3px solid var(--clr_primary);
+}
+
+.page-summary-card h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--clr_primary);
+  margin: 0;
+  padding: 0;
+}
+
+.page-summary-card ul {
+  margin-left: 1.2rem;
+  list-style: disc;
+}
+
+.page-summary-card li {
+  margin-bottom: 0.4rem;
+  color: var(--clr_text);
+}
+
+
+/* =======================   DOWNLOAD BUTTON   ======================= */
+
+.download-section {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.download-btn {
+  padding: 0.8rem 2rem;
+  background: var(--clr_contrasting_accent);
+  color: var(--clr_body_bg);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.download-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}

@@ -13,8 +13,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NoteSmith</title>
-    <link rel="stylesheet" href="../stylesheets/style.css" />
-    <script type="module" src="../scripts/script.js"></script>
+    <link rel="stylesheet" href="../stylesheets/loginStyle.css" />
+    <script type="module" src="../dist/script.js"></script>
   </head>
 
   <body>
@@ -29,11 +29,11 @@
         <a href="crash_course.html">Crash Course</a>
         <a href="practice_tests.html">Practice Test</a>
         <a href="summary.html">Summary</a>
-        <button id="theme-toggle" class="theme-toggle">Theme</button>
       </div>
-
+      
       <div class="nav-right">
         <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+        <button id="theme-toggle" class="theme-toggle">Theme</button>
       </div>
     </div>
 
@@ -63,25 +63,27 @@
           >
             <h3>Create an account</h3>
             <form class="auth-form" id="signupForm" novalidate>
+              
               <div class="auth-field">
-                <label for="su-id">ID (username)</label>
-                <input
-                  id="su-id"
-                  name="id"
-                  type="text"
-                  required
-                  minlength="3"
-                  autocomplete="username"
-                />
-              </div>
-              <div class="auth-field">
-                <label for="su-username">Username (name)</label>
+                <label for="su-username">
+                  Username (ID)
+                </label>
                 <input
                   id="su-username"
                   name="username"
                   type="text"
                   required
-                  minlength="2"
+                  minlength="6"
+                  autocomplete="name"
+                />
+              </div>
+               <div class="auth-field">
+                <label for="su-name">Name</label>
+                <input
+                  id="su-name"
+                  name="name"
+                  type="text"
+                  required
                   autocomplete="name"
                 />
               </div>
@@ -168,5 +170,41 @@
         </div>
       </section>
     </div>
+
+    <footer class="info-hub" aria-labelledby="info-hub-title">
+        <div class="info-hub-inner">
+            <h2 id="info-hub-title">Need to know</h2>
+            <div class="info-columns">
+                <div class="info-col">
+                    <h3>FAQs</h3>
+                    <details>
+                        <summary>Is NoteSmith free?</summary>
+                        <p>Yes, you can get started for free. Additional features may require an upgrade later.</p>
+                    </details>
+                    <details>
+                        <summary>Do I need to upload PDFs?</summary>
+                        <p>No. You can upload your notes or start from any topic to generate a crash course.</p>
+                    </details>
+                    <details>
+                        <summary>Will my data be private?</summary>
+                        <p>Your content is processed for your account only. See Important Info for policy links.</p>
+                    </details>
+                </div>
+                <div class="info-col">
+                    <h3>Contact</h3>
+                    <p>Questions or feedback? We'd love to help.</p>
+                    <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
+                </div>
+                <div class="info-col">
+                    <h3>Important Info</h3>
+                    <ul class="info-list">
+                        <li><a class="info-link" href="#">Terms of Use</a></li>
+                        <li><a class="info-link" href="#">Privacy Policy</a></li>
+                        <li><a class="info-link" href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
   </body>
 </html>

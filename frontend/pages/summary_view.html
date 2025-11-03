@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summary View</title>
+  <link rel="stylesheet" href="../stylesheets/viewer.css" />
+  <script type="module" src="../dist/script.js"></script>
+</head>
+<body>
+  <div class="navigation-bar">
+    <div class="nav-left">
+      <a href="../index.html">
+        <img src="../assets/NoteSmith_logo.png" alt="Logo" class="logo" />
+      </a>
+    </div>
+    <div class="nav-center">
+      <a href="./crash_course.html">Crash Course</a>
+      <a href="./practice_tests.html">Practice Test</a>
+      <a href="./summary.html">Summary</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+      <button id="theme-toggle" class="theme-toggle">Theme</button>
+    </div>
+  </div>
+
+  <div class="summary-container">
+    <aside class="summary-sidebar" id="summary-sidebar">
+      <div class="summary-sidebar-header">
+        <button id="summary-sidebar-collapse-btn" class="summary-sidebar-collapse-btn" title="Collapse Sidebar">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <div class="summary-sidebar-title">Saved Summaries</div>
+      </div>
+      <div class="summary-sidebar-loading" id="summary-sidebar-loading" style="display:none;">
+        <div class="spinner" aria-hidden="true"></div>
+      </div>
+      <ul id="summary-list" class="summary-list"></ul>
+    </aside>
+
+    <main class="summary-main">
+      <div class="summary-content">
+        <div id="output" class="summary-output" style="display:block;">
+          <h3 id="summary-title" class="summary-title"></h3>
+          <p id="summary-exec" class="summary-exec"></p>
+          <div id="summary-key-findings" class="summary-key-findings"></div>
+          <div id="summary-sections" class="summary-sections"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/dist/viewer.js"></script>
+</body>
+</html>
