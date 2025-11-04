@@ -20,72 +20,23 @@
         </a>
       </div>
 
-      <div class="nav-center">
-        <a href="./crash_course.html">Crash Course</a>
-        <a class="active" aria-current="page" href="./practice_tests.html"
-          >Practice Test</a
-        >
-        <a href="./summary.html">Summary</a>
-      </div>
-
-      <div class="nav-right">
-        <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
-        <button id="theme-toggle" class="theme-toggle" type="button">
-          Theme
-        </button>
-      </div>
+    <div id="test-locked" style="display:none;">
+      <lottie-player src="../assets/lock_icon.json" background="transparent" speed="1"
+        style="width:150px; height:150px; margin:auto;" loop autoplay></lottie-player>
+      <p>You must be logged in to access Practice Tests.</p>
     </div>
 
-    <!-- Main Container -->
-    <div class="practice-test-container">
-      <!-- Loading overlay -->
-      <div
-        id="pt-loading"
-        class="practice_test_loading-overlay"
-        aria-hidden="true"
-      >
-        <div class="loading-animation-container">
-          <div
-            class="loading-spinner"
-            role="progressbar"
-            aria-label="Generating test"
-          ></div>
-          <p>Generating your practice test…</p>
+    <div id="test-form">
+      <header class="practice-test-dashboard-header">
+        <h2>Practice Test AI Generator</h2>
+        <p>Fill in your course and topic to generate a personalized practice test powered by AI. Select your desired difficulty level! </p>
+      </header>
+
+      <form id="practiceTestForm" class="practice-test-form" novalidate>
+        <div class="form-group">
+          <label for="practiceTestCourseInput">Course</label>
+          <input type="text" id="practiceTestCourseInput" name="course" placeholder="e.g., Computer Organization" required />
         </div>
-      </div>
-
-      <div id="test-locked" style="display: none">
-        <lottie-player
-          src="../assets/lock_icon.json"
-          background="transparent"
-          speed="1"
-          style="width: 150px; height: 150px; margin: auto"
-          loop
-          autoplay
-        ></lottie-player>
-        <p>You must be logged in to access Practice Tests.</p>
-      </div>
-
-      <div id="test-form">
-        <header class="practice-test-dashboard-header">
-          <h2>Practice Test AI Generator</h2>
-          <p>
-            Fill in your course and topic to generate a personalized practice
-            test powered by AI. Select your desired difficulty level!
-          </p>
-        </header>
-
-        <form id="practiceTestForm" class="practice-test-form" novalidate>
-          <div class="form-group">
-            <label for="practiceTestCourseInput">Course</label>
-            <input
-              type="text"
-              id="practiceTestCourseInput"
-              name="course"
-              placeholder="e.g., Computer Organization"
-              required
-            />
-          </div>
 
           <div class="form-group">
             <label for="practiceTestTopicInput">Topic</label>
@@ -125,24 +76,19 @@
           </button>
         </form>
 
-        <div id="pt-error" class="pt-error" style="display: none"></div>
-        <div id="pt-output" class="pt-output" style="display: none"></div>
-      </div>
+      <div id="pt-error" class="pt-error" style="display:none;"></div>
+      <div id="pt-output" class="pt-output" style="display:none;"></div>
     </div>
 
-    <!-- Requirement Modal -->
-    <div id="requirementModal" class="modal-backdrop" hidden>
-      <div class="modal">
-        <p id="requirementModalMsg">
-          You need to enter a course and topic before generating a test.
-        </p>
-        <button type="button" id="requirementModalClose" class="modal-close">
-          Close
-        </button>
-      </div>
+  <!-- Requirement Modal -->
+  <div id="requirementModal" class="modal-backdrop" hidden>
+    <div class="modal">
+      <p id="requirementModalMsg">You need to enter a course and topic before generating a test.</p>
+      <button type="button" id="requirementModalClose" class="modal-close">Close</button>
     </div>
+  </div>
 
-    <footer class="info-hub" aria-labelledby="info-hub-title">
+  <footer class="info-hub" aria-labelledby="info-hub-title">
       <div class="info-hub-inner">
         <h2 id="info-hub-title">Need to know</h2>
         <div class="info-columns">
@@ -189,6 +135,42 @@
           </div>
         </div>
       </div>
-    </footer>
-  </body>
+  </footer>
+
+  <!-- Modal Validation Script -->
+  <script type="module">
+    const form   = document.getElementById('practiceTestForm');
+    const course = document.getElementById('practiceTestCourseInput');
+    const topic  = document.getElementById('practiceTestTopicInput');
+
+    const modal      = document.getElementById('requirementModal');
+    const modalMsg   = document.getElementById('requirementModalMsg');
+    const modalClose = document.getElementById('requirementModalClose');
+
+    function openModal(message) {
+      modalMsg.textContent = message;
+      modal.hidden = false;
+      modalClose.focus();
+    }
+    function closeModal() { modal.hidden = true; }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    window.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+    form.addEventListener('submit', e => {
+      const missingCourse = !course.value.trim();
+      const missingTopic  = !topic.value.trim();
+
+      if (missingCourse || missingTopic) {
+        e.preventDefault();
+        const what = missingCourse && missingTopic
+          ? 'a course and a topic'
+          : missingCourse ? 'a course' : 'a topic';
+        openModal(`You need to enter ${what} before generating a test.`);
+      }
+    });
+  </script>
+
+</body>
 </html>

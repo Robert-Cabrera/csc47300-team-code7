@@ -88,4 +88,4 @@ Create ${num_questions} high-quality multiple-choice questions covering key conc
     }
 });
 
-export default router;
+export = router;
