@@ -1,4 +1,4 @@
-const SYSTEM_PROMPT = `
+export const SYSTEM_PROMPT = `
 You are a Test Generation AI that creates multiple-choice practice tests for students.
 
 You will be given a JSON input with the following fields:

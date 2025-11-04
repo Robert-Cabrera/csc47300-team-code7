@@ -1,10 +1,13 @@
-const express = require("express");
-const { ChatGoogleGenerativeAI } = require("@langchain/google-genai");
-const { z } = require("zod");
-const { SYSTEM_PROMPT } = require("../utils/practiceTestUtils");
-require('dotenv').config({ path: require('path').join(__dirname, '../keys.env') });
+import express, { Request, Response, Router } from "express";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { z } from "zod";
+import { SYSTEM_PROMPT } from "../utils/practiceTestUtils";
+import dotenv from 'dotenv';
+import path from 'path';
 
-const router = express.Router();
+dotenv.config({ path: path.join(__dirname, '../keys.env') });
+
+const router: Router = express.Router();
 
 // Accept either GEMINI_API_KEY or GOOGLE_API_KEY
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -34,7 +37,7 @@ const testSchema = z.object({
     questions: z.array(questionSchema).describe("Array of test questions")
 });
 
-router.post("/generate-test", async (req, res) => {
+router.post("/generate-test", async (req: Request, res: Response) => {
     try {
         let { course, topic, num_questions, difficulty } = req.body;
 
@@ -76,7 +79,7 @@ Create ${num_questions} high-quality multiple-choice questions covering key conc
         ]);
 
         return res.status(200).json(result);
-    } catch (err) {
+    } catch (err: any) {
         console.error("Server error:", err);
         return res.status(500).json({
             error: "Internal server error",
@@ -85,4 +88,4 @@ Create ${num_questions} high-quality multiple-choice questions covering key conc
     }
 });
 
-module.exports = router;
+export default router;

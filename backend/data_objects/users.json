@@ -10,6 +10,88 @@
       "profilePicture": "",
       "crashCourses": [
         {
+          "id": "cc_1762216195743",
+          "createdAt": "2025-11-04T00:29:55.743Z",
+          "topic": "Machine Learning Fundamentals",
+          "summary": "An introduction to the core concepts, algorithms, and applications of Machine Learning. Understand how machines learn from data and make predictions.",
+          "overview": "This crash course covers the essential elements of Machine Learning. We'll explore supervised, unsupervised, and reinforcement learning, common algorithms like decision trees and k-means, and practical considerations for building ML models.",
+          "main_topics": [
+            {
+              "title": "Introduction to Machine Learning",
+              "description": "Understand what Machine Learning is, its importance, and its different types. Learn the basic terminology and workflow involved in ML projects.",
+              "subtopics": [
+                {
+                  "title": "What is ML?",
+                  "details": "Defining Machine Learning and its goals. Differentiating from traditional programming."
+                },
+                {
+                  "title": "Types of ML",
+                  "details": "Exploring Supervised, Unsupervised, and Reinforcement Learning with examples."
+                },
+                {
+                  "title": "ML Workflow",
+                  "details": "Overview of data collection, preprocessing, model training, evaluation, and deployment."
+                }
+              ]
+            },
+            {
+              "title": "Supervised Learning",
+              "description": "Focus on learning from labeled data. Covers regression and classification tasks, and common algorithms used in these areas.",
+              "subtopics": [
+                {
+                  "title": "Regression",
+                  "details": "Predicting continuous values. Algorithms like Linear Regression and Polynomial Regression."
+                },
+                {
+                  "title": "Classification",
+                  "details": "Categorizing data. Algorithms like Logistic Regression and Support Vector Machines (SVM)."
+                },
+                {
+                  "title": "Evaluation Metrics",
+                  "details": "Measuring performance: Accuracy, Precision, Recall, F1-Score, MSE, R-squared."
+                }
+              ]
+            },
+            {
+              "title": "Unsupervised Learning",
+              "description": "Discovering patterns in unlabeled data. Covers clustering and dimensionality reduction techniques.",
+              "subtopics": [
+                {
+                  "title": "Clustering",
+                  "details": "Grouping similar data points. Algorithms like K-Means and Hierarchical Clustering."
+                },
+                {
+                  "title": "Dimensionality Reduction",
+                  "details": "Reducing the number of features. Techniques like PCA and t-SNE."
+                },
+                {
+                  "title": "Association Rules",
+                  "details": "Finding relationships between variables. e.g., Market Basket Analysis."
+                }
+              ]
+            },
+            {
+              "title": "Model Building & Considerations",
+              "description": "Practical aspects of creating and refining ML models. Includes data preprocessing, feature engineering, and avoiding common pitfalls.",
+              "subtopics": [
+                {
+                  "title": "Data Preprocessing",
+                  "details": "Handling missing values, scaling, encoding categorical features."
+                },
+                {
+                  "title": "Feature Engineering",
+                  "details": "Creating relevant features from raw data to improve model performance."
+                },
+                {
+                  "title": "Overfitting & Underfitting",
+                  "details": "Understanding and mitigating these common training issues."
+                }
+              ]
+            }
+          ],
+          "conclusion": "Machine Learning empowers systems to learn and adapt. Mastering these fundamentals opens doors to innovative solutions across many industries."
+        },
+        {
           "id": "cc_1762139199261",
           "createdAt": "2025-11-03T03:06:39.261Z",
           "topic": "Mechatronics in Spain",
