@@ -1,3 +1,17 @@
+# Features to be implemented for Final
+### Feature 0: Implement SupaBase backend
+**Description:**
+Implement SupaBase backend to store user data, crash courses, practice tests, and summaries, also whether the user is admin or not (should only be set manually in the database for security reasons)
+
+### Feature 1: Review Prior to Posting Data
+**Description:**
+Practice Question - Add interface for user to post data (test questions)
+- Course, Topic
+- Grade you got (if any)
+
+Develop admin interface for it to be review and approved prior to displaying
+it to other users
+
 # Features to be implemented for Midterm
 ### Feature 1: AI-Powered Crash Course Generator
 
