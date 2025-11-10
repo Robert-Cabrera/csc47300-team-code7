@@ -600,12 +600,20 @@ body {
 
 /* --- Loading Overlay --- */
 .practice_test_loading-overlay {
-  position: absolute; inset: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: var(--clr_container_bg);
-  opacity: .97; display: none;
-  justify-content: center; align-items: center;
-  z-index: 10; border-radius: 12px;
+  opacity: .97;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 12px;
   backdrop-filter: blur(2px);
+  width: 100%;
+  height: 100%;
 }
 
 /* --- Loading Spinner (shared) --- */
@@ -665,7 +673,317 @@ body {
   cursor: pointer;
 }
 
+/* NUMBER OF QUESTIONS AND TIMER*/
 
+.questions-timer-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 30px;
+}
+
+
+/* Timer Dial Styling */
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer > label {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--clr_text_base);
+  text-align: center;
+}
+
+.timer-wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.timer-dial {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f9fafb, #ffffff);
+  box-shadow: 
+    inset 0 2px 6px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  background: var(--clr_tick, #d1d5db);
+  transform-origin: center center;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
+}
+
+.tick.major {
+  height: 12px;
+  width: 3px;
+  background: #9ca3af;
+}
+
+.tick.active {
+  background: var(--clr_primary);
+  height: 14px;
+  width: 3px;
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.5);
+}
+
+.tick.active.major {
+  height: 18px;
+  width: 4px;
+}
+
+.tick.near-active {
+  height: 11px;
+  background: #a5b4fc;
+}
+
+.tick.near-active.major {
+  height: 15px;
+}
+
+.timer-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.timer-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--clr_primary);
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.timer-unit {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timer-thumb {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: var(--clr_primary);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  box-shadow: 
+    0 3px 8px rgba(79, 70, 229, 0.4),
+    0 0 0 3px rgba(255, 255, 255, 0.9);
+  transition: all 0.15s ease;
+  z-index: 10;
+}
+
+.timer-thumb:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 
+    0 4px 12px rgba(79, 70, 229, 0.5),
+    0 0 0 4px rgba(255, 255, 255, 0.9);
+}
+
+.timer-thumb:active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.timer-thumb::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.progress-ring circle {
+  fill: none;
+  stroke: var(--clr_primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.2s ease;
+  opacity: 0.25;
+}
+
+@keyframes haptic-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.timer-thumb.pulse {
+  animation: haptic-pulse 0.15s ease;
+}
+
+@keyframes value-pop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.timer-value.changed {
+  animation: value-pop 0.2s ease;
+}
+
+/* Hide the default number input */
+.timer input[type="number"] {
+  display: none;
+}
+
+#numQuestionsSliderWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 80px;
+  margin: 0 auto;
+}
+
+#numQuestionsSliderWrapper::before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 75%;  /* Changed: for 4 options = (4-1)/4 = 75% */
+  background: var(--clr_text_base);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.8;
+}
+
+#numQuestionsSliderWrapper label {
+  position: relative;
+  flex: 1;  /* Added: ensures equal spacing */
+  display: inline-block;
+  height: 40px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#numQuestionsSliderWrapper label::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--clr_text_base);
+  border-radius: 50%;
+  background: var(--clr_output_bg);
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease-in-out;
+}
+
+#numQuestionsSliderWrapper label::before {
+  content: attr(data-value);
+  position: absolute;
+  top: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  color: var(--clr_text_base);
+  opacity: 0.75;
+  transition: all 0.15s ease-in-out;
+}
+
+#numQuestionsSliderWrapper label:hover::after {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+#numQuestionsPos {
+  position: absolute;
+  top: 45%;
+  width: 12px;
+  height: 12px;
+  background: var(--clr_contrasting_accent);
+  border-radius: 50%;
+  border: 2px solid var(--clr_output_bg);
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease-in-out;
+  opacity: 0;
+  z-index: 2;
+}
+
+#numQuestionsSliderWrapper input { 
+  display: none; 
+}
+
+#numQuestionsSliderWrapper input:checked + label::after {
+  border-width: 4px;
+  transform: translate(-50%, -50%) scale(0.75);
+}
+
+#numQuestionsSliderWrapper input:checked + label::before {
+  font-weight: 800;
+  opacity: 1;
+}
+
+#numQuestionsSliderWrapper input:nth-of-type(1):checked ~ #numQuestionsPos { 
+  left: 12.5%; 
+  opacity: 1; 
+}
+#numQuestionsSliderWrapper input:nth-of-type(2):checked ~ #numQuestionsPos { 
+  left: 37.5%; 
+  opacity: 1; 
+}
+#numQuestionsSliderWrapper input:nth-of-type(3):checked ~ #numQuestionsPos { 
+  left: 62.5%; 
+  opacity: 1; 
+}
+#numQuestionsSliderWrapper input:nth-of-type(4):checked ~ #numQuestionsPos { 
+  left: 87.5%; 
+  opacity: 1; 
+}
 
 /* =======================   TOOL CARDS (RE-USABLE)    ========================================== */
 

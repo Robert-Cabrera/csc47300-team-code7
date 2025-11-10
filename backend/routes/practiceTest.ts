@@ -73,10 +73,16 @@ router.post("/generate-test", async (req: Request, res: Response) => {
 Create ${num_questions} high-quality multiple-choice questions covering key concepts in ${topic} for the ${course} course. The test should be at a(n) ${difficulty} level.`;
 
         // Invoke the model with structured output
-        const result = await structuredModel.invoke([
+        let result = await structuredModel.invoke([
             { role: "system", content: SYSTEM_PROMPT },
             { role: "user", content: userInput }
         ]);
+
+        // Enforce the number of questions in the response
+        if (result && Array.isArray(result.questions)) {
+            result.questions = result.questions.slice(0, num_questions);
+            result.num_questions = result.questions.length;
+        }
 
         return res.status(200).json(result);
     } catch (err: any) {

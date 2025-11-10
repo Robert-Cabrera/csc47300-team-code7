@@ -63,7 +63,15 @@ export function initPracticeTest(isLoggedIn: boolean): void {
 
   let currentController: AbortController | null = null;
 
-  const showLoading = (v = true) => show(loadingOverlay, v);
+  const showLoading = (v = true) => {
+    if (!loadingOverlay) return;
+    loadingOverlay.style.display = v ? "flex" : "none";
+    loadingOverlay.setAttribute("aria-hidden", v ? "false" : "true");
+    if (v) {
+      loadingOverlay.focus();
+      loadingOverlay.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
 
   const showError = (m: string) => {
     if (!errorEl) return;
@@ -216,6 +224,10 @@ export function initPracticeTest(isLoggedIn: boolean): void {
     barFill.className = `difficulty-bar-fill ${difficultySelect.value}`;
   });
 
+  // Slider: update displayed value and ensure within 1..20
+  const clamp = (n: number, a: number, b: number) => Math.max(a, Math.min(b, n));
+  // Radio buttons are self-contained, no need for slider update logic
+
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearError();
@@ -241,11 +253,20 @@ export function initPracticeTest(isLoggedIn: boolean): void {
     }
 
     try {
+      // Get selected num_questions from radio buttons
+      const selectedRadio = form?.querySelector<HTMLInputElement>('input[name="num-questions"]:checked');
+      const numQuestionsValue = selectedRadio ? parseInt(selectedRadio.value, 10) : 5;
+
       const res = await fetch(`${window.location.origin}/api/practice-test/generate-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: currentController.signal,
-        body: JSON.stringify({ course, topic, difficulty, num_questions: 5 })
+        body: JSON.stringify({
+          course,
+          topic,
+          difficulty,
+          num_questions: numQuestionsValue
+        })
       });
 
       if (!res.ok) {
@@ -324,3 +345,5 @@ function setupRequirementModalGuard(): void {
 
 // Auto-wire on module load (safe no-op on other pages)
 setupRequirementModalGuard();
+
+// TIMER

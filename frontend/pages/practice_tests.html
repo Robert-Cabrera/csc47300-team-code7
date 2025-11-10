@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoteSmith – Practice Test</title>
 
   <link rel="stylesheet" href="../stylesheets/style.css" />
@@ -25,7 +26,7 @@
       <a class="active" aria-current="page" href="./practice_tests.html">Practice Test</a>
       <a href="./summary.html">Summary</a>
     </div>
-    
+
     <div class="nav-right">
       <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
       <button id="theme-toggle" class="theme-toggle" type="button">Theme</button>
@@ -51,13 +52,15 @@
     <div id="test-form">
       <header class="practice-test-dashboard-header">
         <h2>Practice Test AI Generator</h2>
-        <p>Fill in your course and topic to generate a personalized practice test powered by AI. Select your desired difficulty level! </p>
+        <p>Fill in your course and topic to generate a personalized practice test powered by AI. Select your desired
+          difficulty level! </p>
       </header>
 
       <form id="practiceTestForm" class="practice-test-form" novalidate>
         <div class="form-group">
           <label for="practiceTestCourseInput">Course</label>
-          <input type="text" id="practiceTestCourseInput" name="course" placeholder="e.g., Computer Organization" required />
+          <input type="text" id="practiceTestCourseInput" name="course" placeholder="e.g., Computer Organization"
+            required />
         </div>
 
         <div class="form-group">
@@ -76,6 +79,21 @@
             <div class="difficulty-bar-background">
               <div class="difficulty-bar-fill easy" id="difficultyBarFill"></div>
             </div>
+          </div>
+        </div>
+
+        <div class="form-group num-questions-group">
+          <label for="practiceTestNumQuestions">Number of Questions</label>
+          <div id="numQuestionsSliderWrapper">
+            <input type="radio" name="num-questions" id="numq3" value="3" required>
+            <label for="numq3" data-value="3"></label>
+            <input type="radio" name="num-questions" id="numq5" value="5" required>
+            <label for="numq5" data-value="5"></label>
+            <input type="radio" name="num-questions" id="numq10" value="10" required>
+            <label for="numq10" data-value="10"></label>
+            <input type="radio" name="num-questions" id="numq15" value="15" required>
+            <label for="numq15" data-value="15"></label>
+            <div id="numQuestionsPos"></div>
           </div>
         </div>
 
@@ -131,4 +149,5 @@
     </div>
   </footer>
 </body>
+
 </html>
