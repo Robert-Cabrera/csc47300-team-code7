@@ -1,6 +1,5 @@
 // backend/utils/userManager.ts
-import fs from 'fs';
-import path from 'path';
+import { supabase } from './supabaseClient';
 
 // -------- Types --------
 export interface Summary extends Record<string, unknown> {}
@@ -11,7 +10,7 @@ export interface User {
   username: string;
   name?: string;
   email: string;
-  password: string;           // NOTE: plaintext for demo only
+  password?: string;           // Not stored/retrieved for security
   createdAt: string;
   profilePicture?: string;
   crashCourses?: CrashCourse[];
@@ -22,76 +21,258 @@ export interface UsersData {
   users: User[];
 }
 
-// -------- Path resolution (works from src and dist) --------
-function resolveUsersJsonPath(): string {
-  // When compiled, __dirname = backend/dist/utils
-  // In source, __dirname = backend/utils
-  const candidates = [
-    path.join(__dirname, '..', 'data_objects', 'users.json'),     // dist/utils → dist/data_objects
-    path.join(__dirname, '..', '..', 'data_objects', 'users.json') // utils → data_objects
-  ];
-  for (const p of candidates) {
-    if (fs.existsSync(p)) return p;
+// -------- ID generation --------
+export async function generateUserId(): Promise<string> {
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .select('id')
+      .order('id', { ascending: false })
+      .limit(1);
+
+    if (error) {
+      console.error('Error fetching last user ID:', error);
+      return `user_001`;
+    }
+
+    if (!data || data.length === 0) {
+      return 'user_001';
+    }
+
+    const lastId = data[0].id;
+    const lastIdNum = parseInt(String(lastId).split('_')[1], 10);
+    const newIdNum = (isNaN(lastIdNum) ? 0 : lastIdNum) + 1;
+
+    return `user_${String(newIdNum).padStart(3, '0')}`;
+  } catch (err) {
+    console.error('Error generating user ID:', err);
+    return `user_001`;
   }
-  // Fallback to project root (backend/data_objects/users.json)
-  return path.join(process.cwd(), 'backend', 'data_objects', 'users.json');
 }
 
-const usersPath = resolveUsersJsonPath();
+// -------- Read operations --------
+export async function readUsers(): Promise<UsersData> {
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*');
 
-// -------- I/O helpers --------
-export function readUsers(): UsersData {
-  const raw = fs.readFileSync(usersPath, 'utf8');
-  const data = JSON.parse(raw);
-  // Basic shape guard
-  if (!data || !Array.isArray(data.users)) {
+    if (error) {
+      console.error('Error reading users:', error);
+      return { users: [] };
+    }
+
+    return {
+      users: (data || []).map((user: any) => ({
+        id: user.id,
+        username: user.username,
+        name: user.name,
+        email: user.email,
+        createdAt: user.created_at,
+        profilePicture: user.profile_picture,
+        crashCourses: user.crash_courses || [],
+        summaries: user.summaries || [],
+      })),
+    };
+  } catch (err) {
+    console.error('Error reading users:', err);
     return { users: [] };
   }
-  return data as UsersData;
 }
 
-export function writeUsers(userData: UsersData): void {
-  const dir = path.dirname(usersPath);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(usersPath, JSON.stringify(userData, null, 2), 'utf8');
-}
+// -------- Find user by ID --------
+export async function findUserByID(userId: string): Promise<User | null> {
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', userId)
+      .single();
 
-// -------- ID generation --------
-export function generateUserId(): string {
-  const usersData = readUsers();
-  const users = usersData.users;
+    if (error || !data) {
+      return null;
+    }
 
-  if (users.length === 0) return 'user_001';
-
-  const lastUser = users[users.length - 1];
-  const lastIdNum = parseInt(String(lastUser.id).split('_')[1], 10);
-  const newIdNum = (isNaN(lastIdNum) ? 0 : lastIdNum) + 1;
-
-  return `user_${String(newIdNum).padStart(3, '0')}`;
-}
-
-// -------- Insert user (append for now) --------
-export function insertUserSorted(newUser: User): User {
-  const usersData = readUsers();
-  usersData.users.push(newUser);
-  // (Optional) ensure sort by id if needed:
-  // usersData.users.sort((a, b) => a.id.localeCompare(b.id));
-  writeUsers(usersData);
-  return newUser;
-}
-
-// -------- Binary search by ID (assumes sorted by id ascending) --------
-export function findUserByID(userId: string): User | null {
-  const { users } = readUsers();
-  let left = 0;
-  let right = users.length - 1;
-
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
-    const midId = users[mid].id;
-    if (midId === userId) return users[mid];
-    if (midId < userId) left = mid + 1;
-    else right = mid - 1;
+    return {
+      id: data.id,
+      username: data.username,
+      name: data.name,
+      email: data.email,
+      createdAt: data.created_at,
+      profilePicture: data.profile_picture,
+      crashCourses: data.crash_courses || [],
+      summaries: data.summaries || [],
+    };
+  } catch (err) {
+    console.error('Error finding user by ID:', err);
+    return null;
   }
-  return null;
+}
+
+// -------- Find user by username or email --------
+export async function findUserByUsernameOrEmail(
+  username: string,
+  email: string
+): Promise<User | null> {
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .or(`username.eq.${username},email.eq.${email}`)
+      .single();
+
+    if (error || !data) {
+      return null;
+    }
+
+    return {
+      id: data.id,
+      username: data.username,
+      name: data.name,
+      email: data.email,
+      createdAt: data.created_at,
+      profilePicture: data.profile_picture,
+      crashCourses: data.crash_courses || [],
+      summaries: data.summaries || [],
+    };
+  } catch (err) {
+    // No match found is not an error
+    return null;
+  }
+}
+
+// -------- Insert new user --------
+export async function insertUserSorted(newUser: User, password?: string): Promise<User> {
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .insert([
+        {
+          id: newUser.id,
+          username: newUser.username,
+          name: newUser.name || '',
+          email: newUser.email,
+          password: password || '', // Include password in insert
+          created_at: newUser.createdAt,
+          profile_picture: newUser.profilePicture || '',
+          crash_courses: newUser.crashCourses || [],
+          summaries: newUser.summaries || [],
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error inserting user:', error);
+      throw error;
+    }
+
+    return {
+      id: data.id,
+      username: data.username,
+      name: data.name,
+      email: data.email,
+      createdAt: data.created_at,
+      profilePicture: data.profile_picture,
+      crashCourses: data.crash_courses || [],
+      summaries: data.summaries || [],
+    };
+  } catch (err) {
+    console.error('Error inserting user:', err);
+    throw err;
+  }
+}
+
+// -------- Update user --------
+export async function updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
+  try {
+    const updateData: Record<string, any> = {};
+
+    if (updates.username) updateData.username = updates.username;
+    if (updates.name) updateData.name = updates.name;
+    if (updates.profilePicture) updateData.profile_picture = updates.profilePicture;
+    if (updates.crashCourses) updateData.crash_courses = updates.crashCourses;
+    if (updates.summaries) updateData.summaries = updates.summaries;
+
+    const { data, error } = await supabase
+      .from('users')
+      .update(updateData)
+      .eq('id', userId)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating user:', error);
+      return null;
+    }
+
+    return {
+      id: data.id,
+      username: data.username,
+      name: data.name,
+      email: data.email,
+      createdAt: data.created_at,
+      profilePicture: data.profile_picture,
+      crashCourses: data.crash_courses || [],
+      summaries: data.summaries || [],
+    };
+  } catch (err) {
+    console.error('Error updating user:', err);
+    return null;
+  }
+}
+
+// -------- Verify password (for authentication) --------
+export async function verifyPassword(email: string, password: string): Promise<User | null> {
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (error || !data) {
+      return null;
+    }
+
+    // NOTE: This is a simple comparison. In production, you should hash passwords
+    // For now, we compare plaintext (for demo purposes only)
+    if (data.password === password) {
+      return {
+        id: data.id,
+        username: data.username,
+        name: data.name,
+        email: data.email,
+        createdAt: data.created_at,
+        profilePicture: data.profile_picture,
+        crashCourses: data.crash_courses || [],
+        summaries: data.summaries || [],
+      };
+    }
+
+    return null;
+  } catch (err) {
+    console.error('Error verifying password:', err);
+    return null;
+  }
+}
+
+// -------- Store password (for registration) --------
+export async function storePassword(userId: string, password: string): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from('users')
+      .update({ password })
+      .eq('id', userId);
+
+    if (error) {
+      console.error('Error storing password:', error);
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error('Error storing password:', err);
+    return false;
+  }
 }

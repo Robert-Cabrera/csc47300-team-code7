@@ -2,7 +2,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
-import { readUsers, writeUsers } from '../utils/userManager';
+import { findUserByID, updateUser } from '../utils/userManager';
 
 const router = express.Router();
 
@@ -73,18 +73,17 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 
     // Save to user's crash courses if userId provided and we have valid content
     if (userId && crashCourseContent) {
-      const usersData = readUsers();
-      const userIndex = usersData.users.findIndex((u: any) => u.id === userId);
+      const user = await findUserByID(userId);
 
-      if (userIndex !== -1) {
+      if (user) {
         const crashCourse = {
           id: `cc_${Date.now()}`,
           createdAt: new Date().toISOString(),
           ...crashCourseContent
         };
 
-        usersData.users[userIndex].crashCourses.unshift(crashCourse);
-        writeUsers(usersData);
+        const updatedCourses = [crashCourse, ...(user.crashCourses || [])];
+        await updateUser(userId, { crashCourses: updatedCourses });
       }
     }
 
@@ -96,9 +95,9 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 });
 
 // Get user's crash courses
-router.get('/user/:userId', (req: express.Request, res: express.Response) => {
+router.get('/user/:userId', async (req: express.Request, res: express.Response) => {
   try {
-  const user = (require('../../utils/userManager').findUserByID as Function)(req.params.userId);
+    const user = await findUserByID(req.params.userId);
 
     if (!user) return res.status(404).json({ error: 'User not found' });
 
@@ -109,16 +108,15 @@ router.get('/user/:userId', (req: express.Request, res: express.Response) => {
 });
 
 // Delete a crash course
-router.delete('/user/:userId/:courseId', (req: express.Request, res: express.Response) => {
+router.delete('/user/:userId/:courseId', async (req: express.Request, res: express.Response) => {
   try {
-    const usersData = readUsers();
-    const userIndex = usersData.users.findIndex((u: any) => u.id === req.params.userId);
+    const user = await findUserByID(req.params.userId);
 
-    if (userIndex === -1) return res.status(404).json({ error: 'User not found' });
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-    usersData.users[userIndex].crashCourses = usersData.users[userIndex].crashCourses.filter((cc: any) => cc.id !== req.params.courseId);
+    const updatedCourses = (user.crashCourses || []).filter((cc: any) => cc.id !== req.params.courseId);
 
-    writeUsers(usersData);
+    await updateUser(req.params.userId, { crashCourses: updatedCourses });
     return res.json({ success: true });
   } catch (err: any) {
     return res.status(500).json({ error: err.message });

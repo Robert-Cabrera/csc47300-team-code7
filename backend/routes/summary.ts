@@ -5,7 +5,7 @@ import pdfParse from 'pdf-parse';
 import fs from 'fs';
 import path from 'path';
 
-import { readUsers, writeUsers, findUserByID } from '../utils/userManager';
+import { findUserByID, updateUser } from '../utils/userManager';
 
 const router = express.Router();
 
@@ -109,13 +109,12 @@ router.post('/', upload.single('pdf'), async (req: express.Request, res: express
     }
 
     if (userId && summaryContent) {
-      const usersData = readUsers();
-      const userIndex = usersData.users.findIndex((u: any) => u.id === userId);
-      if (userIndex !== -1) {
-  const originalName = (req as any).file?.originalname || 'uploaded.pdf';
-  const summary = { id: `sum_${Date.now()}`, createdAt: new Date().toISOString(), fileName: originalName, ...summaryContent };
-        usersData.users[userIndex].summaries.unshift(summary);
-        writeUsers(usersData);
+      const user = await findUserByID(userId);
+      if (user) {
+        const originalName = (req as any).file?.originalname || 'uploaded.pdf';
+        const summary = { id: `sum_${Date.now()}`, createdAt: new Date().toISOString(), fileName: originalName, ...summaryContent };
+        const updatedSummaries = [summary, ...(user.summaries || [])];
+        await updateUser(userId, { summaries: updatedSummaries });
       }
     }
 
@@ -127,9 +126,9 @@ router.post('/', upload.single('pdf'), async (req: express.Request, res: express
 });
 
 // Get user's summaries
-router.get('/user/:userId', (req: express.Request, res: express.Response) => {
+router.get('/user/:userId', async (req: express.Request, res: express.Response) => {
   try {
-    const user = (findUserByID as Function)(req.params.userId);
+    const user = await findUserByID(req.params.userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
     return res.json({ summaries: user.summaries || [] });
   } catch (err: any) {
@@ -138,13 +137,12 @@ router.get('/user/:userId', (req: express.Request, res: express.Response) => {
 });
 
 // Delete a summary
-router.delete('/user/:userId/:summaryId', (req: express.Request, res: express.Response) => {
+router.delete('/user/:userId/:summaryId', async (req: express.Request, res: express.Response) => {
   try {
-    const usersData = readUsers();
-    const userIndex = usersData.users.findIndex((u: any) => u.id === req.params.userId);
-    if (userIndex === -1) return res.status(404).json({ error: 'User not found' });
-    usersData.users[userIndex].summaries = usersData.users[userIndex].summaries.filter((s: any) => s.id !== req.params.summaryId);
-    writeUsers(usersData);
+    const user = await findUserByID(req.params.userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    const updatedSummaries = (user.summaries || []).filter((s: any) => s.id !== req.params.summaryId);
+    await updateUser(req.params.userId, { summaries: updatedSummaries });
     return res.json({ success: true });
   } catch (err: any) {
     return res.status(500).json({ error: err?.message || 'Internal error' });

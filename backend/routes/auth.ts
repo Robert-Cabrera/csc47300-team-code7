@@ -1,6 +1,14 @@
 // routes/auth.ts
 import express, { Request, Response } from 'express';
-import { readUsers, generateUserId, insertUserSorted } from '../utils/userManager';
+import {
+  readUsers,
+  generateUserId,
+  insertUserSorted,
+  findUserByID,
+  findUserByUsernameOrEmail,
+  verifyPassword,
+  storePassword,
+} from '../utils/userManager';
 
 const router = express.Router();
 
@@ -13,7 +21,7 @@ interface User {
   username: string;
   name?: string;
   email: string;
-  password: string;         // demo only (plaintext)
+  password?: string;         // not exposed via API
   createdAt: string;
   profilePicture?: string;
   crashCourses?: CrashCourse[];
@@ -33,11 +41,10 @@ function simulateDelay(): Promise<void> {
 }
 
 // GET /user/:userId/stats
-router.get('/user/:userId/stats', (req: Request<{ userId: string }>, res: Response) => {
+router.get('/user/:userId/stats', async (req: Request<{ userId: string }>, res: Response) => {
   try {
     const { userId } = req.params;
-    const usersData = readUsers() as UsersData;
-    const user = usersData.users.find((u) => u.id === userId);
+    const user = await findUserByID(userId);
 
     if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
@@ -64,8 +71,7 @@ router.get(
 
       await simulateDelay();
 
-      const usersData = readUsers() as UsersData;
-      const user = usersData.users.find((u) => u.id === userId);
+      const user = await findUserByID(userId);
       if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
       const allSummaries = user.summaries ?? [];
@@ -92,8 +98,7 @@ router.get(
 
       await simulateDelay();
 
-      const usersData = readUsers() as UsersData;
-      const user = usersData.users.find((u) => u.id === userId);
+      const user = await findUserByID(userId);
       if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
       const allCourses = user.crashCourses ?? [];
@@ -107,11 +112,10 @@ router.get(
 );
 
 // GET /user/:userId
-router.get('/user/:userId', (req: Request<{ userId: string }>, res: Response) => {
+router.get('/user/:userId', async (req: Request<{ userId: string }>, res: Response) => {
   try {
     const { userId } = req.params;
-    const usersData = readUsers() as UsersData;
-    const user = usersData.users.find((u) => u.id === userId);
+    const user = await findUserByID(userId);
 
     if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
@@ -130,7 +134,7 @@ router.get('/user/:userId', (req: Request<{ userId: string }>, res: Response) =>
 });
 
 // POST /login
-router.post('/login', (req: Request, res: Response) => {
+router.post('/login', async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body as { username?: string; password?: string };
 
@@ -138,21 +142,27 @@ router.post('/login', (req: Request, res: Response) => {
       return res.status(400).json({ success: false, error: 'Username and password required' });
     }
 
-    const usersData = readUsers() as UsersData;
-    const user = usersData.users.find(
-      (u) => (u.username === username || u.email === username) && u.password === password
-    );
+    // Try to find user by username or email
+    const user = await findUserByUsernameOrEmail(username, username);
 
-    if (!user) return res.status(401).json({ success: false, error: 'Invalid credentials' });
+    if (!user) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
+
+    // Verify password
+    const verifiedUser = await verifyPassword(user.email, password);
+    if (!verifiedUser) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
 
     res.json({
       success: true,
       user: {
-        id: user.id,
-        username: user.username,
-        name: user.name,
-        email: user.email,
-        profilePicture: user.profilePicture ?? '',
+        id: verifiedUser.id,
+        username: verifiedUser.username,
+        name: verifiedUser.name,
+        email: verifiedUser.email,
+        profilePicture: verifiedUser.profilePicture ?? '',
       },
     });
   } catch (err) {
@@ -161,7 +171,7 @@ router.post('/login', (req: Request, res: Response) => {
 });
 
 // POST /register
-router.post('/register', (req: Request, res: Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   try {
     const { username, name, email, password } = req.body as {
       username?: string;
@@ -176,26 +186,25 @@ router.post('/register', (req: Request, res: Response) => {
         .json({ success: false, error: 'Username, email and password are required' });
     }
 
-    const usersData = readUsers() as UsersData;
-    const exists = usersData.users.find((u) => u.username === username || u.email === email);
+    // Check if user already exists
+    const exists = await findUserByUsernameOrEmail(username, email);
     if (exists) {
       return res.status(409).json({ success: false, error: 'Username or email already in use' });
     }
 
-    const newId = generateUserId();
+    const newId = await generateUserId();
     const newUser: User = {
       id: newId,
       username,
       name: name ?? '',
       email,
-      password, // demo only
       createdAt: new Date().toISOString(),
       profilePicture: '',
       crashCourses: [],
       summaries: [],
     };
 
-    insertUserSorted(newUser);
+    await insertUserSorted(newUser, password);
 
     res.status(201).json({
       success: true,
