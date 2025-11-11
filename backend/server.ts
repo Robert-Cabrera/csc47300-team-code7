@@ -67,6 +67,15 @@ function findFrontendDir() {
   return path.join(__dirname, '..', 'frontend');
 }
 
+function findReactDir() {
+  const candidates = [
+    path.join(__dirname, '..', 'react', 'dist'),   // when running from backend/dist
+    path.join(__dirname, '..', '..', 'react', 'dist'), // edge case
+  ];
+  for (const c of candidates) if (fs.existsSync(c)) return c;
+  return null;
+}
+
 const frontendDir = findFrontendDir();
 const faviconPath = path.join(frontendDir, 'assets', 'favicon.ico');
 
@@ -75,6 +84,22 @@ app.get('/favicon.ico', (req, res) => {
     if (err) res.status(404).send('Favicon not found');
   });
 });
+
+// Serve React app at /react route
+const reactDir = findReactDir();
+if (reactDir) {
+  // Serve all static assets from /react/assets
+  app.use('/react/assets', express.static(path.join(reactDir, 'assets')));
+  
+  // Serve index.html and handle routing for React SPA
+  app.get(/^\/react($|\/)/u, (req, res) => {
+    res.sendFile(path.join(reactDir, 'index.html'));
+  });
+  
+  console.log('React app available at http://localhost:3000/react');
+} else {
+  console.warn('React build not found at react/dist. Build React with: npm run build:react');
+}
 
 app.use(express.static(frontendDir));
 

@@ -1,15 +1,21 @@
 {
   "scripts": {
     "start": "node backend/dist/server.js",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:react\"",
+    "dev:backend": "tsc -p backend/tsconfig.json --watch",
+    "dev:react": "npm --prefix react run dev",
+    "build": "npm run build:frontend && npm run build:backend && npm run build:react",
+    "build:frontend": "npm run clean:frontend && tsc -p frontend/tsconfig.json",
+    "build:backend": "npm run clean:backend && tsc -p backend/tsconfig.json",
+    "build:react": "npm --prefix react run build",
     "clean:frontend": "rimraf frontend/dist",
     "clean:backend": "rimraf backend/dist",
-    "build:frontend": "npm run clean:frontend && tsc -p frontend/tsconfig.json",
-    "watch:frontend": "tsc -p frontend/tsconfig.json --watch",
-    "build:backend": "npm run clean:backend && tsc -p backend/tsconfig.json"
+    "watch:frontend": "tsc -p frontend/tsconfig.json --watch"
   },
   "devDependencies": {
     "@types/express": "^4.17.25",
     "@types/node": "^20.19.23",
+    "concurrently": "^8.2.2",
     "rimraf": "^6.0.1",
     "typescript": "^5.9.3"
   },
@@ -26,3 +32,4 @@
     "zod": "^4.1.12"
   }
 }
+

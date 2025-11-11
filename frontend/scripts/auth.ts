@@ -52,8 +52,10 @@ function updateNavbar(loginBtn: HTMLElement, userName: string): void {
     loginBtn.classList.remove("login");
     loginBtn.classList.add("account");
     
-    // Change link to account settings page
-    (loginBtn as HTMLAnchorElement).href = "account_settings.html";
+    // Change link to account settings page (handle both index and pages context)
+    const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
+    (loginBtn as HTMLAnchorElement).href = isIndex ? "./pages/account_settings.html" : "account_settings.html";
+    
     const navRight = document.querySelector('.nav-right');
     
     // Add logout button if not already present

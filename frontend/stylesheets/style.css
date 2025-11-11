@@ -36,6 +36,7 @@
   --clr_text_nav: #222;
   --clr_theme_toggle: #006bb3;
 
+  --clr_range_selector_bg: #8e8e8e75;
   --clr_container_bg: #ffffff;
   --clr_output_bg: #f9f9ff;
   --clr_output_border: #e0e0f0;
@@ -66,6 +67,7 @@
   --clr_error: #ff5252;
   --clr_title_with_bg: #f0f8ff;
 
+  --clr_range_selector_bg: #4d4d4d75;
   --clr_container_bg: #282828;
   --clr_output_bg: #303030;
   --clr_output_border: #444444;
@@ -577,6 +579,7 @@ body {
   border: 1px solid var(--clr_output_border);
   border-radius: 8px;
   background: var(--clr_output_bg);
+  color:var(--clr_text_base);
   cursor: pointer;
   transition: background-color .2s, border-color .2s, transform .05s;
 }
@@ -586,8 +589,8 @@ body {
 /* --- Submit Test --- */
 .pt-actions { display: flex; justify-content: center; margin-top: 1.25rem; }
 .submit-test-btn {
-  background: var(--clr_primary);
-  color: var(--clr_text_nav);
+  background: var(--clr_logout);
+  color: white;
   border: none; border-radius: 10px;
   font-family: 'Poppins';
   padding: .9rem 1.5rem;
@@ -879,110 +882,135 @@ body {
   display: none;
 }
 
+/* Range Slider Wrapper */
 #numQuestionsSliderWrapper {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
   position: relative;
   width: 100%;
-  height: 80px;
-  margin: 0 auto;
+  padding: 1rem 0;
 }
 
-#numQuestionsSliderWrapper::before {
-  content: "";
-  position: absolute;
-  height: 2px;
-  width: 75%;  /* Changed: for 4 options = (4-1)/4 = 75% */
-  background: var(--clr_text_base);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.8;
-}
-
-#numQuestionsSliderWrapper label {
-  position: relative;
-  flex: 1;  /* Added: ensures equal spacing */
-  display: inline-block;
-  height: 40px;
-  cursor: pointer;
+/* Display value on top */
+.range-display {
   text-align: center;
+  min-height: 2rem;
 }
 
-#numQuestionsSliderWrapper label::after {
-  content: "";
+#numQuestionsDisplay {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--clr_primary);
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block;
+}
+
+/* Slider track container */
+.slider-track {
+  position: relative;
+  width: 70%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0rem;
+  color: black;
+}
+
+
+/* Range input (hidden but functional) */
+#practiceTestNumQuestions {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--clr_text_base);
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: var(--clr_range_selector_bg);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+/* Webkit browsers (Chrome, Safari) */
+#practiceTestNumQuestions::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: linear-gradient(to right, var(--clr_contrasting_accent) 0%, var(--clr_contrasting_accent) var(--slider-progress, 50%), var(--clr_text_base) var(--slider-progress, 50%), var(--clr_text_base) 100%);
+}
+
+#practiceTestNumQuestions::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--clr_output_bg);
-  transform: translate(-50%, -50%);
-  transition: all 0.15s ease-in-out;
-}
-
-#numQuestionsSliderWrapper label::before {
-  content: attr(data-value);
-  position: absolute;
-  top: 115%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 15px;
-  color: var(--clr_text_base);
-  opacity: 0.75;
-  transition: all 0.15s ease-in-out;
-}
-
-#numQuestionsSliderWrapper label:hover::after {
-  transform: translate(-50%, -50%) scale(1.15);
-}
-
-#numQuestionsPos {
-  position: absolute;
-  top: 45%;
-  width: 12px;
-  height: 12px;
   background: var(--clr_contrasting_accent);
-  border-radius: 50%;
-  border: 2px solid var(--clr_output_bg);
-  transform: translate(-50%, -50%);
-  transition: all 0.15s ease-in-out;
-  opacity: 0;
+  border: 3px solid var(--clr_output_bg);
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(70, 200, 200, 0.3);
+  transition: all 0.2s ease;
   z-index: 2;
+  margin-top: -8px;
 }
 
-#numQuestionsSliderWrapper input { 
-  display: none; 
+#practiceTestNumQuestions::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 8px rgba(70, 200, 200, 0.15);
+  transform: scale(1.1);
 }
 
-#numQuestionsSliderWrapper input:checked + label::after {
-  border-width: 4px;
-  transform: translate(-50%, -50%) scale(0.75);
+/* Firefox */
+#practiceTestNumQuestions::-moz-range-track {
+  background: transparent;
+  border: none;
 }
 
-#numQuestionsSliderWrapper input:checked + label::before {
-  font-weight: 800;
-  opacity: 1;
+#practiceTestNumQuestions::-moz-range-progress {
+  background-color: var(--clr_contrasting_accent);
+  height: 8px;
+  border-radius: 5px;
 }
 
-#numQuestionsSliderWrapper input:nth-of-type(1):checked ~ #numQuestionsPos { 
-  left: 12.5%; 
-  opacity: 1; 
+#practiceTestNumQuestions::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--clr_contrasting_accent);
+  border: 3px solid var(--clr_output_bg);
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(70, 200, 200, 0.3);
+  transition: all 0.2s ease;
 }
-#numQuestionsSliderWrapper input:nth-of-type(2):checked ~ #numQuestionsPos { 
-  left: 37.5%; 
-  opacity: 1; 
+
+#practiceTestNumQuestions::-moz-range-thumb:hover {
+  box-shadow: 0 0 0 8px rgba(70, 200, 200, 0.15);
+  transform: scale(1.1);
 }
-#numQuestionsSliderWrapper input:nth-of-type(3):checked ~ #numQuestionsPos { 
-  left: 62.5%; 
-  opacity: 1; 
+
+/* Animated thumb glow on focus */
+#practiceTestNumQuestions:focus {
+  outline: none;
 }
-#numQuestionsSliderWrapper input:nth-of-type(4):checked ~ #numQuestionsPos { 
-  left: 87.5%; 
-  opacity: 1; 
+
+#practiceTestNumQuestions:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 12px rgba(70, 200, 200, 0.2);
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =======================   TOOL CARDS (RE-USABLE)    ========================================== */
@@ -1225,6 +1253,96 @@ body {
 .summary-container,
 .crash-container,
 .account-settings-container { flex: 1 0 auto; }
+
+/* --- Account Settings --- */
+.account-settings-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.account-settings-container h1 {
+  color: var(--clr_primary);
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.account-settings-container > p {
+  color: var(--clr_text_muted);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.settings-section {
+  background: var(--clr_container_bg);
+  border: 1px solid var(--clr_output_border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.settings-section h2 {
+  color: var(--clr_primary);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--clr_contrasting_accent);
+  padding-bottom: 0.75rem;
+}
+
+.settings-item {
+  margin-bottom: 2rem;
+}
+
+.settings-item:last-child {
+  margin-bottom: 0;
+}
+
+.settings-item h3 {
+  color: var(--clr_text_base);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.settings-item p {
+  color: var(--clr_text_muted);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.settings-item .btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.settings-item .btn.primary {
+  background: var(--clr_primary);
+  color: white;
+}
+
+.settings-item .btn.primary:hover {
+  background: var(--clr_primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 60, 255, 0.3);
+}
+
+/* --- Dark Theme for Settings --- */
+@media (prefers-color-scheme: dark) {
+  .settings-section {
+    background: var(--clr_container_bg);
+    border-color: var(--clr_output_border);
+  }
+  
+  .settings-item .btn.primary:hover {
+    background: #0a1a36;
+  }
+}
 
 /* --- Modal Safety Resets (ensure overlays appear above transforms) --- */
 html, body {

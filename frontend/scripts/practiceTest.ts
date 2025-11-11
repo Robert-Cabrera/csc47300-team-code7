@@ -85,6 +85,38 @@ export function initPracticeTest(isLoggedIn: boolean): void {
     errorEl.style.display = "none";
   };
 
+  // Range slider handler
+  const setupRangeSlider = () => {
+    const rangeInput = qs<HTMLInputElement>("#practiceTestNumQuestions");
+    const displaySpan = qs<HTMLElement>("#numQuestionsDisplay");
+    const sliderTrack = qs<HTMLElement>(".slider-track");
+
+    if (!rangeInput || !displaySpan) return;
+
+    const updateDisplay = () => {
+      const value = parseInt(rangeInput.value, 10);
+      displaySpan.textContent = String(value);
+      
+      // Update CSS variable for gradient progress
+      const progress = ((value - parseInt(rangeInput.min, 10)) / (parseInt(rangeInput.max, 10) - parseInt(rangeInput.min, 10))) * 100;
+      if (sliderTrack) {
+        sliderTrack.style.setProperty('--slider-progress', progress + '%');
+      }
+      
+      // Trigger animation
+      displaySpan.style.animation = "none";
+      setTimeout(() => {
+        displaySpan.style.animation = "slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
+      }, 10);
+    };
+
+    rangeInput.addEventListener("input", updateDisplay);
+    // Initial update
+    updateDisplay();
+  };
+
+  setupRangeSlider();
+
   const gradePracticeTest = (questions: Question[]) => {
     const qWrap = qs<HTMLElement>("#pt-questions");
     if (!qWrap || !outputEl) return;
@@ -253,9 +285,9 @@ export function initPracticeTest(isLoggedIn: boolean): void {
     }
 
     try {
-      // Get selected num_questions from radio buttons
-      const selectedRadio = form?.querySelector<HTMLInputElement>('input[name="num-questions"]:checked');
-      const numQuestionsValue = selectedRadio ? parseInt(selectedRadio.value, 10) : 5;
+      // Get selected num_questions from range slider
+      const rangeInput = form?.querySelector<HTMLInputElement>('input[type="range"][name="num-questions"]');
+      const numQuestionsValue = rangeInput ? parseInt(rangeInput.value, 10) : 10;
 
       const res = await fetch(`${window.location.origin}/api/practice-test/generate-test`, {
         method: "POST",

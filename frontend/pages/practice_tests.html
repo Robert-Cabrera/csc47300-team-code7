@@ -85,15 +85,13 @@
         <div class="form-group num-questions-group">
           <label for="practiceTestNumQuestions">Number of Questions</label>
           <div id="numQuestionsSliderWrapper">
-            <input type="radio" name="num-questions" id="numq3" value="3" required>
-            <label for="numq3" data-value="3"></label>
-            <input type="radio" name="num-questions" id="numq5" value="5" required>
-            <label for="numq5" data-value="5"></label>
-            <input type="radio" name="num-questions" id="numq10" value="10" required>
-            <label for="numq10" data-value="10"></label>
-            <input type="radio" name="num-questions" id="numq15" value="15" required>
-            <label for="numq15" data-value="15"></label>
-            <div id="numQuestionsPos"></div>
+            <div class="range-display">
+              <span id="numQuestionsDisplay">10</span>
+            </div>
+            <div class="slider-track">
+                <input type="range" id="practiceTestNumQuestions" name="num-questions" min="1" max="20" value="10">
+              <div class="slider-thumb"></div>
+            </div>
           </div>
         </div>
 
