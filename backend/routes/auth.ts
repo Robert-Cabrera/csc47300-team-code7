@@ -8,6 +8,7 @@ import {
   findUserByUsernameOrEmail,
   verifyPassword,
   storePassword,
+  updateUser,
 } from '../utils/userManager';
 
 const router = express.Router();
@@ -24,6 +25,9 @@ interface User {
   password?: string;         // not exposed via API
   createdAt: string;
   profilePicture?: string;
+  major?: string;
+  year?: string;
+  isAdmin?: boolean;
   crashCourses?: CrashCourse[];
   summaries?: Summary[];
 }
@@ -125,6 +129,9 @@ router.get('/user/:userId', async (req: Request<{ userId: string }>, res: Respon
       name: user.name,
       email: user.email,
       profilePicture: user.profilePicture,
+      major: user.major,
+      year: user.year,
+      isAdmin: user.isAdmin,
       crashCourses: user.crashCourses ?? [],
       summaries: user.summaries ?? [],
     });
@@ -163,6 +170,9 @@ router.post('/login', async (req: Request, res: Response) => {
         name: verifiedUser.name,
         email: verifiedUser.email,
         profilePicture: verifiedUser.profilePicture ?? '',
+        major: verifiedUser.major ?? '',
+        year: verifiedUser.year ?? '',
+        isAdmin: verifiedUser.isAdmin ?? false,
       },
     });
   } catch (err) {
@@ -214,7 +224,52 @@ router.post('/register', async (req: Request, res: Response) => {
         name: newUser.name,
         email: newUser.email,
         profilePicture: newUser.profilePicture,
+        major: newUser.major,
+        year: newUser.year,
+        isAdmin: newUser.isAdmin,
       },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: (err as Error).message });
+  }
+});
+
+// PUT /user/:userId - Update user profile
+router.put('/user/:userId', async (req: Request<{ userId: string }>, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const { name, major, year, profilePicture } = req.body as {
+      name?: string;
+      major?: string;
+      year?: string;
+      profilePicture?: string;
+    };
+
+    // Validate input
+    if (!name && !major && !year && !profilePicture) {
+      return res.status(400).json({ success: false, error: 'No fields to update' });
+    }
+
+    // Build updates object
+    const updates: Partial<User> = {};
+    if (name !== undefined) updates.name = name;
+    if (major !== undefined) updates.major = major;
+    if (year !== undefined) updates.year = year;
+    if (profilePicture !== undefined) updates.profilePicture = profilePicture;
+
+    // Update user
+    const updatedUser = await updateUser(userId, updates);
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      name: updatedUser.name,
+      major: updatedUser.major,
+      year: updatedUser.year,
+      profilePicture: updatedUser.profilePicture,
     });
   } catch (err) {
     res.status(500).json({ success: false, error: (err as Error).message });

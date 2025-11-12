@@ -1,12 +1,3 @@
-<!--
-    account_settings.html
-
-    This file contains the HTML structure for the account settings page of NoteSmith.
-    It includes a navigation bar and a container for account settings content.
-
-    (NOT DONE YET)
--->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoteSmith - Account Settings</title>
     <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/accountSettingsStyle.css">
     <script type="module" src="/dist/script.js"></script>
 </head>
 
@@ -38,21 +30,103 @@
         </div>
     </div>
 
-    <div class="account-settings-container">
-        <h1>Account Settings</h1>
-        <p>Manage your NoteSmith account settings here.</p>
-        
-        <section class="settings-section">
-            <h2>Experimental Features</h2>
-            <div class="settings-item">
-                <h3>React Application</h3>
-                <p>Try our new React-based application with modern features and improved performance.</p>
-                <a href="/react" class="btn primary">
-                    Open React App
-                </a>
+    <main class="account-settings-container">
+        <div class="settings-wrapper">
+            <h1>Account Settings</h1>
+            <p class="subtitle">Manage your NoteSmith account and profile information</p>
+
+            <div class="settings-content">
+                <!-- Profile Section -->
+                <section class="settings-section profile-section">
+                    <h2>Profile Information</h2>
+                    
+                    <div class="form-group profile-picture-group">
+                        <label for="profilePicture">Profile Picture</label>
+                        <div class="profile-picture-container">
+                            <img id="profilePicturePreview" src="../assets/avatar_placeholder.png" alt="Profile Picture" class="profile-picture-preview">
+                            <div class="profile-picture-controls">
+                                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display: none;">
+                                <button type="button" id="uploadProfilePictureBtn" class="btn primary btn-small">Upload Picture</button>
+                                <button type="button" id="removeProfilePictureBtn" class="btn secondary btn-small">Remove</button>
+                            </div>
+                        </div>
+                        <small class="info-text">Click to upload a new profile picture (JPG, PNG, GIF)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" readonly>
+                        <small class="info-text">Your username cannot be changed</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" readonly>
+                        <small class="info-text">Your email cannot be changed</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name">
+                    </div>
+                </section>
+
+                <!-- Academic Information Section -->
+                <section class="settings-section academic-section">
+                    <h2>Academic Information</h2>
+                    <p class="section-description">Help us personalize your learning experience</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="major">Major</label>
+                            <input type="text" id="major" name="major" placeholder="e.g., Computer Science, Biology">
+                            <small class="info-text">Your field of study</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year">Year in School</label>
+                            <select id="year" name="year">
+                                <option value="">Select your year</option>
+                                <option value="Freshman">Freshman</option>
+                                <option value="Sophomore">Sophomore</option>
+                                <option value="Junior">Junior</option>
+                                <option value="Senior">Senior</option>
+                                <option value="Graduate">Graduate</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Experimental Features Section -->
+                <section class="settings-section experimental-section" id="experimentalSection">
+                    <h2>
+                        Admin Console 
+                    </h2>
+                    <div class="settings-item">
+                        <h3>Access the Admin Console</h3>
+                        <p>Review and moderate user-submitted questions</p>
+                        <!-- hardcoded for now -->
+                        <a href="http://localhost:5173/" class="btn primary" id="reactBtn">
+                            Open Console
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Action Buttons -->
+                <section class="settings-actions">
+                    <button id="saveBtn" class="btn primary">Save Changes</button>
+                    <button id="cancelBtn" class="btn secondary">Cancel</button>
+                </section>
+
+                <!-- Success/Error Messages -->
+                <div id="successMessage" class="message success-message" style="display: none;">
+                    ✓ Your changes have been saved successfully!
+                </div>
+                <div id="errorMessage" class="message error-message" style="display: none;"></div>
             </div>
-        </section>
-    </div>
+        </div>
+    </main>
 
     <footer class="info-hub" aria-labelledby="info-hub-title">
         <div class="info-hub-inner">
@@ -89,6 +163,8 @@
             </div>
         </div>
     </footer>
+
+    <script type="module" src="/dist/accountSettings.js"></script>
 </body>
 
 </html>

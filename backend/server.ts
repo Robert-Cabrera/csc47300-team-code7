@@ -8,7 +8,9 @@ dotenv.config({ path: './backend/keys.env' });
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+// Increase payload size limit for profile pictures (10MB)
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 /**
  * Resolve a route module and always return the actual Express router/middleware.
@@ -51,11 +53,13 @@ const crashCourseRoutes = resolveRouteModule('crashCourse');
 const summaryRoutes = resolveRouteModule('summary');
 const practiceTestRoutesModule = resolveRouteModule('practiceTest');
 const practiceTestRoutes = practiceTestRoutesModule.default || practiceTestRoutesModule;
+const submitQuestionRoutes = resolveRouteModule('submitQuestion');
 
 app.use('/api', authRoutes);
 app.use('/api/crash-course', crashCourseRoutes);
 app.use('/api/summary', summaryRoutes);
 app.use('/api/practice-test', practiceTestRoutes);
+app.use('/api', submitQuestionRoutes);
 
 // Serve favicon specifically BEFORE static files
 function findFrontendDir() {

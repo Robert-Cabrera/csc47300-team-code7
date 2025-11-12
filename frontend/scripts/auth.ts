@@ -43,14 +43,22 @@ function handleLogout(e: Event): void {
 }
 
 // Update navbar to show user info when logged in (avatar and name)
-function updateNavbar(loginBtn: HTMLElement, userName: string): void {
+function updateNavbar(loginBtn: HTMLElement, userName: string, isAdmin: boolean = false): void {
     
-    // HTML structure for user avatar and name
-    loginBtn.innerHTML = `
-        <img src="../assets/avatar_placeholder.png" alt="User" class="avatar"> ${userName}
-    `;
+  // Get user profile picture from localStorage
+  const userData = getUserData();
+  const profilePicture = userData && userData.profilePicture ? userData.profilePicture : "../assets/avatar_placeholder.png";
+  // HTML structure for user avatar and name
+  loginBtn.innerHTML = `
+    <img src="${profilePicture}" alt="User" class="avatar"> ${userName}
+  `;
     loginBtn.classList.remove("login");
     loginBtn.classList.add("account");
+    
+    // Add admin shine effect if user is admin
+    if (isAdmin) {
+        loginBtn.classList.add("admin-shine");
+    }
     
     // Change link to account settings page (handle both index and pages context)
     const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
@@ -156,7 +164,8 @@ export function initAuth(): void {
   if (isLoggedIn && loginBtn) {
     const userData = getUserData();
     const userName = userData && userData.name ? userData.name : "User";
-    updateNavbar(loginBtn, userName);
+    const isAdmin = userData && userData.isAdmin ? userData.isAdmin : false;
+    updateNavbar(loginBtn, userName, isAdmin);
   }
   
   // Login button click handler

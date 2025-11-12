@@ -13,6 +13,9 @@ export interface User {
   password?: string;           // Not stored/retrieved for security
   createdAt: string;
   profilePicture?: string;
+  major?: string;
+  year?: string;
+  isAdmin?: boolean;
   crashCourses?: CrashCourse[];
   summaries?: Summary[];
 }
@@ -70,6 +73,9 @@ export async function readUsers(): Promise<UsersData> {
         email: user.email,
         createdAt: user.created_at,
         profilePicture: user.profile_picture,
+        major: user.major,
+        year: user.year,
+        isAdmin: user.is_admin,
         crashCourses: user.crash_courses || [],
         summaries: user.summaries || [],
       })),
@@ -100,6 +106,9 @@ export async function findUserByID(userId: string): Promise<User | null> {
       email: data.email,
       createdAt: data.created_at,
       profilePicture: data.profile_picture,
+      major: data.major,
+      year: data.year,
+      isAdmin: data.is_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -132,6 +141,9 @@ export async function findUserByUsernameOrEmail(
       email: data.email,
       createdAt: data.created_at,
       profilePicture: data.profile_picture,
+      major: data.major,
+      year: data.year,
+      isAdmin: data.is_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -155,6 +167,9 @@ export async function insertUserSorted(newUser: User, password?: string): Promis
           password: password || '', // Include password in insert
           created_at: newUser.createdAt,
           profile_picture: newUser.profilePicture || '',
+          major: newUser.major || '',
+          year: newUser.year || '',
+          is_admin: newUser.isAdmin || false,
           crash_courses: newUser.crashCourses || [],
           summaries: newUser.summaries || [],
         },
@@ -174,6 +189,9 @@ export async function insertUserSorted(newUser: User, password?: string): Promis
       email: data.email,
       createdAt: data.created_at,
       profilePicture: data.profile_picture,
+      major: data.major,
+      year: data.year,
+      isAdmin: data.is_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -191,6 +209,9 @@ export async function updateUser(userId: string, updates: Partial<User>): Promis
     if (updates.username) updateData.username = updates.username;
     if (updates.name) updateData.name = updates.name;
     if (updates.profilePicture) updateData.profile_picture = updates.profilePicture;
+    if (updates.major) updateData.major = updates.major;
+    if (updates.year) updateData.year = updates.year;
+    if (updates.isAdmin !== undefined) updateData.is_admin = updates.isAdmin;
     if (updates.crashCourses) updateData.crash_courses = updates.crashCourses;
     if (updates.summaries) updateData.summaries = updates.summaries;
 
@@ -213,6 +234,9 @@ export async function updateUser(userId: string, updates: Partial<User>): Promis
       email: data.email,
       createdAt: data.created_at,
       profilePicture: data.profile_picture,
+      major: data.major,
+      year: data.year,
+      isAdmin: data.is_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -245,6 +269,9 @@ export async function verifyPassword(email: string, password: string): Promise<U
         email: data.email,
         createdAt: data.created_at,
         profilePicture: data.profile_picture,
+        major: data.major,
+        year: data.year,
+        isAdmin: data.is_admin,
         crashCourses: data.crash_courses || [],
         summaries: data.summaries || [],
       };

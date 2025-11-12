@@ -21,6 +21,7 @@ import { initPracticeTest } from './practiceTest.js';
 import { initDashboard } from './dashboard.js';
 import { initStatsAnimation } from './statsAnimation.js';
 import { initPopup } from './popup.js';
+import { initAddQuestion } from './addQuestion.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initCrashCourse(isLoggedIn);
 	initSummary(isLoggedIn);
 	initPracticeTest(isLoggedIn);
+	initAddQuestion();
 	
 	// coolness factor am i right?  -David
 	// very cool indeed 			-Robert

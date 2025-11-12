@@ -1,8 +1,8 @@
 {
   "scripts": {
     "start": "node backend/dist/server.js",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:react\"",
-    "dev:backend": "tsc -p backend/tsconfig.json --watch",
+    "dev": "concurrently \"npm run dev:backend\" \"wait-on http://localhost:3000 && npm run dev:react\"",
+    "dev:backend": "npm run build:backend && node backend/dist/server.js",
     "dev:react": "npm --prefix react run dev",
     "build": "npm run build:frontend && npm run build:backend && npm run build:react",
     "build:frontend": "npm run clean:frontend && tsc -p frontend/tsconfig.json",
@@ -17,7 +17,8 @@
     "@types/node": "^20.19.23",
     "concurrently": "^8.2.2",
     "rimraf": "^6.0.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wait-on": "^9.0.3"
   },
   "dependencies": {
     "@langchain/google-genai": "^1.0.0",
@@ -32,4 +33,3 @@
     "zod": "^4.1.12"
   }
 }
-
