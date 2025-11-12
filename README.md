@@ -1,3 +1,34 @@
+#  Notes and Updates
+
+ ## SupaBase and React Admin Dashboard Integration - Nov 12 2025
+ The users database has been moved to SupaBase. A react directory has been created and it will host the interface for Feature #1 in prospect to the Final. Please use the following command to run the app now:
+ ```
+npm run build:frontend && npm run build:backend && npm run dev 
+```
+Note that the React Server and the JavaScript server are running concurrently. localhost/3000 and localhost/5173 respectively.
+
+ ## TS Migration - Oct 28 2025
+ Started migrating the JS (both front and back end) to TS. To run the website use the following command from the source directory:
+ ```
+npm install && npm run build:frontend && npm run build:backend && npm start
+```
+
+ ## Directory Refactoring - Oct 17 2025:
+ Separated the files into `frontend/` and `backend/` for better organization, ensuring the biggest directory is the root directory as requested in the last email
+
+ ## JS Migration - Oct 12 2025:  
+ The `develop` branch transitioned from **static JavaScript** to a **Node.js** runtime to support **Gemini API Integration**, therefore GitHub pages deployment is  **disabled** until further notice. 
+  
+ To run the local version of the repository, execute:  
+ ```bash
+ node backend/server.js
+ ```
+A Gemini-API key is required, this can be obtained in https://aistudio.google.com/api-keys
+  
+
+
+
+
 # Features to be implemented for Final
 ### Feature 0: Implement SupaBase backend
 **Description:**
@@ -56,35 +87,6 @@ csc47300-team-code7/
     ├── data_objects/          # JSON objects files
     └── server.ts              # Express server entry point
 ```
-
-
-#  Notes and Updates
-
- ## SupaBase and React Admin Dashboard Integration - Nov 12 2025
- The users database has been moved to SupaBase. A react directory has been created and it will host the interface for Feature #1 in prospect to the Final. Please use the following command to run the app now:
- ```
-npm run build:frontend && npm run build:backend && npm run dev 
-```
-Note that the React Server and the JavaScript server are running concurrently. localhost/3000 and localhost/5173 respectively.
-
- ## TS Migration - Oct 28 2025
- Started migrating the JS (both front and back end) to TS. To run the website use the following command from the source directory:
- ```
-npm install && npm run build:frontend && npm run build:backend && npm start
-```
-
- ## Directory Refactoring - Oct 17 2025:
- Separated the files into `frontend/` and `backend/` for better organization, ensuring the biggest directory is the root directory as requested in the last email
-
- ## JS Migration - Oct 12 2025:  
- The `develop` branch transitioned from **static JavaScript** to a **Node.js** runtime to support **Gemini API Integration**, therefore GitHub pages deployment is  **disabled** until further notice. 
-  
- To run the local version of the repository, execute:  
- ```bash
- node backend/server.js
- ```
-A Gemini-API key is required, this can be obtained in https://aistudio.google.com/api-keys
-  
 
 
 
