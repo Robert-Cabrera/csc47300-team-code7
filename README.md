@@ -60,6 +60,13 @@ csc47300-team-code7/
 
 #  Notes and Updates
 
+ ## SupaBase and React Admin Dashboard Integration - Nov 12 2025
+ The users database has been moved to SupaBase. A react directory has been created and it will host the interface for Feature #1 in prospect to the Final. Please use the following command to run the app now:
+ ```
+npm run build:frontend && npm run build:backend && npm run dev 
+```
+Note that the React Server and the JavaScript server are running concurrently. localhost/3000 and localhost/5173 respectively.
+
  ## TS Migration - Oct 28 2025
  Started migrating the JS (both front and back end) to TS. To run the website use the following command from the source directory:
  ```
