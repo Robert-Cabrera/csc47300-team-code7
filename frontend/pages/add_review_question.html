@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NoteSmith – Submit a Question</title>
+
+  <link rel="stylesheet" href="../stylesheets/style.css" />
+
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script type="module" src="../dist/script.js"></script>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <div class="navigation-bar">
+    <div class="nav-left">
+      <a href="../index.html">
+        <img src="../assets/NoteSmith_logo.png" alt="Logo" class="logo" />
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <a href="./crash_course.html" id="crashCourseBtn">Crash Course</a>
+      <a href="./practice_tests.html" id="practiceTestBtn">Practice Test</a>
+      <a href="./summary.html" id="summaryBtn">Summary</a>
+    </div>
+
+    <div class="nav-right">
+      <a href="#" id="loginBtn" class="login">Login/Sign Up</a>
+      <button id="theme-toggle" class="theme-toggle" type="button">Theme</button>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="add-question-container">
+    <!-- Loading overlay -->
+    <div id="aq-loading" class="add-question-loading-overlay" aria-hidden="true">
+      <div class="loading-animation-container">
+        <div class="loading-spinner" role="progressbar" aria-label="Submitting question"></div>
+        <p>Submitting your question…</p>
+      </div>
+    </div>
+
+    <div id="test-locked" style="display:none;">
+      <lottie-player src="../assets/lock_icon.json" background="transparent" speed="1"
+        style="width:150px; height:150px; margin:auto;" loop autoplay></lottie-player>
+      <p>You must be logged in to submit questions.</p>
+    </div>
+
+    <div id="question-form">
+      <header class="add-question-dashboard-header">
+        <h2>Submit a Question</h2>
+        <p>Help improve NoteSmith by submitting high-quality practice questions. Your contribution will be reviewed and added to our question database.</p>
+      </header>
+
+      <form id="addQuestionForm" class="add-question-form" novalidate>
+        <div class="form-group">
+          <label for="questionInput">Question</label>
+          <textarea id="questionInput" name="question" placeholder="Enter the question text..." required rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="correctAnswerInput">Correct Answer</label>
+          <textarea id="correctAnswerInput" name="correctAnswer" placeholder="Enter the correct answer..." required rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="courseInput">Course</label>
+          <input type="text" id="courseInput" name="course" placeholder="e.g., Computer Organization" required />
+        </div>
+
+        <div class="form-group">
+          <label for="topicInput">Topic</label>
+          <input type="text" id="topicInput" name="topic" placeholder="e.g., Memory Hierarchy" required />
+        </div>
+
+        <div class="form-group">
+          <label for="difficultyInput">Difficulty Level</label>
+          <select id="difficultyInput" name="difficulty" required>
+            <option value="">Select difficulty level</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submitQuestionBtn" class="submit-btn">Submit Question</button>
+          <a href="./practice_tests.html" class="cancel-btn">Cancel</a>
+        </div>
+      </form>
+
+      <div id="aq-error" class="aq-error" style="display:none;"></div>
+      <div id="aq-success" class="aq-success" style="display:none;"></div>
+    </div>
+  </div>
+
+  <footer class="info-hub" aria-labelledby="info-hub-title">
+    <div class="info-hub-inner">
+      <h2 id="info-hub-title">Need to know</h2>
+      <div class="info-columns">
+        <div class="info-col">
+          <h3>FAQs</h3>
+          <details>
+            <summary>Can I edit my submitted questions?</summary>
+            <p>After submission, questions will be reviewed by our team. Contact support if you need to make changes.</p>
+          </details>
+          <details>
+            <summary>How long does review take?</summary>
+            <p>Typically, questions are reviewed within 1-2 days and added to the database if approved.</p>
+          </details>
+          <details>
+            <summary>Will I get credit for my questions?</summary>
+            <p>Yes! Your name and profile picture will be displayed with any approved questions you submit.</p>
+          </details>
+        </div>
+        <div class="info-col">
+          <h3>Contact</h3>
+          <p>Questions or feedback? We'd love to help.</p>
+          <p><a class="info-link" href="mailto:support@notesmith.app">support@notesmith.app</a></p>
+        </div>
+        <div class="info-col">
+          <h3>Important Info</h3>
+          <ul class="info-list">
+            <li><a class="info-link" href="#">Terms of Use</a></li>
+            <li><a class="info-link" href="#">Privacy Policy</a></li>
+            <li><a class="info-link" href="#">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
