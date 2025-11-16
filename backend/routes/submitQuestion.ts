@@ -252,4 +252,56 @@ router.get('/getProfilePicture/:userId', async (req: Request, res: Response) => 
   }
 });
 
+/**
+ * GET /api/filterOptions
+ * Get available courses and topics for filter dropdowns
+ */
+router.get('/filterOptions', async (req: Request, res: Response) => {
+  try {
+    // Fetch all distinct courses
+    const { data: coursesData, error: coursesError } = await supabase
+      .from('reviewquestiontable')
+      .select('course')
+      .order('course', { ascending: true });
+
+    if (coursesError) {
+      console.error('Supabase error fetching courses:', coursesError);
+      return res.status(500).json({
+        success: false,
+        error: coursesError.message || 'Failed to fetch courses'
+      });
+    }
+
+    // Fetch all distinct topics
+    const { data: topicsData, error: topicsError } = await supabase
+      .from('reviewquestiontable')
+      .select('topic')
+      .order('topic', { ascending: true });
+
+    if (topicsError) {
+      console.error('Supabase error fetching topics:', topicsError);
+      return res.status(500).json({
+        success: false,
+        error: topicsError.message || 'Failed to fetch topics'
+      });
+    }
+
+    // Get unique courses and topics
+    const uniqueCourses = [...new Set(coursesData?.map((row: any) => row.course).filter(Boolean) || [])];
+    const uniqueTopics = [...new Set(topicsData?.map((row: any) => row.topic).filter(Boolean) || [])];
+
+    return res.status(200).json({
+      success: true,
+      courses: uniqueCourses,
+      topics: uniqueTopics
+    });
+  } catch (err) {
+    console.error('Error fetching filter options:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
+  }
+});
+
 export default router;

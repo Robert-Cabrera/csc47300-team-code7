@@ -42,6 +42,8 @@ function App() {
   const [showApproved, setShowApproved] = useState<'pending' | 'rejected' | 'approved'>('pending')
   const [pendingChanges, setPendingChanges] = useState<Map<number, 'approved' | 'rejected' | 'pending'>>(new Map())
   const [hasPendingChanges, setHasPendingChanges] = useState(false)
+  const [availableCourses, setAvailableCourses] = useState<string[]>([])
+  const [availableTopics, setAvailableTopics] = useState<string[]>([])
   const questionsPerPage = 10
 
   useEffect(() => {
@@ -53,6 +55,7 @@ function App() {
     }
 
     fetchQuestions()
+    fetchFilterOptions()
     
     // Update clock every second
     const timer = setInterval(() => {
@@ -88,6 +91,19 @@ function App() {
       console.error('Error fetching questions:', err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchFilterOptions = async () => {
+    try {
+      const response = await fetch('/api/filterOptions')
+      if (response.ok) {
+        const data = await response.json()
+        setAvailableCourses(data.courses || [])
+        setAvailableTopics(data.topics || [])
+      }
+    } catch (err) {
+      console.error('Error fetching filter options:', err)
     }
   }
 
@@ -344,6 +360,9 @@ function App() {
                     className="filter-select"
                   >
                     <option value="">All Courses</option>
+                    {availableCourses.map(course => (
+                      <option key={course} value={course}>{course}</option>
+                    ))}
                   </select>
 
                   <select
@@ -352,6 +371,9 @@ function App() {
                     className="filter-select"
                   >
                     <option value="">All Topics</option>
+                    {availableTopics.map(topic => (
+                      <option key={topic} value={topic}>{topic}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -393,7 +415,7 @@ function App() {
           <div className="table-wrapper">
             <div className="table-header">
               <h2 className="table-title">
-                {showApproved ? 'Approved Questions' : 'Pending & Rejected Questions'}: {getFilteredQuestions().length}
+                {showApproved === 'approved' ? 'Approved Questions' : showApproved === 'rejected' ? 'Rejected Questions' : 'Pending Questions'}
               </h2>
               <button onClick={() => fetchQuestions()} className="refresh-btn">
                 ↻ Refresh
@@ -431,6 +453,9 @@ function App() {
                     className="filter-select"
                   >
                     <option value="">All Courses</option>
+                    {availableCourses.map(course => (
+                      <option key={course} value={course}>{course}</option>
+                    ))}
                   </select>
 
                   <select
@@ -439,6 +464,9 @@ function App() {
                     className="filter-select"
                   >
                     <option value="">All Topics</option>
+                    {availableTopics.map(topic => (
+                      <option key={topic} value={topic}>{topic}</option>
+                    ))}
                   </select>
                 </div>
               </div>
