@@ -392,6 +392,17 @@ function initializeEventListeners(): void {
   if (removeProfilePictureBtn) {
     removeProfilePictureBtn.addEventListener('click', handleRemoveProfilePicture);
   }
+
+  // Handle admin console button
+  const reactBtn = document.getElementById('reactBtn') as HTMLButtonElement | null;
+  if (reactBtn) {
+    reactBtn.addEventListener('click', () => {
+      const userData = getUserData();
+      const adminName = userData?.name || userData?.username || 'Admin';
+      const encodedName = encodeURIComponent(adminName);
+      window.location.href = `http://localhost:5173/?name=${encodedName}`;
+    });
+  }
 }
 
 // ===================== INITIALIZATION =====================

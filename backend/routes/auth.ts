@@ -36,13 +36,6 @@ interface UsersData {
 }
 
 const ITEMS_PER_PAGE = 4;
-const WAITING_RANGE_MS = 400;
-
-function simulateDelay(): Promise<void> {
-  return new Promise((resolve) =>
-    setTimeout(resolve, WAITING_RANGE_MS + Math.random() * WAITING_RANGE_MS)
-  );
-}
 
 // GET /user/:userId/stats
 router.get('/user/:userId/stats', async (req: Request<{ userId: string }>, res: Response) => {
@@ -73,8 +66,6 @@ router.get(
       const start = Number(req.query.start ?? 0) || 0;
       const limit = Number(req.query.limit ?? ITEMS_PER_PAGE) || ITEMS_PER_PAGE;
 
-      await simulateDelay();
-
       const user = await findUserByID(userId);
       if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
@@ -99,8 +90,6 @@ router.get(
       const { userId } = req.params;
       const start = Number(req.query.start ?? 0) || 0;
       const limit = Number(req.query.limit ?? ITEMS_PER_PAGE) || ITEMS_PER_PAGE;
-
-      await simulateDelay();
 
       const user = await findUserByID(userId);
       if (!user) return res.status(404).json({ success: false, error: 'User not found' });

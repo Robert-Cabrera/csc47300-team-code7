@@ -6,22 +6,32 @@ const router = Router();
 
 /**
  * GET /api/getQuestions
- * Retrieve paginated submitted questions
+ * Retrieve paginated submitted questions with optional status filter
  * Query params:
  *   - page: page number (default: 1)
  *   - limit: items per page (default: 10, max: 100)
+ *   - status: filter by status ('pending', 'approved', 'rejected', or 'all' for no filter)
  */
 router.get('/getQuestions', async (req: Request, res: Response) => {
   try {
     const page = Math.max(1, parseInt(req.query.page as string) || 1);
     const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 10));
+    const statusFilter = req.query.status as string || 'all';
     const offset = (page - 1) * limit;
 
-    // Fetch paginated data with count in one query, excluding large profile picture data
-    const { data, error, count } = await supabase
+    // Build query with optional status filter
+    let query = supabase
       .from('reviewquestiontable')
       .select('id, question, correct_answer, course, topic, difficulty, user_id, user_name, user_email, status, created_at', { count: 'exact' })
-      .order('created_at', { ascending: false })
+      .order('created_at', { ascending: false });
+
+    // Apply status filter if specified and not 'all'
+    if (statusFilter !== 'all' && ['pending', 'approved', 'rejected'].includes(statusFilter)) {
+      query = query.eq('status', statusFilter);
+    }
+
+    // Fetch paginated data
+    const { data, error, count } = await query
       .range(offset, offset + limit - 1);
 
     if (error) {
