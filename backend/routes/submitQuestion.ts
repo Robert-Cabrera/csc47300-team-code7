@@ -6,14 +6,23 @@ const router = Router();
 
 /**
  * GET /api/getQuestions
- * Retrieve all submitted questions
+ * Retrieve paginated submitted questions
+ * Query params:
+ *   - page: page number (default: 1)
+ *   - limit: items per page (default: 10, max: 100)
  */
 router.get('/getQuestions', async (req: Request, res: Response) => {
   try {
-    const { data, error } = await supabase
+    const page = Math.max(1, parseInt(req.query.page as string) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 10));
+    const offset = (page - 1) * limit;
+
+    // Fetch paginated data with count in one query, excluding large profile picture data
+    const { data, error, count } = await supabase
       .from('reviewquestiontable')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('id, question, correct_answer, course, topic, difficulty, user_id, user_name, user_email, status, created_at', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
 
     if (error) {
       console.error('Supabase error:', error);
@@ -23,9 +32,17 @@ router.get('/getQuestions', async (req: Request, res: Response) => {
       });
     }
 
+    const totalPages = Math.ceil((count || 0) / limit);
+
     return res.status(200).json({
       success: true,
-      data: data
+      data: data,
+      pagination: {
+        page,
+        limit,
+        total: count,
+        totalPages
+      }
     });
 
   } catch (err) {
@@ -141,6 +158,83 @@ router.post('/submitQuestion', async (req: Request, res: Response) => {
 
   } catch (err) {
     console.error('Error submitting question:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
+  }
+});
+
+/**
+ * PATCH /api/updateQuestionStatus
+ * Body: { id: number, status: 'approved' | 'rejected' | 'pending' }
+ * Updates the status of a submitted question
+ */
+router.patch('/updateQuestionStatus', async (req: Request, res: Response) => {
+  try {
+    const { id, status } = req.body;
+
+    if (!id || !status) {
+      return res.status(400).json({ success: false, error: 'Missing id or status' });
+    }
+
+    if (!['approved', 'rejected', 'pending'].includes(status)) {
+      return res.status(400).json({ success: false, error: 'Invalid status. Must be approved, rejected, or pending' });
+    }
+
+    const { data, error } = await supabase
+      .from('reviewquestiontable')
+      .update({ status: status, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({ success: false, error: error.message || 'Failed to update status' });
+    }
+
+    return res.status(200).json({ success: true, data });
+  } catch (err) {
+    console.error('Error updating question status:', err);
+    return res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
+
+/**
+ * GET /api/getProfilePicture/:userId
+ * Retrieve a user's profile picture
+ */
+router.get('/getProfilePicture/:userId', async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing userId'
+      });
+    }
+
+    const { data, error } = await supabase
+      .from('reviewquestiontable')
+      .select('user_profile_picture')
+      .eq('user_id', userId)
+      .limit(1)
+      .single();
+
+    if (error || !data) {
+      return res.status(404).json({
+        success: false,
+        error: 'Profile picture not found'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      profilePicture: data.user_profile_picture
+    });
+  } catch (err) {
+    console.error('Error fetching profile picture:', err);
     return res.status(500).json({
       success: false,
       error: 'Internal server error'
