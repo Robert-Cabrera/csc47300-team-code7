@@ -8,6 +8,9 @@ type Question = {
   options?: string[];
   correct_answer?: string | number | null;
   explanation?: string | null;
+  isFromCommunity?: boolean;
+  communityUserName?: string;
+  communityUserProfilePicture?: string | null;
 };
 
 type Test = {
@@ -195,20 +198,54 @@ export function initPracticeTest(isLoggedIn: boolean): void {
       </div>
     `;
 
+    // Add test-active class to hide buttons
+    const container = qs<HTMLElement>(".practice-test-container");
+    if (container) {
+      container.classList.add("test-active");
+    }
+
     const qWrap = qs<HTMLElement>("#pt-questions", outputEl)!;
+    
+    console.log(`[renderTest] Rendering ${questions.length} questions`);
 
     questions.forEach((q, i) => {
       const qId = `q_${i + 1}`;
+      console.log(`[renderTest] Question ${i + 1}: isFromCommunity=${q.isFromCommunity}, text="${q.question_text?.substring(0, 40)}..."`);
+
       const card = document.createElement("section");
       card.className = "question-card";
+      if (q.isFromCommunity) {
+        card.classList.add("community-question");
+      }
       (card as any).dataset.questionId = q.id || qId;
 
+      const titleWrapper = document.createElement("div");
+      titleWrapper.className = "question-title-wrapper";
+      
       const title = document.createElement("h4");
       title.className = "question-title";
       title.innerHTML = `<span style="color:var(--clr_accent);">Q${i + 1}.</span> ${escapeHtml(
         q.question_text || ""
       )}`;
-      card.appendChild(title);
+      titleWrapper.appendChild(title);
+      
+      // Add community badge if question is from community
+      if (q.isFromCommunity) {
+        const badge = document.createElement("div");
+        badge.className = "community-badge";
+        
+        let badgeHTML = `<span class="community-star" title="This question was submitted by the community. Submitted by: ${escapeHtml(q.communityUserName || "Unknown")}">★</span>`;
+        
+        // Add profile picture if available
+        if (q.communityUserProfilePicture) {
+          badgeHTML = `<img src="${escapeAttr(q.communityUserProfilePicture)}" alt="${escapeHtml(q.communityUserName || "User")}" class="community-pfp" title="Submitted by: ${escapeHtml(q.communityUserName || "Unknown")}" />${badgeHTML}`;
+        }
+        
+        badge.innerHTML = badgeHTML;
+        titleWrapper.appendChild(badge);
+      }
+      
+      card.appendChild(titleWrapper);
 
       const ul = document.createElement("ul");
       ul.className = "options-list";
@@ -267,6 +304,12 @@ export function initPracticeTest(isLoggedIn: boolean): void {
     const course = courseInput?.value.trim();
     const topic = topicInput?.value.trim();
     const difficulty = difficultySelect?.value;
+    const includeCommunityCheckbox = document.querySelector<HTMLInputElement>('#includeCommunityQuestionsCheckbox');
+    const includeCommunity = includeCommunityCheckbox?.checked ?? false;
+
+    console.log(`[Practice Test Frontend] Checkbox element:`, includeCommunityCheckbox);
+    console.log(`[Practice Test Frontend] Checkbox checked property:`, includeCommunityCheckbox?.checked);
+    console.log(`[Practice Test Frontend] Form submitted with includeCommunity=${includeCommunity}`);
 
     if (!course || !topic || !difficulty) {
       showError("Please provide Course, Topic, and Difficulty.");
@@ -289,6 +332,8 @@ export function initPracticeTest(isLoggedIn: boolean): void {
       const rangeInput = form?.querySelector<HTMLInputElement>('input[type="range"][name="num-questions"]');
       const numQuestionsValue = rangeInput ? parseInt(rangeInput.value, 10) : 10;
 
+      console.log(`[Practice Test Frontend] Sending request with course="${course}", topic="${topic}", includeCommunity=${includeCommunity}`);
+
       const res = await fetch(`${window.location.origin}/api/practice-test/generate-test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -297,7 +342,8 @@ export function initPracticeTest(isLoggedIn: boolean): void {
           course,
           topic,
           difficulty,
-          num_questions: numQuestionsValue
+          num_questions: numQuestionsValue,
+          includeCommunity
         })
       });
 
@@ -307,6 +353,9 @@ export function initPracticeTest(isLoggedIn: boolean): void {
       }
 
       const data = (await res.json()) as Test;
+      console.log(`[Practice Test Frontend] Received ${data.questions.length} questions from backend`);
+      const communityCount = data.questions.filter((q: any) => q.isFromCommunity).length;
+      console.log(`[Practice Test Frontend] Community questions in response: ${communityCount}`);
       renderTest(data);
     } catch (err: any) {
       if (err?.name === "AbortError") return;

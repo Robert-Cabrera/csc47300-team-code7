@@ -8,6 +8,14 @@ You will be given a JSON input with the following fields:
   "num_questions": "integer — how many questions to generate"
 }
 
+## IMPORTANT: Community Questions Processing
+If the prompt includes a "Community Questions" section, you MUST:
+1. Include those questions EXACTLY as provided in the output
+2. Keep the exact question text and correct answer from the community submission
+3. Generate 3 plausible but INCORRECT answer choices for each community question
+4. These community questions should be mixed with any new questions you generate
+5. The total output should include both community questions (with generated wrong answers) and new AI-generated questions
+
 Your task is to generate a complete practice test in **strict JSON format**.
 The output must match the exact structure shown below — no markdown, no explanations, no arrays at the top level, and no missing fields.
 
@@ -128,3 +136,122 @@ const TEST_OUTPUT_SCHEMA = {
     "questions"
   ]
 };
+
+/**
+ * Community question interface
+ */
+export interface CommunityQuestion {
+  id?: number;
+  question: string;
+  correct_answer: string;
+  course: string;
+  topic: string;
+  difficulty: string;
+  user_id: string;
+  user_name: string;
+  user_email: string;
+  user_profile_picture?: string | null;
+  status: string;
+  created_at: string;
+}
+
+/**
+ * Processed community question for practice test
+ */
+export interface ProcessedCommunityQuestion {
+  id: string;
+  question_text: string;
+  options: string[];
+  correct_answer: string;
+  explanation: string;
+  isFromCommunity: true;
+  communityData?: {
+    user_name: string;
+    user_profile_picture?: string | null;
+  };
+}
+
+/**
+ * Fetch approved community questions from Supabase matching course and topic
+ * @param supabase - Supabase client instance
+ * @param course - Course name to match
+ * @param topic - Topic to match
+ * @returns Array of community questions or empty array if error
+ */
+export async function fetchCommunityQuestions(
+  supabase: any,
+  course: string,
+  topic: string
+): Promise<CommunityQuestion[]> {
+  try {
+    const { data, error } = await supabase
+      .from('reviewquestiontable')
+      .select('id, question, correct_answer, course, topic, difficulty, user_id, user_name, user_email, user_profile_picture, status, created_at')
+      .eq('status', 'approved')
+      .ilike('course', `%${course}%`)
+      .ilike('topic', `%${topic}%`);
+
+    if (error) {
+      console.error('Error fetching community questions:', error.message);
+      return [];
+    }
+
+    console.log(`[Community Questions] Found ${(data || []).length} matching questions for course="${course}", topic="${topic}"`);
+
+    // Validate questions have all required fields
+    const validated = (data || []).filter(q => 
+      q.question && 
+      q.correct_answer && 
+      q.course && 
+      q.topic &&
+      q.user_name
+    );
+
+    console.log(`[Community Questions] Validated ${validated.length} questions (had all required fields)`);
+    return validated;
+  } catch (err: any) {
+    console.error('Exception fetching community questions:', err.message);
+    return [];
+  }
+}
+
+/**
+ * Convert community question to practice test question format
+ * @param communityQuestion - Community question from database
+ * @param index - Index for question ID
+ * @returns Processed question ready for practice test
+ */
+export function convertCommunityQuestion(
+  communityQuestion: CommunityQuestion,
+  index: number
+): ProcessedCommunityQuestion {
+  // For now, use the correct answer as placeholder for options
+  // In a real scenario, you might want to generate wrong options
+  const options = [communityQuestion.correct_answer];
+  
+  return {
+    id: `community_q${index + 1}`,
+    question_text: communityQuestion.question,
+    options: options,
+    correct_answer: communityQuestion.correct_answer,
+    explanation: `Community-submitted question by ${communityQuestion.user_name}`,
+    isFromCommunity: true,
+    communityData: {
+      user_name: communityQuestion.user_name,
+      user_profile_picture: communityQuestion.user_profile_picture || null
+    }
+  };
+}
+
+/**
+ * Randomly select N questions from array
+ * @param arr - Array to select from
+ * @param n - Number of items to select
+ * @returns Array of randomly selected items
+ */
+export function randomlySelectQuestions<T>(arr: T[], n: number): T[] {
+  if (arr.length === 0) return [];
+  const count = Math.min(n, arr.length);
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
