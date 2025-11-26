@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import DoneIcon from '@mui/icons-material/Done'
 import CloseIcon from '@mui/icons-material/Close'
@@ -25,6 +26,7 @@ interface UserProfile {
 }
 
 function App() {
+  const navigate = useNavigate()
   const [questions, setQuestions] = useState<Question[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -35,7 +37,6 @@ function App() {
   const [filterTopic, setFilterTopic] = useState('')
   const [currentTime, setCurrentTime] = useState(new Date())
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
   const [profilePictures, setProfilePictures] = useState<UserProfile>({})
   const [adminName, setAdminName] = useState('Admin')
@@ -76,7 +77,6 @@ function App() {
 
       const data = await response.json()
       setQuestions(data.data || [])
-      setTotalCount(data.pagination.total)
       setTotalPages(data.pagination.totalPages)
 
       // Load profile pictures for visible users
@@ -172,7 +172,6 @@ function App() {
       if (response.ok) {
         const data = await response.json()
         setQuestions(data.data || [])
-        setTotalCount(data.pagination.total)
         setTotalPages(data.pagination.totalPages)
       }
     } catch (err) {
@@ -234,6 +233,11 @@ function App() {
       setShowApproved('pending')
     }
     setCurrentPage(1)
+  }
+
+  const handleUserClick = (userId: string) => {
+    // Navigate to profile page with userId as query parameter
+    navigate(`/profile?userId=${userId}`)
   }
 
   const toggleRowExpansion = (id: number) => {
@@ -524,7 +528,14 @@ function App() {
                             onClick={() => toggleRowExpansion(question.id)}
                           >
                             <td className="td user-td">
-                              <div className="user-cell">
+                              <div 
+                                className="user-cell"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  handleUserClick(question.user_id)
+                                }}
+                                style={{ cursor: 'pointer' }}
+                              >
                                 {profilePictures[question.user_id] && profilePictures[question.user_id] !== null ? (
                                   <img
                                     src={profilePictures[question.user_id] || ''}

@@ -304,4 +304,160 @@ router.get('/filterOptions', async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * GET /api/user/:userId/questions
+ * Get questions submitted by a specific user
+ * Query params:
+ *   - limit: max items to return (default: 5)
+ */
+router.get('/user/:userId/questions', async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 5));
+
+    const { data, error, count } = await supabase
+      .from('reviewquestiontable')
+      .select('id, question, correct_answer, course, topic, difficulty, status, created_at', { count: 'exact' })
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({
+        success: false,
+        error: error.message || 'Failed to fetch user questions'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      items: data || [],
+      total: count || 0
+    });
+
+  } catch (err) {
+    console.error('Error fetching user questions:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
+  }
+});
+
+/**
+ * GET /api/getUser/:userId
+ * Get user profile information and statistics
+ */
+router.get('/getUser/:userId', async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing userId'
+      });
+    }
+
+    // Get user data from users table
+    const user = await findUserByID(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    // Get user's question statistics from reviewquestiontable
+    const { data: questionsData, error: questionsError, count } = await supabase
+      .from('reviewquestiontable')
+      .select('status', { count: 'exact' })
+      .eq('user_id', userId);
+
+    if (questionsError) {
+      console.error('Supabase error:', questionsError);
+      return res.status(500).json({
+        success: false,
+        error: questionsError.message || 'Failed to fetch user statistics'
+      });
+    }
+
+    // Calculate question statistics
+    const questions = questionsData || [];
+    const totalQuestions = count || 0;
+    const approvedQuestions = questions.filter((q: any) => q.status === 'approved').length;
+    const rejectedQuestions = questions.filter((q: any) => q.status === 'rejected').length;
+    const pendingQuestions = questions.filter((q: any) => q.status === 'pending').length;
+
+    return res.status(200).json({
+      success: true,
+      id: user.id,
+      name: user.name || 'Anonymous',
+      email: user.email,
+      profilePicture: user.profilePicture || null,
+      totalQuestions,
+      approvedQuestions,
+      rejectedQuestions,
+      pendingQuestions,
+      joinDate: user.createdAt
+    });
+  } catch (err) {
+    console.error('Error fetching user data:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
+  }
+});
+
+/**
+ * GET /api/getUserQuestions/:userId
+ * Get all questions submitted by a specific user
+ * Query params:
+ *   - limit: max items to return (default: 100)
+ */
+router.get('/getUserQuestions/:userId', async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const limit = Math.min(500, Math.max(1, parseInt(req.query.limit as string) || 100));
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing userId'
+      });
+    }
+
+    const { data, error, count } = await supabase
+      .from('reviewquestiontable')
+      .select('id, question, correct_answer, course, topic, difficulty, status, created_at', { count: 'exact' })
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({
+        success: false,
+        error: error.message || 'Failed to fetch user questions'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      questions: data || [],
+      total: count || 0
+    });
+
+  } catch (err) {
+    console.error('Error fetching user questions:', err);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
+  }
+});
+
 export default router;
+
