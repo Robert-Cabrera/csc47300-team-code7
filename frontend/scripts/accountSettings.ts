@@ -482,10 +482,10 @@ function initializeEventListeners(): void {
   if (reactBtn) {
     reactBtn.addEventListener('click', () => {
       const userData = getUserData();
-      const adminName = userData?.name || userData?.username || 'Admin';
-      const isSuperAdmin = userData?.isSuperAdmin || false;
-      const encodedName = encodeURIComponent(adminName);
-      window.location.href = `http://localhost:5173/?name=${encodedName}&isSuperAdmin=${isSuperAdmin}`;
+      const userId = userData?.id;
+      if (userId) {
+        window.location.href = `http://localhost:5173/?userId=${userId}`;
+      }
     });
   }
 }

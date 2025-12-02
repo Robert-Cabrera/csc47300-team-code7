@@ -36,7 +36,7 @@ router.get('/getQuestions', async (req: Request, res: Response) => {
       .order('created_at', { ascending: false });
 
     // Apply status filter if specified and not 'all'
-    if (statusFilter !== 'all' && ['pending', 'approved', 'rejected'].includes(statusFilter)) {
+    if (statusFilter !== 'all' && ['pending', 'approved', 'rejected', 'deleted'].includes(statusFilter)) {
       query = query.eq('status', statusFilter);
     }
 

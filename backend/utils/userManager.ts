@@ -161,6 +161,12 @@ export async function findUserByUsernameOrEmail(
 // -------- Insert new user --------
 export async function insertUserSorted(newUser: User, password?: string): Promise<User> {
   try {
+    // Hash password before storing
+    let hashedPassword = '';
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
     const { data, error } = await supabase
       .from('users')
       .insert([
@@ -169,7 +175,7 @@ export async function insertUserSorted(newUser: User, password?: string): Promis
           username: newUser.username,
           name: newUser.name || '',
           email: newUser.email,
-          password: password || '', // Include password in insert
+          password: hashedPassword, // Store hashed password
           created_at: newUser.createdAt,
           profile_picture: newUser.profilePicture || '',
           major: newUser.major || '',
@@ -297,9 +303,12 @@ export async function verifyPassword(email: string, password: string): Promise<U
 // -------- Store password (for registration) --------
 export async function storePassword(userId: string, password: string): Promise<boolean> {
   try {
+    // Hash password before storing
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const { error } = await supabase
       .from('users')
-      .update({ password })
+      .update({ password: hashedPassword })
       .eq('id', userId);
 
     if (error) {

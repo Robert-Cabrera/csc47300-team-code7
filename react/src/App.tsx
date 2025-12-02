@@ -38,28 +38,30 @@ function App() {
   const [filterTopic, setFilterTopic] = useState('')
   const [currentTime, setCurrentTime] = useState(new Date())
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(0)
   const [profilePictures, setProfilePictures] = useState<UserProfile>({})
   const [adminName, setAdminName] = useState('Admin')
   const [isSuperAdmin, setIsSuperAdmin] = useState(false)
-  const [showApproved, setShowApproved] = useState<'pending' | 'rejected' | 'approved'>('pending')
+  const [showApproved, setShowApproved] = useState<'pending' | 'rejected' | 'approved' | 'deleted'>('pending')
   const [pendingChanges, setPendingChanges] = useState<Map<number, 'approved' | 'rejected' | 'pending' | 'deleted'>>(new Map())
   const [pendingDeletes, setPendingDeletes] = useState<Set<number>>(new Set())
   const [hasPendingChanges, setHasPendingChanges] = useState(false)
   const [availableCourses, setAvailableCourses] = useState<string[]>([])
   const [availableTopics, setAvailableTopics] = useState<string[]>([])
+  // Pending filter state - these are the filter values being configured
+  const [pendingSearchTerm, setPendingSearchTerm] = useState('')
+  const [pendingFilterDifficulty, setPendingFilterDifficulty] = useState('')
+  const [pendingFilterCourse, setPendingFilterCourse] = useState('')
+  const [pendingFilterTopic, setPendingFilterTopic] = useState('')
   const questionsPerPage = 10
 
   useEffect(() => {
-    // Get admin name from URL params
+    // Get userId from URL params
     const params = new URLSearchParams(window.location.search)
-    const name = params.get('name')
-    const superAdmin = params.get('isSuperAdmin')
-    if (name) {
-      setAdminName(decodeURIComponent(name))
-    }
-    if (superAdmin === 'true') {
-      setIsSuperAdmin(true)
+    const userId = params.get('userId')
+    
+    // Fetch admin info from backend using userId
+    if (userId) {
+      fetchAdminInfo(userId)
     }
 
     fetchQuestions()
@@ -71,7 +73,7 @@ function App() {
     }, 1000)
     
     return () => clearInterval(timer)
-  }, [currentPage, showApproved])
+  }, [showApproved])
 
   useEffect(() => {
     setHasPendingChanges(pendingChanges.size > 0 || pendingDeletes.size > 0)
@@ -82,7 +84,9 @@ function App() {
   const fetchQuestions = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/getQuestions?page=${currentPage}&limit=${questionsPerPage}&status=${showApproved}`)
+      
+      // Fetch all questions (large limit to get everything)
+      const response = await fetch(`/api/getQuestions?page=1&limit=10000&status=${showApproved}`)
 
       if (!response.ok) {
         throw new Error('Failed to fetch questions')
@@ -90,7 +94,7 @@ function App() {
 
       const data = await response.json()
       setQuestions(data.data || [])
-      setTotalPages(data.pagination.totalPages)
+      setCurrentPage(1) // Reset to first page when fetching new data
 
       // Load profile pictures for visible users
       const uniqueUserIds = [...new Set((data.data || []).map((q: Question) => q.user_id))] as string[]
@@ -132,6 +136,19 @@ function App() {
       }
     } catch (err) {
       console.error(`Error fetching profile picture for ${userId}:`, err)
+    }
+  }
+
+  const fetchAdminInfo = async (userId: string) => {
+    try {
+      const response = await fetch(`/api/user/${userId}`)
+      if (response.ok) {
+        const user = await response.json()
+        setAdminName(user.name || 'Admin')
+        setIsSuperAdmin(user.isSuperAdmin ?? false)
+      }
+    } catch (err) {
+      console.error('Error fetching admin info:', err)
     }
   }
 
@@ -190,15 +207,14 @@ function App() {
       setPendingDeletes(new Set())
       setHasPendingChanges(false)
       
-      // Reset to page 1 to show updated questions from the beginning
+      // Reset to page 1 and reload all questions
       setCurrentPage(1)
       
-      // Reload with page 1 to get fresh data with current status filter
-      const response = await fetch(`/api/getQuestions?page=1&limit=10&status=${showApproved}`)
+      // Reload with large limit to get all questions
+      const response = await fetch(`/api/getQuestions?page=1&limit=10000&status=${showApproved}`)
       if (response.ok) {
         const data = await response.json()
         setQuestions(data.data || [])
-        setTotalPages(data.pagination.totalPages)
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
@@ -211,6 +227,11 @@ function App() {
   // Get the effective status of a question (pending change or original status)
   const getEffectiveStatus = (question: Question): 'approved' | 'rejected' | 'pending' | 'deleted' => {
     return pendingChanges.get(question.id) || question.status
+  }
+
+  // Check if a question has a pending change (user clicked undo or changed status)
+  const hasPendingChange = (question: Question): boolean => {
+    return pendingChanges.has(question.id)
   }
 
   // Get badge styling for pending changes - shows original status with decision color outline
@@ -233,32 +254,141 @@ function App() {
         background: 'black',
         boxShadow: '0 0 0 3px #ff8686ff'
       }
+    } else if (pendingStatus === 'pending') {
+      // Purple styling for pending changes
+      return {
+        color: '#a78bfaff',
+        background: 'black',
+        boxShadow: '0 0 0 3px #a78bfaff'
+      }
+    } else if (pendingStatus === 'deleted') {
+      // Dark red for deleted
+      return {
+        color: '#dc2626ff',
+        background: 'black',
+        boxShadow: '0 0 0 3px #dc2626ff'
+      }
     }
     return {}
   }
 
   const getFilteredQuestions = () => {
-    // Filter based on ORIGINAL server status, not local changes
-    // This keeps locally-changed questions visible until changes are applied
+    let filtered = questions;
+
+    // Filter by status
     if (showApproved === 'approved') {
-      return questions.filter(q => q.status === 'approved')
+      filtered = filtered.filter(q => q.status === 'approved')
     } else if (showApproved === 'rejected') {
-      return questions.filter(q => q.status === 'rejected')
+      filtered = filtered.filter(q => q.status === 'rejected')
+    } else if (showApproved === 'deleted') {
+      filtered = filtered.filter(q => q.status === 'deleted')
     } else {
-      // In pending view, show only pending questions
-      return questions.filter(q => q.status === 'pending')
+      filtered = filtered.filter(q => q.status === 'pending')
     }
+
+    // Filter by difficulty (using applied filters, not pending)
+    if (filterDifficulty) {
+      filtered = filtered.filter(q => q.difficulty === filterDifficulty)
+    }
+
+    // Filter by course (using applied filters, not pending)
+    if (filterCourse) {
+      filtered = filtered.filter(q => q.course === filterCourse)
+    }
+
+    // Filter by topic (using applied filters, not pending)
+    if (filterTopic) {
+      filtered = filtered.filter(q => q.topic === filterTopic)
+    }
+
+    // Filter by search term (using applied filters, not pending)
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase()
+      filtered = filtered.filter(q => 
+        q.question.toLowerCase().includes(term) ||
+        q.course.toLowerCase().includes(term) ||
+        q.topic.toLowerCase().includes(term)
+      )
+    }
+
+    return filtered
+  }
+
+  const getPaginatedQuestions = () => {
+    const filtered = getFilteredQuestions()
+    // Sort by created_at in descending order (newest first)
+    const sorted = [...filtered].sort((a, b) => {
+      const dateA = new Date(a.created_at).getTime()
+      const dateB = new Date(b.created_at).getTime()
+      return dateB - dateA // Descending order
+    })
+    const startIndex = (currentPage - 1) * questionsPerPage
+    const endIndex = startIndex + questionsPerPage
+    return sorted.slice(startIndex, endIndex)
+  }
+
+  const getFilteredTotalPages = () => {
+    const filtered = getFilteredQuestions()
+    return Math.ceil(filtered.length / questionsPerPage)
   }
 
   const handleToggleApproved = () => {
-    if (showApproved === 'pending') {
-      setShowApproved('rejected')
-    } else if (showApproved === 'rejected') {
-      setShowApproved('approved')
+    if (isSuperAdmin) {
+      // Super admin rotation: Pending → Rejected → Approved → Deleted → Pending
+      if (showApproved === 'pending') {
+        setShowApproved('rejected')
+      } else if (showApproved === 'rejected') {
+        setShowApproved('approved')
+      } else if (showApproved === 'approved') {
+        setShowApproved('deleted')
+      } else {
+        setShowApproved('pending')
+      }
     } else {
-      setShowApproved('pending')
+      // Regular admin rotation: Pending → Rejected → Approved → Pending
+      if (showApproved === 'pending') {
+        setShowApproved('rejected')
+      } else if (showApproved === 'rejected') {
+        setShowApproved('approved')
+      } else {
+        setShowApproved('pending')
+      }
     }
     setCurrentPage(1)
+  }
+
+  const handleApplyFilters = () => {
+    // Apply pending filters to active filters
+    setSearchTerm(pendingSearchTerm)
+    setFilterDifficulty(pendingFilterDifficulty)
+    setFilterCourse(pendingFilterCourse)
+    setFilterTopic(pendingFilterTopic)
+    setCurrentPage(1) // Reset to first page
+  }
+
+  const handleResetFilters = () => {
+    // Reset pending filter inputs
+    setPendingSearchTerm('')
+    setPendingFilterDifficulty('')
+    setPendingFilterCourse('')
+    setPendingFilterTopic('')
+    // Reset applied filters
+    setSearchTerm('')
+    setFilterDifficulty('')
+    setFilterCourse('')
+    setFilterTopic('')
+    setCurrentPage(1)
+  }
+
+  const hasActiveFilters = () => {
+    return searchTerm || filterDifficulty || filterCourse || filterTopic
+  }
+
+  const hasPendingFilterChanges = () => {
+    return pendingSearchTerm !== searchTerm || 
+           pendingFilterDifficulty !== filterDifficulty || 
+           pendingFilterCourse !== filterCourse || 
+           pendingFilterTopic !== filterTopic
   }
 
   const handleUserClick = (userId: string) => {
@@ -352,7 +482,7 @@ function App() {
           <div className="table-wrapper">
             <div className="table-header">
               <h2 className="table-title">
-                {showApproved === 'approved' ? 'Approved Questions' : showApproved === 'rejected' ? 'Rejected Questions' : 'Pending Questions'}: 0
+                {showApproved === 'approved' ? 'Approved Questions' : showApproved === 'rejected' ? 'Rejected Questions' : showApproved === 'deleted' ? 'Deleted Questions' : 'Pending Questions'}
               </h2>
               <button onClick={() => fetchQuestions()} className="refresh-btn">
                 ↻ Refresh
@@ -366,16 +496,16 @@ function App() {
                   <input
                     type="text"
                     placeholder="Search by question, course, topic..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={pendingSearchTerm}
+                    onChange={(e) => setPendingSearchTerm(e.target.value)}
                     className="search-input"
                   />
                 </div>
 
                 <div className="filter-controls">
                   <select
-                    value={filterDifficulty}
-                    onChange={(e) => setFilterDifficulty(e.target.value)}
+                    value={pendingFilterDifficulty}
+                    onChange={(e) => setPendingFilterDifficulty(e.target.value)}
                     className="filter-select"
                   >
                     <option value="">All Difficulties</option>
@@ -385,8 +515,8 @@ function App() {
                   </select>
 
                   <select
-                    value={filterCourse}
-                    onChange={(e) => setFilterCourse(e.target.value)}
+                    value={pendingFilterCourse}
+                    onChange={(e) => setPendingFilterCourse(e.target.value)}
                     className="filter-select"
                   >
                     <option value="">All Courses</option>
@@ -396,8 +526,8 @@ function App() {
                   </select>
 
                   <select
-                    value={filterTopic}
-                    onChange={(e) => setFilterTopic(e.target.value)}
+                    value={pendingFilterTopic}
+                    onChange={(e) => setPendingFilterTopic(e.target.value)}
                     className="filter-select"
                   >
                     <option value="">All Topics</option>
@@ -412,20 +542,34 @@ function App() {
                 <button 
                   className={`toggle-approved-btn ${showApproved !== 'pending' ? 'active' : ''}`}
                   onClick={handleToggleApproved}
-                  title="Cycle through: Pending → Rejected → Approved"
+                  title={isSuperAdmin ? "Cycle through: Pending → Rejected → Approved → Deleted" : "Cycle through: Pending → Rejected → Approved"}
                   style={{
-                    backgroundColor: showApproved === 'rejected' ? 'red' : undefined,
-                    color: showApproved === 'rejected' ? 'white' : undefined
+                    backgroundColor: showApproved === 'rejected' ? 'red' : showApproved === 'deleted' ? '#7f1d1d' : undefined,
+                    color: showApproved === 'rejected' || showApproved === 'deleted' ? 'white' : undefined
                   }}
                 >
                   {showApproved === 'approved' ? (
                     '✓ Approved'
                   ) : showApproved === 'rejected' ? (
                     <span style={{ color: 'white', padding: '2px 8px', borderRadius: '6px' }}>✗ Rejected</span>
+                  ) : showApproved === 'deleted' ? (
+                    <span style={{ color: 'white', padding: '2px 8px', borderRadius: '6px' }}>Deleted</span>
                   ) : (
                     'Pending'
                   )}
                 </button>
+
+                {hasPendingFilterChanges() && (
+                  <button className="apply-filters-btn" onClick={handleApplyFilters}>
+                    Apply Filters
+                  </button>
+                )}
+
+                {hasActiveFilters() && (
+                  <button className="reset-filters-btn" onClick={handleResetFilters}>
+                    Reset Filters
+                  </button>
+                )}
                 
                 {hasPendingChanges && (
                   <button className="apply-changes-btn" onClick={applyChanges}>
@@ -436,7 +580,7 @@ function App() {
             </div>
 
             <div className="center-content">
-              <p className="empty-text">No {showApproved === 'approved' ? 'approved' : showApproved === 'rejected' ? 'rejected' : 'pending'} questions yet. Click the toggle button to view other categories.</p>
+              <p className="empty-text">No {showApproved === 'approved' ? 'approved' : showApproved === 'rejected' ? 'rejected' : showApproved === 'deleted' ? 'deleted' : 'pending'} questions yet. Click the toggle button to view other categories.</p>
             </div>
           </div>
         )}
@@ -445,7 +589,7 @@ function App() {
           <div className="table-wrapper">
             <div className="table-header">
               <h2 className="table-title">
-                {showApproved === 'approved' ? 'Approved Questions' : showApproved === 'rejected' ? 'Rejected Questions' : 'Pending Questions'}
+                {showApproved === 'approved' ? 'Approved Questions' : showApproved === 'rejected' ? 'Rejected Questions' : showApproved === 'deleted' ? 'Deleted Questions' : 'Pending Questions'}
               </h2>
               <button onClick={() => fetchQuestions()} className="refresh-btn">
                 ↻ Refresh
@@ -459,16 +603,16 @@ function App() {
                   <input
                     type="text"
                     placeholder="Search by question, course, topic..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={pendingSearchTerm}
+                    onChange={(e) => setPendingSearchTerm(e.target.value)}
                     className="search-input"
                   />
                 </div>
 
                 <div className="filter-controls">
                   <select
-                    value={filterDifficulty}
-                    onChange={(e) => setFilterDifficulty(e.target.value)}
+                    value={pendingFilterDifficulty}
+                    onChange={(e) => setPendingFilterDifficulty(e.target.value)}
                     className="filter-select"
                   >
                     <option value="">All Difficulties</option>
@@ -478,8 +622,8 @@ function App() {
                   </select>
 
                   <select
-                    value={filterCourse}
-                    onChange={(e) => setFilterCourse(e.target.value)}
+                    value={pendingFilterCourse}
+                    onChange={(e) => setPendingFilterCourse(e.target.value)}
                     className="filter-select"
                   >
                     <option value="">All Courses</option>
@@ -489,8 +633,8 @@ function App() {
                   </select>
 
                   <select
-                    value={filterTopic}
-                    onChange={(e) => setFilterTopic(e.target.value)}
+                    value={pendingFilterTopic}
+                    onChange={(e) => setPendingFilterTopic(e.target.value)}
                     className="filter-select"
                   >
                     <option value="">All Topics</option>
@@ -505,20 +649,34 @@ function App() {
                 <button 
                   className={`toggle-approved-btn ${showApproved !== 'pending' ? 'active' : ''}`}
                   onClick={handleToggleApproved}
-                  title="Cycle through: Pending → Rejected → Approved"
+                  title={isSuperAdmin ? "Cycle through: Pending → Rejected → Approved → Deleted" : "Cycle through: Pending → Rejected → Approved"}
                   style={{
-                  backgroundColor: showApproved === 'rejected' ? 'red' : undefined,
-                  color: showApproved === 'rejected' ? 'white' : undefined
+                  backgroundColor: showApproved === 'rejected' ? 'red' : showApproved === 'deleted' ? '#7f1d1d' : undefined,
+                  color: showApproved === 'rejected' || showApproved === 'deleted' ? 'white' : undefined
                   }}
                 >
                   {showApproved === 'approved' ? (
                   '✓ Approved'
                   ) : showApproved === 'rejected' ? (
                   <span style={{ color: 'white', padding: '2px 8px', borderRadius: '6px' }}>✗ Rejected</span>
+                  ) : showApproved === 'deleted' ? (
+                  <span style={{ color: 'white', padding: '2px 8px', borderRadius: '6px' }}>Deleted</span>
                   ) : (
                   'Pending'
                   )}
                 </button>
+
+                {hasPendingFilterChanges() && (
+                  <button className="apply-filters-btn" onClick={handleApplyFilters}>
+                    Apply Filters
+                  </button>
+                )}
+
+                {hasActiveFilters() && (
+                  <button className="reset-filters-btn" onClick={handleResetFilters}>
+                    Reset Filters
+                  </button>
+                )}
                 
                 {hasPendingChanges && (
                   <button className="apply-changes-btn" onClick={applyChanges}>
@@ -543,8 +701,8 @@ function App() {
                 </thead>
                 <tbody>
                   {(() => {
-                    const filteredQuestions = getFilteredQuestions()
-                    return filteredQuestions.map((question) => {
+                    const paginatedQuestions = getPaginatedQuestions()
+                    return paginatedQuestions.map((question) => {
                       const isExpanded = expandedRows.has(question.id)
                       return (
                         <>
@@ -588,7 +746,23 @@ function App() {
                               </span>
                             </td>
                             <td className="td">
-                              {getEffectiveStatus(question) === 'pending' ? (
+                              {hasPendingChange(question) ? (
+                                <div className="status-actions">
+                                  <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
+                                    {getEffectiveStatus(question)}
+                                  </span>
+                                  <Button
+                                    variant="contained"
+                                    size="small"
+                                    className="circle-btn undo-btn"
+                                    onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, question.status) }}
+                                    style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
+                                    title="Cancel change"
+                                  >
+                                    <UndoIcon fontSize="small" />
+                                  </Button>
+                                </div>
+                              ) : question.status === 'pending' ? (
                                 <div className="status-actions">
                                   <Button
                                     variant="contained"
@@ -597,7 +771,7 @@ function App() {
                                     className="circle-btn accept-btn"
                                     onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'approved') }}
                                     style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%' }}
-
+                                    title="Approve"
                                   >
                                     <DoneIcon fontSize="medium" />
                                   </Button>
@@ -608,63 +782,67 @@ function App() {
                                     className="circle-btn reject-btn"
                                     onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'rejected') }}
                                     style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%' }}
-
+                                    title="Reject"
                                   >
                                     <CloseIcon fontSize="medium" />
                                   </Button>
-                                </div>
-                              ) : getEffectiveStatus(question) === 'approved' ? (
-                                <div className="status-actions">
-                                  <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
-                                    {getEffectiveStatus(question)}
-                                  </span>
-                                  <Button
-                                    variant="contained"
-                                    size="small"
-                                    className="circle-btn undo-btn"
-                                    onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
-                                    style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
-                                    title="Undo approval"
-                                  >
-                                    <UndoIcon fontSize="small" />
-                                  </Button>
-                                </div>
-                              ) : getEffectiveStatus(question) === 'rejected' ? (
-                                <div className="status-actions">
-                                  <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
-                                    {getEffectiveStatus(question)}
-                                  </span>
-                                  {/* // ! CHECKMARK 1.4: Frontend that allows "SUPER ADMIN" to "SOFT DELETE" questions */}
-                                  {isSuperAdmin && pendingDeletes.has(question.id) ? (
-                                    <Button
-                                      variant="contained"
-                                      size="small"
-                                      className="circle-btn undo-delete-btn"
-                                      onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => { const newSet = new Set(prev); newSet.delete(question.id); return newSet }) }}
-                                      style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#f59e0b' }}
-                                      title="Undo deletion"
-                                    >
-                                      <UndoIcon fontSize="small" />
-                                    </Button>
-                                  ) : isSuperAdmin ? (
+                                  {isSuperAdmin && (
                                     <Button
                                       variant="contained"
                                       size="small"
                                       className="circle-btn delete-btn"
-                                      onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => new Set([...prev, question.id])) }}
+                                      onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'deleted') }}
                                       style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#8b5cf6' }}
-                                      title="Delete question"
+                                      title="Delete"
                                     >
                                       <DeleteIcon fontSize="small" />
                                     </Button>
-                                  ) : null}
+                                  )}
+                                </div>
+                              ) : question.status === 'approved' ? (
+                                <div className="status-actions">
+                                  <span className={`badge ${getStatusClass(question.status)}`}>
+                                    {question.status}
+                                  </span>
                                   <Button
                                     variant="contained"
                                     size="small"
                                     className="circle-btn undo-btn"
                                     onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
                                     style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
-                                    title="Undo rejection"
+                                    title="Undo to pending"
+                                  >
+                                    <UndoIcon fontSize="small" />
+                                  </Button>
+                                </div>
+                              ) : question.status === 'rejected' ? (
+                                <div className="status-actions">
+                                  <span className={`badge ${getStatusClass(question.status)}`}>
+                                    {question.status}
+                                  </span>
+                                  <Button
+                                    variant="contained"
+                                    size="small"
+                                    className="circle-btn undo-btn"
+                                    onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
+                                    style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
+                                    title="Undo to pending"
+                                  >
+                                    <UndoIcon fontSize="small" />
+                                  </Button>
+                                </div>
+                              ) : question.status === 'deleted' ? (
+                                <div className="status-actions">
+                                  <span className={`badge ${getStatusClass(question.status)}`}>
+                                    {question.status}
+                                  </span>
+                                  <Button
+                                    variant="contained"
+                                    size="small"
+                                    className="circle-btn undo-btn"
+                                    onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
+                                    style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
+                                    title="Undo to pending"
                                   >
                                     <UndoIcon fontSize="small" />
                                   </Button>
@@ -710,7 +888,23 @@ function App() {
                                     </div>
                                     <div className="detail-item">
                                       <span className="detail-label">Status:</span>
-                                      {getEffectiveStatus(question) === 'pending' ? (
+                                      {hasPendingChange(question) ? (
+                                        <div className="status-actions">
+                                          <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
+                                            {getEffectiveStatus(question)}
+                                          </span>
+                                          <Button
+                                            variant="contained"
+                                            size="small"
+                                            className="circle-btn undo-btn"
+                                            onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, question.status) }}
+                                            style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
+                                            title="Cancel change"
+                                          >
+                                            <UndoIcon fontSize="small" />
+                                          </Button>
+                                        </div>
+                                      ) : question.status === 'pending' ? (
                                         <div className="status-actions">
                                           <Button
                                             variant="contained"
@@ -719,6 +913,7 @@ function App() {
                                             className="circle-btn accept-btn"
                                             onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'approved') }}
                                             style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%' }}
+                                            title="Approve"
                                           >
                                             <DoneIcon fontSize="medium" />
                                           </Button>
@@ -729,61 +924,67 @@ function App() {
                                             className="circle-btn reject-btn"
                                             onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'rejected') }}
                                             style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%' }}
+                                            title="Reject"
                                           >
                                             <CloseIcon fontSize="medium" />
                                           </Button>
-                                        </div>
-                                      ) : getEffectiveStatus(question) === 'approved' ? (
-                                        <div className="status-actions">
-                                          <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
-                                            {getEffectiveStatus(question)}
-                                          </span>
-                                          <Button
-                                            variant="contained"
-                                            size="small"
-                                            className="circle-btn undo-btn"
-                                            onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
-                                            style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
-                                            title="Undo approval"
-                                          >
-                                            <UndoIcon fontSize="small" />
-                                          </Button>
-                                        </div>
-                                      ) : getEffectiveStatus(question) === 'rejected' ? (
-                                        <div className="status-actions">
-                                          <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
-                                            {getEffectiveStatus(question)}
-                                          </span>
-                                          {isSuperAdmin && pendingDeletes.has(question.id) ? (
-                                            <Button
-                                              variant="contained"
-                                              size="small"
-                                              className="circle-btn undo-delete-btn"
-                                              onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => { const newSet = new Set(prev); newSet.delete(question.id); return newSet }) }}
-                                              style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#f59e0b' }}
-                                              title="Undo deletion"
-                                            >
-                                              <UndoIcon fontSize="small" />
-                                            </Button>
-                                          ) : isSuperAdmin ? (
+                                          {isSuperAdmin && (
                                             <Button
                                               variant="contained"
                                               size="small"
                                               className="circle-btn delete-btn"
-                                              onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => new Set([...prev, question.id])) }}
+                                              onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'deleted') }}
                                               style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#8b5cf6' }}
-                                              title="Delete question"
+                                              title="Delete"
                                             >
                                               <DeleteIcon fontSize="small" />
                                             </Button>
-                                          ) : null}
+                                          )}
+                                        </div>
+                                      ) : question.status === 'approved' ? (
+                                        <div className="status-actions">
+                                          <span className={`badge ${getStatusClass(question.status)}`}>
+                                            {question.status}
+                                          </span>
                                           <Button
                                             variant="contained"
                                             size="small"
                                             className="circle-btn undo-btn"
                                             onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
                                             style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
-                                            title="Undo rejection"
+                                            title="Undo to pending"
+                                          >
+                                            <UndoIcon fontSize="small" />
+                                          </Button>
+                                        </div>
+                                      ) : question.status === 'rejected' ? (
+                                        <div className="status-actions">
+                                          <span className={`badge ${getStatusClass(question.status)}`}>
+                                            {question.status}
+                                          </span>
+                                          <Button
+                                            variant="contained"
+                                            size="small"
+                                            className="circle-btn undo-btn"
+                                            onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
+                                            style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
+                                            title="Undo to pending"
+                                          >
+                                            <UndoIcon fontSize="small" />
+                                          </Button>
+                                        </div>
+                                      ) : question.status === 'deleted' ? (
+                                        <div className="status-actions">
+                                          <span className={`badge ${getStatusClass(question.status)}`}>
+                                            {question.status}
+                                          </span>
+                                          <Button
+                                            variant="contained"
+                                            size="small"
+                                            className="circle-btn undo-btn"
+                                            onClick={(e) => { e.stopPropagation(); updateQuestionStatus(question.id, 'pending') }}
+                                            style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#6b7280' }}
+                                            title="Undo to pending"
                                           >
                                             <UndoIcon fontSize="small" />
                                           </Button>
@@ -811,7 +1012,8 @@ function App() {
             <div className="pagination-container">
               <div className="pagination-info">
                 {(() => {
-                  const filteredCount = getFilteredQuestions().length
+                  const filteredQuestions = getFilteredQuestions()
+                  const filteredCount = filteredQuestions.length
                   const startItem = filteredCount === 0 ? 0 : (currentPage - 1) * questionsPerPage + 1
                   const endItem = Math.min(currentPage * questionsPerPage, filteredCount)
                   return `Showing ${startItem} - ${endItem} of ${filteredCount}`
@@ -825,13 +1027,13 @@ function App() {
                 >
                   ← Previous
                 </button>
-                <span className="page-number">Page {currentPage} of {totalPages}</span>
+                <span className="page-number">Page {currentPage} of {getFilteredTotalPages()}</span>
                 <button
                   className="pagination-btn"
                   onClick={() => {
-                    setCurrentPage(prev => Math.min(totalPages, prev + 1))
+                    setCurrentPage(prev => Math.min(getFilteredTotalPages(), prev + 1))
                   }}
-                  disabled={currentPage >= totalPages}
+                  disabled={currentPage >= getFilteredTotalPages()}
                 >
                   Next →
                 </button>
