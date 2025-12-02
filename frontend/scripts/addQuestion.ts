@@ -76,7 +76,10 @@ async function handleFormSubmit(e: Event): Promise<void> {
   hideMessage('aq-success');
 
   try {
+
+    // ! CHECKMARK 1.5: Very little work is done here; most is in the backend route
     // Submit to backend API
+    // ! CHECKMARK 1.1: Frontend that calls the API to ``INSERT``
     const response = await fetch('/api/submitQuestion', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

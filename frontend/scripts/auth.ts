@@ -43,7 +43,7 @@ function handleLogout(e: Event): void {
 }
 
 // Update navbar to show user info when logged in (avatar and name)
-function updateNavbar(loginBtn: HTMLElement, userName: string, isAdmin: boolean = false): void {
+function updateNavbar(loginBtn: HTMLElement, userName: string, isAdmin: boolean = false, isSuperAdmin: boolean = false): void {
     
   // Get user profile picture from localStorage
   const userData = getUserData();
@@ -58,6 +58,10 @@ function updateNavbar(loginBtn: HTMLElement, userName: string, isAdmin: boolean 
     // Add admin shine effect if user is admin
     if (isAdmin) {
         loginBtn.classList.add("admin-shine");
+    }
+
+    if (isSuperAdmin){
+        loginBtn.classList.add("superadmin-shine");
     }
     
     // Change link to account settings page (handle both index and pages context)
@@ -165,7 +169,8 @@ export function initAuth(): void {
     const userData = getUserData();
     const userName = userData && userData.name ? userData.name : "User";
     const isAdmin = userData && userData.isAdmin ? userData.isAdmin : false;
-    updateNavbar(loginBtn, userName, isAdmin);
+    const isSuperAdmin = userData && userData.isSuperAdmin ? userData.isSuperAdmin : false; 
+    updateNavbar(loginBtn, userName, isAdmin, isSuperAdmin);
   }
   
   // Login button click handler

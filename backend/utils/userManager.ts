@@ -1,5 +1,6 @@
 // backend/utils/userManager.ts
 import { supabase } from './supabaseClient';
+import bcrypt from 'bcrypt';
 
 // -------- Types --------
 export interface Summary extends Record<string, unknown> {}
@@ -16,6 +17,7 @@ export interface User {
   major?: string;
   year?: string;
   isAdmin?: boolean;
+  isSuperAdmin?: boolean;
   crashCourses?: CrashCourse[];
   summaries?: Summary[];
 }
@@ -76,6 +78,7 @@ export async function readUsers(): Promise<UsersData> {
         major: user.major,
         year: user.year,
         isAdmin: user.is_admin,
+        isSuperAdmin: user.is_super_admin,
         crashCourses: user.crash_courses || [],
         summaries: user.summaries || [],
       })),
@@ -109,6 +112,7 @@ export async function findUserByID(userId: string): Promise<User | null> {
       major: data.major,
       year: data.year,
       isAdmin: data.is_admin,
+      isSuperAdmin: data.is_super_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -144,6 +148,7 @@ export async function findUserByUsernameOrEmail(
       major: data.major,
       year: data.year,
       isAdmin: data.is_admin,
+      isSuperAdmin: data.is_super_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -170,6 +175,7 @@ export async function insertUserSorted(newUser: User, password?: string): Promis
           major: newUser.major || '',
           year: newUser.year || '',
           is_admin: newUser.isAdmin || false,
+          is_super_admin: newUser.isSuperAdmin || false,
           crash_courses: newUser.crashCourses || [],
           summaries: newUser.summaries || [],
         },
@@ -192,6 +198,7 @@ export async function insertUserSorted(newUser: User, password?: string): Promis
       major: data.major,
       year: data.year,
       isAdmin: data.is_admin,
+      isSuperAdmin: data.is_super_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -212,6 +219,7 @@ export async function updateUser(userId: string, updates: Partial<User>): Promis
     if (updates.major) updateData.major = updates.major;
     if (updates.year) updateData.year = updates.year;
     if (updates.isAdmin !== undefined) updateData.is_admin = updates.isAdmin;
+    if (updates.isSuperAdmin !== undefined) updateData.is_super_admin = updates.isSuperAdmin;
     if (updates.crashCourses) updateData.crash_courses = updates.crashCourses;
     if (updates.summaries) updateData.summaries = updates.summaries;
 
@@ -237,6 +245,7 @@ export async function updateUser(userId: string, updates: Partial<User>): Promis
       major: data.major,
       year: data.year,
       isAdmin: data.is_admin,
+      isSuperAdmin: data.is_super_admin,
       crashCourses: data.crash_courses || [],
       summaries: data.summaries || [],
     };
@@ -259,9 +268,9 @@ export async function verifyPassword(email: string, password: string): Promise<U
       return null;
     }
 
-    // NOTE: This is a simple comparison. In production, you should hash passwords
-    // For now, we compare plaintext (for demo purposes only)
-    if (data.password === password) {
+    const passwordMatch = await bcrypt.compare(password, data.password);
+
+    if (passwordMatch) {
       return {
         id: data.id,
         username: data.username,
@@ -272,6 +281,7 @@ export async function verifyPassword(email: string, password: string): Promise<U
         major: data.major,
         year: data.year,
         isAdmin: data.is_admin,
+        isSuperAdmin: data.is_super_admin,
         crashCourses: data.crash_courses || [],
         summaries: data.summaries || [],
       };

@@ -4,14 +4,7 @@ import { findUserByID } from '../utils/userManager';
 
 const router = Router();
 
-/**
- * GET /api/getQuestions
- * Retrieve paginated submitted questions with optional status filter
- * Query params:
- *   - page: page number (default: 1)
- *   - limit: items per page (default: 10, max: 100)
- *   - status: filter by status ('pending', 'approved', 'rejected', or 'all' for no filter)
- */
+// READ or query submitted questions 
 router.get('/getQuestions', async (req: Request, res: Response) => {
   try {
     const page = Math.max(1, parseInt(req.query.page as string) || 1);
@@ -19,7 +12,24 @@ router.get('/getQuestions', async (req: Request, res: Response) => {
     const statusFilter = req.query.status as string || 'all';
     const offset = (page - 1) * limit;
 
-    // Build query with optional status filter
+    // ! CHECKMARK 1.2
+    /* 
+
+      ? THIS IS A READ OPERATION
+
+      ? SUPABASE DOCS ------------------------------------------------
+    
+        select(columns?, options?)
+
+        Perform a ``SELECT`` query on the table or view.
+
+        By default, Supabase projects return a maximum of 1,000 rows. 
+        This setting can be changed in your project's API settings. 
+        It's recommended that you keep it low to limit the payload size of accidental 
+        or malicious requests. You can use range() queries to paginate through your data.
+      ? ---------------------------------------------------------------
+    
+    */
     let query = supabase
       .from('reviewquestiontable')
       .select('id, question, correct_answer, course, topic, difficulty, user_id, user_name, user_email, status, created_at', { count: 'exact' })
@@ -79,6 +89,8 @@ router.get('/getQuestions', async (req: Request, res: Response) => {
  * }
  * Note: User's profile picture is automatically retrieved from the database
  */
+
+// ! CHECKMARK 1.5: Most of the work gets done in the backend (API route)
 router.post('/submitQuestion', async (req: Request, res: Response) => {
   try {
     const {
@@ -130,7 +142,23 @@ router.post('/submitQuestion', async (req: Request, res: Response) => {
     const finalUserEmail = userEmail || user.email || 'unknown@example.com';
     const userProfilePicture = user.profilePicture || null;
 
-    // Insert into reviewQuestionTable
+    // ! CHECKMARK 1.1
+    /* 
+
+      ? THIS IS A INSERT OPERATION
+
+      ? SUPABASE DOCS ------------------------------------------------
+    
+        insert(values, options?)
+
+        Performs a ``INSERT`` into the table.
+        
+        Inserts new rows into the table. You can insert a single row by passing an object, 
+        or multiple rows by passing an array of objects.
+    
+      ? ---------------------------------------------------------------
+    
+    */
     const { data, error } = await supabase
       .from('reviewquestiontable')
       .insert([
@@ -175,11 +203,7 @@ router.post('/submitQuestion', async (req: Request, res: Response) => {
   }
 });
 
-/**
- * PATCH /api/updateQuestionStatus
- * Body: { id: number, status: 'approved' | 'rejected' | 'pending' }
- * Updates the status of a submitted question
- */
+
 router.patch('/updateQuestionStatus', async (req: Request, res: Response) => {
   try {
     const { id, status } = req.body;
@@ -188,10 +212,30 @@ router.patch('/updateQuestionStatus', async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, error: 'Missing id or status' });
     }
 
-    if (!['approved', 'rejected', 'pending'].includes(status)) {
-      return res.status(400).json({ success: false, error: 'Invalid status. Must be approved, rejected, or pending' });
+    if (!['approved', 'rejected', 'pending', 'deleted'].includes(status)) {
+      return res.status(400).json({ success: false, error: 'Invalid status. Must be approved, rejected, pending, or deleted' });
     }
 
+    // ! CHECKMARK 1.3
+    /* 
+
+      ? THIS IS AN UPDATE OPERATION
+
+      ? SUPABASE DOCS ------------------------------------------------
+    
+        update(values, options)
+
+        Perform an UPDATE on the table or view.
+
+        By default, updated rows are not returned. To return it, 
+        chain the call with .select() after filters.
+
+        update() should always be combined with Filters to target the item(s) 
+        you wish to update.
+
+      ? ---------------------------------------------------------------
+    
+    */
     const { data, error } = await supabase
       .from('reviewquestiontable')
       .update({ status: status, updated_at: new Date().toISOString() })

@@ -263,21 +263,32 @@ function loadUserData(): void {
   }
 
   // Handle admin-only features
-  handleAdminVisibility(userData.isAdmin);
+  handleAdminVisibility(userData.isAdmin, userData.isSuperAdmin);
 }
 
 /**
- * Show/hide React button based on admin status
+ * Show/hide sections based on admin status
  */
-function handleAdminVisibility(isAdmin: boolean): void {
+function handleAdminVisibility(isAdmin: boolean, isSuperAdmin: boolean): void {
   const experimentalSection = document.getElementById('experimentalSection');
+  const superAdminSection = document.getElementById('superAdminSection');
+  
   if (!experimentalSection) return;
 
-  // Only show experimental features if user is admin
+  // Show experimental features if user is admin
   if (!isAdmin) {
     experimentalSection.style.display = 'none';
   } else {
     experimentalSection.style.display = 'block';
+  }
+
+  // Show super admin section only if user is super admin
+  if (superAdminSection) {
+    if (!isSuperAdmin) {
+      superAdminSection.style.display = 'none';
+    } else {
+      superAdminSection.style.display = 'block';
+    }
   }
 }
 
@@ -351,6 +362,73 @@ async function saveChanges(): Promise<void> {
 }
 
 /**
+ * Update super admin status for a user
+ */
+
+// ! CHECKMARK 2.2: Frontend that allows "SUPER ADMIN" to update other users to be "SUPER ADMIN"
+async function updateSuperAdminUser(): Promise<void> {
+  const adminUsernameField = document.getElementById('adminUsername') as HTMLInputElement;
+  const adminNameField = document.getElementById('adminName') as HTMLInputElement;
+  const isSuperAdminCheckbox = document.getElementById('isSuperAdmin') as HTMLInputElement;
+
+  const username = adminUsernameField?.value?.trim();
+  const name = adminNameField?.value?.trim();
+  const isSuperAdmin = isSuperAdminCheckbox?.checked || false;
+
+  // Validate inputs
+  if (!username || !name) {
+    showMessage('superAdminMessage', 'Username and full name are required', false);
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/makeSuperAdmin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username,
+        name,
+        isSuperAdmin,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      showMessage('superAdminMessage', `Error: ${result.error || 'Failed to update user'}`, false);
+      // Add error styling
+      const messageElement = document.getElementById('superAdminMessage');
+      if (messageElement) {
+        messageElement.classList.add('error-message');
+        messageElement.classList.remove('success-message');
+      }
+      return;
+    }
+
+    // Clear form
+    adminUsernameField.value = '';
+    adminNameField.value = '';
+    isSuperAdminCheckbox.checked = true;
+
+    // Show success message
+    const messageElement = document.getElementById('superAdminMessage');
+    if (messageElement) {
+      messageElement.classList.remove('error-message');
+      messageElement.classList.add('success-message');
+    }
+    showMessage('superAdminMessage', `✓ ${result.message}`, true);
+  } catch (err) {
+    console.error('Error updating super admin:', err);
+    showMessage('superAdminMessage', `Error: ${formatErrorMessage(err)}`, false);
+    const messageElement = document.getElementById('superAdminMessage');
+    if (messageElement) {
+      messageElement.classList.add('error-message');
+      messageElement.classList.remove('success-message');
+    }
+  }
+}
+
+/**
  * Cancel changes and reload form
  */
 function cancelChanges(): void {
@@ -393,14 +471,21 @@ function initializeEventListeners(): void {
     removeProfilePictureBtn.addEventListener('click', handleRemoveProfilePicture);
   }
 
+  // Handle super admin button
+  const updateSuperAdminBtn = document.getElementById('updateSuperAdminBtn');
+  if (updateSuperAdminBtn) {
+    updateSuperAdminBtn.addEventListener('click', updateSuperAdminUser);
+  }
+
   // Handle admin console button
   const reactBtn = document.getElementById('reactBtn') as HTMLButtonElement | null;
   if (reactBtn) {
     reactBtn.addEventListener('click', () => {
       const userData = getUserData();
       const adminName = userData?.name || userData?.username || 'Admin';
+      const isSuperAdmin = userData?.isSuperAdmin || false;
       const encodedName = encodeURIComponent(adminName);
-      window.location.href = `http://localhost:5173/?name=${encodedName}`;
+      window.location.href = `http://localhost:5173/?name=${encodedName}&isSuperAdmin=${isSuperAdmin}`;
     });
   }
 }

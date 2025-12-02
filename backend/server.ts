@@ -12,17 +12,9 @@ const PORT = 3000;
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-/**
- * Resolve a route module and always return the actual Express router/middleware.
- * Supports:
- *  - CommonJS: module.exports = router
- *  - ESM transpiled to CJS: exports.default = router
- *  - modules that export { router }
- */
+
+// UTILITY FUNCTIONS
 function resolveRouteModule(name: string) {
-  // 1) backend/dist/routes/<name>.js (compiled)
-  // 2) backend/dist/../dist/routes/<name>.js (edge case if server compiled from elsewhere)
-  // 3) backend/../routes/<name>.js (source)
   const candidates = [
     path.join(__dirname, 'routes', `${name}.js`),
     path.join(__dirname, '..', 'dist', 'routes', `${name}.js`),
@@ -47,21 +39,6 @@ function resolveRouteModule(name: string) {
   return load(`./routes/${name}`);
 }
 
-// Import routes using resolver (each route should `export default router`)
-const authRoutes = resolveRouteModule('auth');
-const crashCourseRoutes = resolveRouteModule('crashCourse');
-const summaryRoutes = resolveRouteModule('summary');
-const practiceTestRoutesModule = resolveRouteModule('practiceTest');
-const practiceTestRoutes = practiceTestRoutesModule.default || practiceTestRoutesModule;
-const submitQuestionRoutes = resolveRouteModule('submitQuestion');
-
-app.use('/api', authRoutes);
-app.use('/api/crash-course', crashCourseRoutes);
-app.use('/api/summary', summaryRoutes);
-app.use('/api/practice-test', practiceTestRoutes);
-app.use('/api', submitQuestionRoutes);
-
-// Serve favicon specifically BEFORE static files
 function findFrontendDir() {
   const candidates = [
     path.join(__dirname, '..', 'frontend'),        // when running source server
@@ -73,13 +50,31 @@ function findFrontendDir() {
 
 function findReactDir() {
   const candidates = [
-    path.join(__dirname, '..', 'react', 'dist'),   // when running from backend/dist
-    path.join(__dirname, '..', '..', 'react', 'dist'), // edge case
+    path.join(__dirname, '..', 'react', 'dist'),        // when running from backend/dist
+    path.join(__dirname, '..', '..', 'react', 'dist'),  // edge case
   ];
   for (const c of candidates) if (fs.existsSync(c)) return c;
   return null;
 }
 
+
+// ! CHECKMARK 1.6: Import routes 
+// Import routes using resolver (each route should `export default router`)
+const authRoutes = resolveRouteModule('auth');
+const crashCourseRoutes = resolveRouteModule('crashCourse');
+const summaryRoutes = resolveRouteModule('summary');
+const practiceTestRoutesModule = resolveRouteModule('practiceTest');
+const practiceTestRoutes = practiceTestRoutesModule.default || practiceTestRoutesModule;
+const submitQuestionRoutes = resolveRouteModule('submitQuestion');
+
+// ! CHECKMARK 1.6: Use /api prefix for all API routes
+app.use('/api', authRoutes);
+app.use('/api/crash-course', crashCourseRoutes);
+app.use('/api/summary', summaryRoutes);
+app.use('/api/practice-test', practiceTestRoutes);
+app.use('/api', submitQuestionRoutes);
+
+// Serve favicon specifically BEFORE static files
 const frontendDir = findFrontendDir();
 const faviconPath = path.join(frontendDir, 'assets', 'favicon.ico');
 
@@ -89,24 +84,22 @@ app.get('/favicon.ico', (req, res) => {
   });
 });
 
-// Serve React app at /react route
+// Serve React app at /react route (this is to serve the React at the same time as the Node.js server)
 const reactDir = findReactDir();
 if (reactDir) {
-  // Serve all static assets from /react/assets
   app.use('/react/assets', express.static(path.join(reactDir, 'assets')));
-  
-  // Serve index.html and handle routing for React SPA
   app.get(/^\/react($|\/)/u, (req, res) => {
     res.sendFile(path.join(reactDir, 'index.html'));
   });
-  
-  console.log('React app available at http://localhost:3000/react');
+  console.log('React app running!');
 } else {
-  console.warn('React build not found at react/dist. Build React with: npm run build:react');
+  console.warn('React build not found at react/dist');
 }
 
+// ! CHECKMARK 1.6: Serve frontend static files and index.html using express.static
 app.use(express.static(frontendDir));
 
+// ! CHECKMARK 1.6: We start the Nodejs server here usually on port 3000
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/index.html`);
 });

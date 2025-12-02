@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import DoneIcon from '@mui/icons-material/Done'
 import CloseIcon from '@mui/icons-material/Close'
 import UndoIcon from '@mui/icons-material/Undo'
+import DeleteIcon from '@mui/icons-material/Delete'
 import './App.css'
 
 interface Question {
@@ -17,7 +18,7 @@ interface Question {
   user_name: string
   user_email: string
   user_profile_picture: string | null
-  status: 'pending' | 'approved' | 'rejected'
+  status: 'pending' | 'approved' | 'rejected' | 'deleted'
   created_at: string
 }
 
@@ -40,8 +41,10 @@ function App() {
   const [totalPages, setTotalPages] = useState(0)
   const [profilePictures, setProfilePictures] = useState<UserProfile>({})
   const [adminName, setAdminName] = useState('Admin')
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false)
   const [showApproved, setShowApproved] = useState<'pending' | 'rejected' | 'approved'>('pending')
-  const [pendingChanges, setPendingChanges] = useState<Map<number, 'approved' | 'rejected' | 'pending'>>(new Map())
+  const [pendingChanges, setPendingChanges] = useState<Map<number, 'approved' | 'rejected' | 'pending' | 'deleted'>>(new Map())
+  const [pendingDeletes, setPendingDeletes] = useState<Set<number>>(new Set())
   const [hasPendingChanges, setHasPendingChanges] = useState(false)
   const [availableCourses, setAvailableCourses] = useState<string[]>([])
   const [availableTopics, setAvailableTopics] = useState<string[]>([])
@@ -51,8 +54,12 @@ function App() {
     // Get admin name from URL params
     const params = new URLSearchParams(window.location.search)
     const name = params.get('name')
+    const superAdmin = params.get('isSuperAdmin')
     if (name) {
       setAdminName(decodeURIComponent(name))
+    }
+    if (superAdmin === 'true') {
+      setIsSuperAdmin(true)
     }
 
     fetchQuestions()
@@ -66,6 +73,12 @@ function App() {
     return () => clearInterval(timer)
   }, [currentPage, showApproved])
 
+  useEffect(() => {
+    setHasPendingChanges(pendingChanges.size > 0 || pendingDeletes.size > 0)
+  }, [pendingChanges, pendingDeletes])
+
+
+  // ! CHECKMARK 1.2: Front end that calls the API to ``READ``
   const fetchQuestions = async () => {
     try {
       setLoading(true)
@@ -122,7 +135,7 @@ function App() {
     }
   }
 
-  const updateQuestionStatus = (id: number, newStatus: 'approved' | 'rejected' | 'pending') => {
+  const updateQuestionStatus = (id: number, newStatus: 'approved' | 'rejected' | 'pending' | 'deleted') => {
     // Get the original status from the questions array
     const originalQuestion = questions.find(q => q.id === id)
     const originalStatus = originalQuestion?.status
@@ -138,12 +151,13 @@ function App() {
     }
     
     setPendingChanges(newPendingChanges)
-    setHasPendingChanges(newPendingChanges.size > 0)
+    setHasPendingChanges(newPendingChanges.size > 0 || pendingDeletes.size > 0)
 
     // Don't update q.status - keep original server status for filtering
     // The UI will display the pending change via getEffectiveStatus()
   }
 
+  // ! CHECKMARK 1.3: Frontend that calls the API to ``UPDATE``
   const applyChanges = async () => {
     try {
       setLoading(true)
@@ -160,8 +174,20 @@ function App() {
         })
       }
 
-      // Clear pending changes
+      // ! CHECKMARK 1.4: Frontend that calls the API to ``SOFT DELETE``
+      for (const id of pendingDeletes) {
+        await fetch('/api/updateQuestionStatus', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ id, status: 'deleted' })
+        })
+      }
+
+      // Clear pending changes and deletes
       setPendingChanges(new Map())
+      setPendingDeletes(new Set())
       setHasPendingChanges(false)
       
       // Reset to page 1 to show updated questions from the beginning
@@ -183,7 +209,7 @@ function App() {
   }
 
   // Get the effective status of a question (pending change or original status)
-  const getEffectiveStatus = (question: Question): 'approved' | 'rejected' | 'pending' => {
+  const getEffectiveStatus = (question: Question): 'approved' | 'rejected' | 'pending' | 'deleted' => {
     return pendingChanges.get(question.id) || question.status
   }
 
@@ -403,7 +429,7 @@ function App() {
                 
                 {hasPendingChanges && (
                   <button className="apply-changes-btn" onClick={applyChanges}>
-                    Apply Changes ({pendingChanges.size})
+                    Apply Changes ({pendingChanges.size + pendingDeletes.size})
                   </button>
                 )}
               </div>
@@ -496,7 +522,7 @@ function App() {
                 
                 {hasPendingChanges && (
                   <button className="apply-changes-btn" onClick={applyChanges}>
-                    Apply Changes ({pendingChanges.size})
+                    Apply Changes ({pendingChanges.size + pendingDeletes.size})
                   </button>
                 )}
               </div>
@@ -608,6 +634,30 @@ function App() {
                                   <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
                                     {getEffectiveStatus(question)}
                                   </span>
+                                  {/* // ! CHECKMARK 1.4: Frontend that allows "SUPER ADMIN" to "SOFT DELETE" questions */}
+                                  {isSuperAdmin && pendingDeletes.has(question.id) ? (
+                                    <Button
+                                      variant="contained"
+                                      size="small"
+                                      className="circle-btn undo-delete-btn"
+                                      onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => { const newSet = new Set(prev); newSet.delete(question.id); return newSet }) }}
+                                      style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#f59e0b' }}
+                                      title="Undo deletion"
+                                    >
+                                      <UndoIcon fontSize="small" />
+                                    </Button>
+                                  ) : isSuperAdmin ? (
+                                    <Button
+                                      variant="contained"
+                                      size="small"
+                                      className="circle-btn delete-btn"
+                                      onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => new Set([...prev, question.id])) }}
+                                      style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#8b5cf6' }}
+                                      title="Delete question"
+                                    >
+                                      <DeleteIcon fontSize="small" />
+                                    </Button>
+                                  ) : null}
                                   <Button
                                     variant="contained"
                                     size="small"
@@ -704,6 +754,29 @@ function App() {
                                           <span className={`badge ${getStatusClass(question.status)}`} style={getPendingBadgeStyle(question)}>
                                             {getEffectiveStatus(question)}
                                           </span>
+                                          {isSuperAdmin && pendingDeletes.has(question.id) ? (
+                                            <Button
+                                              variant="contained"
+                                              size="small"
+                                              className="circle-btn undo-delete-btn"
+                                              onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => { const newSet = new Set(prev); newSet.delete(question.id); return newSet }) }}
+                                              style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#f59e0b' }}
+                                              title="Undo deletion"
+                                            >
+                                              <UndoIcon fontSize="small" />
+                                            </Button>
+                                          ) : isSuperAdmin ? (
+                                            <Button
+                                              variant="contained"
+                                              size="small"
+                                              className="circle-btn delete-btn"
+                                              onClick={(e) => { e.stopPropagation(); setPendingDeletes(prev => new Set([...prev, question.id])) }}
+                                              style={{ minWidth: 0, width: 36, height: 36, borderRadius: '50%', backgroundColor: '#8b5cf6' }}
+                                              title="Delete question"
+                                            >
+                                              <DeleteIcon fontSize="small" />
+                                            </Button>
+                                          ) : null}
                                           <Button
                                             variant="contained"
                                             size="small"

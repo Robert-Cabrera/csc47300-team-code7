@@ -34,6 +34,8 @@ function ProfilePage() {
 
   useEffect(() => {
     // Get userId from URL query parameter
+
+    // ! CHECKMARK 3.1: DYNAMIC ROUTING - PARAMETER EXTRACTION (usrID from URL)
     const params = new URLSearchParams(window.location.search)
     const userId = params.get('userId')
     

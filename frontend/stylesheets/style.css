@@ -25,6 +25,7 @@
   --clr_error: #670202;
   --clr_logout: #ff4356;
   --clr_shine: #a37416;
+  --clr_spr_shine: #a35516;
 
   --clr_body_bg: #f4f4f4;
   --clr_nav_bg: rgba(255, 255, 255, 0.85);
@@ -58,6 +59,7 @@
   --clr_theme_toggle: #f1c100;
   --clr_logout: #c82333;
   --clr_shine: #f6c26d;
+  --clr_spr_shine: rgb(244, 149, 66);
 
   --clr_text_base: #e0e0e0;
   --clr_text_nav: #f0f0f0;
@@ -331,6 +333,11 @@ body {
 /* --- Admin Shine Animation --- */
 .navigation-bar a.account.admin-shine {
   color: var(--clr_shine) !important;
+  font-weight: bold;
+}
+
+.navigation-bar a.account.superadmin-shine {
+  color: var(--clr_spr_shine) !important;
   font-weight: bold;
 }
 

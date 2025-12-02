@@ -28,6 +28,7 @@ interface User {
   major?: string;
   year?: string;
   isAdmin?: boolean;
+  isSuperAdmin?: boolean;
   crashCourses?: CrashCourse[];
   summaries?: Summary[];
 }
@@ -121,6 +122,7 @@ router.get('/user/:userId', async (req: Request<{ userId: string }>, res: Respon
       major: user.major,
       year: user.year,
       isAdmin: user.isAdmin,
+      isSuperAdmin: user.isSuperAdmin,
       crashCourses: user.crashCourses ?? [],
       summaries: user.summaries ?? [],
     });
@@ -138,19 +140,49 @@ router.post('/login', async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, error: 'Username and password required' });
     }
 
-    // Try to find user by username or email
+    // ! CHECKMARK 2.1: LOGIN AS EITHER ADMIN OR SUPER ADMIN
+
+    // ? STEP 1: Find user by username or email
+    /*
+
+    CODE TO HIT THE DATABASE AND CHECK FOR USER OR EMAIL
+      try {
+        const { data, error } = await supabase
+          .from('users')
+          .select('*')
+          .or(`username.eq.${username},email.eq.${email}`)
+          .single();
+    */
     const user = await findUserByUsernameOrEmail(username, username);
 
     if (!user) {
       return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
 
-    // Verify password
+    // ? STEP 2: Verify password
+    /*
+      CODE TO HIT THE DATABASE AND VERIFY THE PASSWORD
+      
+      try {
+        const { data, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('email', email)
+          .single();
+
+        if (error || !data) {
+          return null;
+        }
+
+        ? Note that we are encrypting the password using bcrypt
+        const passwordMatch = await bcrypt.compare(password, data.password);
+    */
     const verifiedUser = await verifyPassword(user.email, password);
     if (!verifiedUser) {
       return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
 
+    // ? STEP 3: Return user data (including admin and superAdmin flags)
     res.json({
       success: true,
       user: {
@@ -162,6 +194,7 @@ router.post('/login', async (req: Request, res: Response) => {
         major: verifiedUser.major ?? '',
         year: verifiedUser.year ?? '',
         isAdmin: verifiedUser.isAdmin ?? false,
+        isSuperAdmin: verifiedUser.isSuperAdmin ?? false,
       },
     });
   } catch (err) {
@@ -216,6 +249,7 @@ router.post('/register', async (req: Request, res: Response) => {
         major: newUser.major,
         year: newUser.year,
         isAdmin: newUser.isAdmin,
+        isSuperAdmin: newUser.isSuperAdmin,
       },
     });
   } catch (err) {
@@ -259,6 +293,81 @@ router.put('/user/:userId', async (req: Request<{ userId: string }>, res: Respon
       major: updatedUser.major,
       year: updatedUser.year,
       profilePicture: updatedUser.profilePicture,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: (err as Error).message });
+  }
+});
+
+router.post('/makeSuperAdmin', async (req: Request, res: Response) => {
+  try {
+    const { username, name, isSuperAdmin } = req.body as {
+      username?: string;
+      name?: string;
+      isSuperAdmin?: boolean;
+    };
+
+    // Validate input
+    if (!username || !name) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Username and name are required' });
+    }
+
+    if (isSuperAdmin === undefined) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'isSuperAdmin flag is required' });
+    }
+
+    // Find user by username
+    const user = await findUserByUsernameOrEmail(username, '');
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    // Verify name matches
+    if (user.name !== name) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Username and name do not match' });
+    }
+
+    // Update user's super admin status
+    // ! CHECKMARK 2.2: BACKEND that allows "SUPER ADMIN" to update other users to be "SUPER ADMIN"
+    /*
+      ? THIS IS AN ``UPDATE`` OPERATION
+
+      CODE TO HIT THE DATABASE AND UPDATE THE USER'S isSuperAdmin FLAG
+          
+          if (updates.isSuperAdmin !== undefined) updateData.is_super_admin = updates.isSuperAdmin;
+
+          const { data, error } = await supabase
+            .from('users')
+            .update(updateData)
+            .eq('id', userId)
+            .select()
+            .single();
+
+    */
+    const updatedUser = await updateUser(user.id, { isSuperAdmin });
+
+    if (!updatedUser) {
+      return res.status(500).json({ success: false, error: 'Failed to update user' });
+    }
+
+    res.json({
+      success: true,
+      message: isSuperAdmin
+        ? `User ${username} promoted to super admin`
+        : `User ${username} removed from super admin`,
+      user: {
+        id: updatedUser.id,
+        username: updatedUser.username,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isSuperAdmin: updatedUser.isSuperAdmin,
+      },
     });
   } catch (err) {
     res.status(500).json({ success: false, error: (err as Error).message });
