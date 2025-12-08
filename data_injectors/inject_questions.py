@@ -8,6 +8,7 @@ import os
 import json
 import requests
 import re
+import time
 from pathlib import Path
 from typing import List, Tuple
 
@@ -16,13 +17,13 @@ from typing import List, Tuple
 # ============================================================
 
 API_BASE = "http://localhost:3000"
-COURSE = "CSC473"
-TOPIC = "JAVASCRIPT"
+COURSE = "CSC342"
+TOPIC = "Data Pipeline Hazards"
 
 # Number of questions per difficulty level
-EASY_COUNT = 4
-MEDIUM_COUNT = 2
-HARD_COUNT = 0
+EASY_COUNT = 5
+MEDIUM_COUNT = 5
+HARD_COUNT = 5
 
 # User credentials for submitting questions
 USERS = [
@@ -65,8 +66,8 @@ print()
 
 
 def generate_questions(difficulty: str, count: int) -> List[Tuple[str, str]]:
-    """Generate questions using Gemini API"""
-    prompt = f"""Generate {count} multiple choice questions for a university course on {COURSE}, specifically about {TOPIC}, at {difficulty} difficulty level.
+    """Generate questions using Gemini API with retry logic"""
+    prompt = f"""Generate {count} multiple choice questions for a university course on {COURSE} in CCNY (ensure you crosscheck for example: CSC342 - Computer Organization), specifically about {TOPIC}, at {difficulty} difficulty level.
 
 Format each question EXACTLY as follows (one per line):
 QUESTION: <question text>
@@ -75,7 +76,7 @@ CORRECT: <correct answer text>
 
 Make sure each question is educational and the answers are scientifically/technically accurate. The correct answer should be clearly the best answer among the options."""
 
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
     headers = {
         "Content-Type": "application/json",
         "X-goog-api-key": GEMINI_API_KEY,
@@ -90,38 +91,62 @@ Make sure each question is educational and the answers are scientifically/techni
         ]
     }
 
-    try:
-        response = requests.post(url, json=data, headers=headers, timeout=30)
-        response.raise_for_status()
-        result = response.json()
+    # Retry logic with exponential backoff
+    max_retries = 5
+    base_wait_time = 1  # Start with 2 seconds
+    
+    for attempt in range(max_retries):
+        try:
+            response = requests.post(url, json=data, headers=headers, timeout=30)
+            
+            # Handle rate limit errors specifically
+            if response.status_code == 429:
+                wait_time = base_wait_time * (2 ** attempt)  # Exponential backoff
+                print(f"  Rate limited (429). Waiting {wait_time}s before retry {attempt + 1}/{max_retries}...")
+                time.sleep(wait_time)
+                continue
+            
+            response.raise_for_status()
+            result = response.json()
+            
+            # Extract text from response
+            text = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+            
+            # Parse questions from text
+            questions = []
+            lines = text.split("\n")
+            current_question = None
+            current_correct = None
+            
+            for line in lines:
+                line = line.strip()
+                if line.startswith("QUESTION:"):
+                    if current_question and current_correct:
+                        questions.append((current_question, current_correct))
+                    current_question = line.replace("QUESTION:", "").strip()
+                    current_correct = None
+                elif line.startswith("CORRECT:"):
+                    current_correct = line.replace("CORRECT:", "").strip()
+            
+            # Don't forget the last question
+            if current_question and current_correct:
+                questions.append((current_question, current_correct))
+            
+            return questions[:count]
         
-        # Extract text from response
-        text = result.get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-        
-        # Parse questions from text
-        questions = []
-        lines = text.split("\n")
-        current_question = None
-        current_correct = None
-        
-        for line in lines:
-            line = line.strip()
-            if line.startswith("QUESTION:"):
-                if current_question and current_correct:
-                    questions.append((current_question, current_correct))
-                current_question = line.replace("QUESTION:", "").strip()
-                current_correct = None
-            elif line.startswith("CORRECT:"):
-                current_correct = line.replace("CORRECT:", "").strip()
-        
-        # Don't forget the last question
-        if current_question and current_correct:
-            questions.append((current_question, current_correct))
-        
-        return questions[:count]
-    except Exception as e:
-        print(f"✗ Error generating {difficulty} questions: {e}")
-        return []
+        except requests.exceptions.HTTPError as e:
+            if response.status_code == 429:
+                # Already handled above
+                continue
+            print(f"✗ Error generating {difficulty} questions: {e}")
+            return []
+        except Exception as e:
+            print(f"✗ Error generating {difficulty} questions: {e}")
+            return []
+    
+    # If we exhausted all retries
+    print(f"✗ Failed to generate {difficulty} questions after {max_retries} retries")
+    return []
 
 
 def get_token(email: str, password: str) -> str:
